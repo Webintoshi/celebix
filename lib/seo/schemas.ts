@@ -10,7 +10,7 @@ export const organizationSchema = {
   "name": "Celebix",
   "alternateName": "Celebix Digital Agency",
   "url": "https://celebix.co",
-  "logo": "https://celebix.co/logo/celebix beyaz logo.svg",
+  "logo": "https://celebix.co/Logo/celebix beyaz logo.svg",
   "sameAs": [
     "https://twitter.com/celebix",
     "https://linkedin.com/company/celebix",
@@ -50,7 +50,7 @@ export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "Celebix",
-  "image": "https://celebix.co/logo/koyu logo.svg",
+  "image": "https://celebix.co/Logo/koyu logo.svg",
   "url": "https://celebix.co",
   "telephone": "+90 530 209 96 28",
   "email": "merhaba@celebix.co",
@@ -224,7 +224,7 @@ export const blogPostSchema = (post: {
     "name": "Celebix",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://celebix.co/logo/celebix beyaz logo.svg"
+      "url": "https://celebix.co/Logo/celebix beyaz logo.svg"
     }
   },
   "keywords": post.tags.join(", "),

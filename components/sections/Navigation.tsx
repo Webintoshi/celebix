@@ -79,7 +79,7 @@ export default function Navigation({ locale }: { locale: string }) {
             {/* Logo */}
             <Link href={`/${locale}`} className="flex items-center -ml-2">
               <img 
-                src="/logo/koyu logo.svg" 
+                src="/Logo/koyu logo.svg" 
                 alt="Celebix" 
                 className="h-16 w-auto"
               />

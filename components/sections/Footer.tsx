@@ -46,7 +46,7 @@ export default function Footer({ locale }: { locale: string }) {
           >
             <Link href={`/${locale}`} className="flex items-center mb-8">
               <img 
-                src="/logo/celebix beyaz logo.svg" 
+                src="/Logo/celebix beyaz logo.svg" 
                 alt="Celebix" 
                 className="h-16 w-auto"
               />
