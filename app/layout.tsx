@@ -80,9 +80,14 @@ export const metadata: Metadata = {
     description: "Celebix ile işletmenizi dijital dünyada büyütün. AI destekli e-ticaret, kurumsal yazılım ve daha fazlası.",
     images: ["/images/og-default.jpg"],
   },
-  verification: {
-    google: "your-google-verification-code",
-    yandex: "your-yandex-verification-code",
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    shortcut: ['/favicon.svg'],
+    apple: [
+      { url: '/Logo/koyu logo.svg', type: 'image/svg+xml' },
+    ],
   },
   alternates: {
     canonical: "/",

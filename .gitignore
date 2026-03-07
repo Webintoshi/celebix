@@ -37,3 +37,4 @@ Thumbs.db
 # Misc
 *.tgz
 *.tar.gz
+components/MapboxMap.tsx
