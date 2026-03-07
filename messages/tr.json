@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "title": "Celebix | Premium Yazılım ve Digital Marketing",
+    "description": "Celebix - Sadık Ahmet Çelebi tarafından kurulan, premium yazılım geliştirme ve stratejik dijital marketing hizmetleri."
+  },
+  "nav": {
+    "home": "Ana Sayfa",
+    "about": "Hakkımızda",
+    "services": "Hizmetler",
+    "portfolio": "Portföy",
+    "blog": "Blog",
+    "contact": "İletişim",
+    "startProject": "Projeye Başla"
+  },
+  "hero": {
+    "headline": "Dijital Dönüşümünüzü Hızlandırın",
+    "subheadline": "Premium yazılım geliştirme ve stratejik dijital marketing ile markanızı geleceğe taşıyoruz. Teknoloji ve yaratıcılığın mükemmel uyumu.",
+    "ctaPrimary": "Projeye Başla",
+    "ctaSecondary": "Portföyü Gör"
+  },
+  "trustedBy": {
+    "title": "Güvenilen Ortaklar"
+  },
+  "services": {
+    "title": "Hizmetlerimiz",
+    "subtitle": "Yazılım ve marketingin gücünü bir araya getiriyoruz",
+    "software": {
+      "title": "Yazılım Geliştirme",
+      "description": "Özel web ve mobil uygulamalar, kurumsal yazılım çözümleri ve ölçeklenebilir mimariler.",
+      "features": ["Web Uygulamaları", "Mobil Uygulamalar", "API Geliştirme", "Cloud Çözümleri"]
+    },
+    "marketing": {
+      "title": "Digital Marketing",
+      "description": "Veri odaklı stratejiler, marka konumlandırma ve büyüme odaklı kampanyalar.",
+      "features": ["SEO & SEM", "Sosyal Medya", "İçerik Stratejisi", "Performans Marketing"]
+    },
+    "design": {
+      "title": "UI/UX Tasarım",
+      "description": "Kullanıcı merkezli tasarım, etkileyici arayüzler ve seamless deneyimler.",
+      "features": ["Kullanıcı Araştırması", "Arayüz Tasarımı", "Prototipleme", "Tasarım Sistemleri"]
+    }
+  },
+  "portfolio": {
+    "title": "Seçilmiş Projeler",
+    "subtitle": "En son çalışmalarımızdan bazıları",
+    "viewCase": "Vaka İncele",
+    "projects": {
+      "project1": {
+        "title": "E-Ticaret Platformu",
+        "category": "Web Geliştirme",
+        "year": "2024"
+      },
+      "project2": {
+        "title": "FinTech Mobil Uygulama",
+        "category": "Mobil Geliştirme",
+        "year": "2024"
+      },
+      "project3": {
+        "title": "Kurumsal Marketing Sitesi",
+        "category": "Web & Marketing",
+        "year": "2023"
+      },
+      "project4": {
+        "title": "SaaS Dashboard",
+        "category": "UI/UX & Geliştirme",
+        "year": "2023"
+      }
+    }
+  },
+  "process": {
+    "title": "Nasıl Çalışırız?",
+    "subtitle": "Dört adımda dijital mükemmellik",
+    "steps": {
+      "discovery": {
+        "number": "01",
+        "title": "Keşif",
+        "description": "İhtiyaçlarınızı, hedeflerinizi ve rakip analizini detaylı şekilde inceliyoruz."
+      },
+      "design": {
+        "number": "02",
+        "title": "Tasarım",
+        "description": "Kullanıcı odaklı wireframe'ler ve etkileyici görsel tasarımlar oluşturuyoruz."
+      },
+      "development": {
+        "number": "03",
+        "title": "Geliştirme",
+        "description": "Modern teknolojilerle ölçeklenebilir ve performanslı çözümler geliştiriyoruz."
+      },
+      "launch": {
+        "number": "04",
+        "title": "Lansman",
+        "description": "Test süreçleri, optimizasyon ve başarılı bir lansman ile projeyi hayata geçiriyoruz."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Müşteri Yorumları",
+    "clients": {
+      "client1": {
+        "quote": "Celebix ekibi, vizyonumuzu gerçeğe dönüştürdü. Profesyonellik ve yaratıcılığın mükemmel kombinasyonu.",
+        "name": "Ahmet Yılmaz",
+        "title": "CEO, TechCorp"
+      },
+      "client2": {
+        "quote": "Marketing stratejilerimiz tamamen değişti. ROI'de %200 artış sağladık.",
+        "name": "Zeynep Kaya",
+        "title": "Marketing Direktörü, BrandX"
+      },
+      "client3": {
+        "quote": "Yazılım kalitesi ve teslimat süreci kusursuzdu. Kesinlikle tavsiye ediyorum.",
+        "name": "Mehmet Demir",
+        "title": "CTO, StartupHub"
+      }
+    }
+  },
+  "cta": {
+    "title": "Hadi Projenizi Konuşalım",
+    "subtitle": "Ücretsiz danışmanlık için formu doldurun, 24 saat içinde dönüş yapalım.",
+    "emailPlaceholder": "E-posta adresiniz",
+    "buttonText": "Gönder",
+    "trustText": "Ücretsiz danışmanlık • 24 saat içinde dönüş"
+  },
+  "footer": {
+    "description": "Premium yazılım geliştirme ve digital marketing hizmetleri.",
+    "quickLinks": "Hızlı Linkler",
+    "services": "Hizmetler",
+    "contact": "İletişim",
+    "rights": "Tüm hakları saklıdır."
+  }
+}

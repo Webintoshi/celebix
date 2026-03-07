@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand Foundation */
+    --color-light: #F8F8F8;
+    --color-light-50: #FFFFFF;
+    --color-light-100: #F8F8F8;
+    --color-light-200: #EFEFEF;
+    --color-light-300: #E0E0E0;
+    
+    --color-dark: #2A2A2A;
+    --color-dark-950: #1A1A1A;
+    --color-dark-900: #2A2A2A;
+    --color-dark-800: #3A3A3A;
+    --color-dark-700: #4A4A4A;
+    
+    /* Aurora Accents */
+    --color-aurora-indigo: #6366F1;
+    --color-aurora-violet: #8B5CF6;
+    --color-aurora-magenta: #EC4899;
+    --color-aurora-coral: #F97316;
+    
+    /* Semantic */
+    --background: #F8F8F8;
+    --foreground: #2A2A2A;
+    --surface: #FFFFFF;
+    --surface-elevated: #FFFFFF;
+    --surface-glass: rgba(248, 248, 248, 0.7);
+    --border: rgba(42, 42, 42, 0.08);
+    
+    /* Gradients */
+    --gradient-aurora: linear-gradient(135deg, #6366F1 0%, #8B5CF6 35%, #EC4899 70%, #F97316 100%);
+    --gradient-hero: linear-gradient(180deg, rgba(99, 102, 241, 0.08) 0%, transparent 60%);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    -moz-tab-size: 4;
+    tab-size: 4;
+  }
+
+  body {
+    @apply bg-light-100 text-dark-900;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    overflow-x: hidden;
+    min-height: 100vh;
+    /* Mobile font smoothing */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Responsive images */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Responsive typography base */
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+
+  p {
+    text-wrap: pretty;
+    overflow-wrap: break-word;
+  }
+
+  ::selection {
+    background: rgba(99, 102, 241, 0.2);
+    color: #2A2A2A;
+  }
+
+  /* Focus visible for accessibility */
+  :focus-visible {
+    outline: 2px solid var(--color-aurora-indigo);
+    outline-offset: 2px;
+  }
+
+  /* Remove tap highlight on mobile */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer components {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-aurora);
+  }
+
+  .glass-card {
+    @apply backdrop-blur-glass;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(42, 42, 42, 0.08);
+  }
+
+  .section-padding {
+    @apply py-12 sm:py-16 lg:py-20 xl:py-24 px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+
+  .container-max {
+    @apply max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12;
+    width: 100%;
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 ease-out;
+  }
+
+  .hover-lift:hover {
+    @apply -translate-y-1 sm:-translate-y-2;
+    box-shadow: 0 20px 40px rgba(42, 42, 42, 0.1);
+  }
+
+  /* Responsive glass card */
+  .glass-card {
+    @apply backdrop-blur-glass;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(42, 42, 42, 0.08);
+  }
+
+  /* Mobile touch improvements */
+  @media (hover: none) {
+    .hover-lift:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    
+    .hover-lift:active {
+      transform: scale(0.98);
+    }
+  }
+
+  /* Safe area for notched devices */
+  @supports (padding: max(0px)) {
+    .safe-area-inset {
+      padding-left: max(1rem, env(safe-area-inset-left));
+      padding-right: max(1rem, env(safe-area-inset-right));
+    }
+  }
+}
+
+@layer utilities {
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animation-delay-300 {
+    animation-delay: 300ms;
+  }
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  .animation-delay-500 {
+    animation-delay: 500ms;
+  }
+}
+
+/* Smooth scrolling for reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

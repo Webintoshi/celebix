@@ -1,0 +1,130 @@
+{
+  "metadata": {
+    "title": "Celebix | Premium Software & Digital Marketing",
+    "description": "Celebix - Premium software development and strategic digital marketing services founded by Sadık Ahmet Çelebi."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "contact": "Contact",
+    "startProject": "Start Project"
+  },
+  "hero": {
+    "headline": "Accelerate Your Digital Transformation",
+    "subheadline": "We elevate your brand to the future with premium software development and strategic digital marketing. The perfect harmony of technology and creativity.",
+    "ctaPrimary": "Start Project",
+    "ctaSecondary": "View Portfolio"
+  },
+  "trustedBy": {
+    "title": "Trusted By"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Bringing together the power of software and marketing",
+    "software": {
+      "title": "Software Development",
+      "description": "Custom web and mobile applications, enterprise software solutions, and scalable architectures.",
+      "features": ["Web Applications", "Mobile Apps", "API Development", "Cloud Solutions"]
+    },
+    "marketing": {
+      "title": "Digital Marketing",
+      "description": "Data-driven strategies, brand positioning, and growth-focused campaigns.",
+      "features": ["SEO & SEM", "Social Media", "Content Strategy", "Performance Marketing"]
+    },
+    "design": {
+      "title": "UI/UX Design",
+      "description": "User-centered design, captivating interfaces, and seamless experiences.",
+      "features": ["User Research", "Interface Design", "Prototyping", "Design Systems"]
+    }
+  },
+  "portfolio": {
+    "title": "Selected Works",
+    "subtitle": "Some of our latest projects",
+    "viewCase": "View Case",
+    "projects": {
+      "project1": {
+        "title": "E-Commerce Platform",
+        "category": "Web Development",
+        "year": "2024"
+      },
+      "project2": {
+        "title": "FinTech Mobile App",
+        "category": "Mobile Development",
+        "year": "2024"
+      },
+      "project3": {
+        "title": "Corporate Marketing Site",
+        "category": "Web & Marketing",
+        "year": "2023"
+      },
+      "project4": {
+        "title": "SaaS Dashboard",
+        "category": "UI/UX & Development",
+        "year": "2023"
+      }
+    }
+  },
+  "process": {
+    "title": "How We Work",
+    "subtitle": "Digital excellence in four steps",
+    "steps": {
+      "discovery": {
+        "number": "01",
+        "title": "Discovery",
+        "description": "We thoroughly analyze your needs, goals, and competitive landscape."
+      },
+      "design": {
+        "number": "02",
+        "title": "Design",
+        "description": "We create user-focused wireframes and captivating visual designs."
+      },
+      "development": {
+        "number": "03",
+        "title": "Development",
+        "description": "We build scalable and performant solutions with modern technologies."
+      },
+      "launch": {
+        "number": "04",
+        "title": "Launch",
+        "description": "Testing, optimization, and a successful launch bring the project to life."
+      }
+    }
+  },
+  "testimonials": {
+    "title": "Client Testimonials",
+    "clients": {
+      "client1": {
+        "quote": "The Celebix team turned our vision into reality. The perfect combination of professionalism and creativity.",
+        "name": "Ahmet Yilmaz",
+        "title": "CEO, TechCorp"
+      },
+      "client2": {
+        "quote": "Our marketing strategy completely transformed. We achieved 200% increase in ROI.",
+        "name": "Zeynep Kaya",
+        "title": "Marketing Director, BrandX"
+      },
+      "client3": {
+        "quote": "Software quality and delivery process were flawless. Highly recommended.",
+        "name": "Mehmet Demir",
+        "title": "CTO, StartupHub"
+      }
+    }
+  },
+  "cta": {
+    "title": "Let's Discuss Your Project",
+    "subtitle": "Fill out the form for a free consultation, we'll get back to you within 24 hours.",
+    "emailPlaceholder": "Your email address",
+    "buttonText": "Send",
+    "trustText": "Free consultation • Response within 24h"
+  },
+  "footer": {
+    "description": "Premium software development and digital marketing services.",
+    "quickLinks": "Quick Links",
+    "services": "Services",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  }
+}
