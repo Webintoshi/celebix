@@ -65,10 +65,10 @@ export const metadata: Metadata = {
     description: "Celebix ile işletmenizi dijital dünyada büyütün. AI destekli e-ticaret, kurumsal yazılım ve daha fazlası.",
     images: [
       {
-        url: "/images/og-default.jpg",
+        url: "https://celebix.co/og-image.webp",
         width: 1200,
         height: 630,
-        alt: "Celebix - Dijital Çözümler",
+        alt: "Celebix - Premium Yazılım ve Dijital Çözümler",
       },
     ],
   },
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     creator: "@celebix",
     title: "Celebix | Premium E-Ticaret ve Dijital Çözümler",
     description: "Celebix ile işletmenizi dijital dünyada büyütün. AI destekli e-ticaret, kurumsal yazılım ve daha fazlası.",
-    images: ["/images/og-default.jpg"],
+    images: ["https://celebix.co/og-image.webp"],
   },
   icons: {
     icon: [
