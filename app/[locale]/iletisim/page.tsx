@@ -112,6 +112,16 @@ export default function Contact({ params }: { params: { locale: string } }) {
     
     setIsSubmitting(false);
     setIsSubmitted(true);
+    
+    // Google Tag Manager - Form Submit Event
+    if (typeof window !== 'undefined' && (window as any).dataLayer) {
+      (window as any).dataLayer.push({
+        'event': 'form_submit_success',
+        'form_name': 'contact_form',
+        'form_subject': formData.subject || 'general'
+      });
+    }
+    
     setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
   };
 
