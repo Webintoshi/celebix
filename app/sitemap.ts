@@ -1,5 +1,7 @@
 import { MetadataRoute } from "next";
 
+export const dynamic = 'force-static';
+
 // Base URL
 const BASE_URL = "https://celebix.co";
 
