@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
+import FloatingButtons from "@/components/FloatingButtons";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function LocaleLayout({
           }}
         />
         {children}
+        <FloatingButtons />
       </body>
     </html>
   );
