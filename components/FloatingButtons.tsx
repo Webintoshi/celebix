@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Instagram } from "lucide-react";
+import { Instagram } from "lucide-react";
 
 // WhatsApp phone number
 const WHATSAPP_NUMBER = "905302099628";
@@ -10,104 +8,44 @@ const WHATSAPP_MESSAGE = "Merhaba, Celebix hakkında bilgi almak istiyorum.";
 const INSTAGRAM_USERNAME = "celebix.co";
 
 export default function FloatingButtons() {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Show buttons after scrolling
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 200) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     WHATSAPP_MESSAGE
   )}`;
   const instagramUrl = `https://instagram.com/${INSTAGRAM_USERNAME}`;
 
   return (
-    <AnimatePresence>
-      {isVisible && (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 20 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="fixed right-4 bottom-4 z-50 flex flex-col items-end gap-3"
+    <div className="fixed right-0 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-0">
+      {/* Instagram Button */}
+      <a
+        href={instagramUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center w-14 h-14 bg-dark-900 text-light-100 hover:bg-dark-800 transition-colors"
+        style={{ backgroundColor: "#2A2A2A" }}
+        aria-label="Instagram"
+      >
+        <Instagram size={24} />
+      </a>
+
+      {/* WhatsApp Button */}
+      <a
+        href={whatsappUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center w-14 h-14 bg-dark-900 text-light-100 hover:bg-dark-800 transition-colors"
+        style={{ backgroundColor: "#25D366" }}
+        aria-label="WhatsApp"
+      >
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Expanded Menu */}
-          <AnimatePresence>
-            {isOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 20, scale: 0.8 }}
-                transition={{ duration: 0.2 }}
-                className="flex flex-col gap-3 mb-2"
-              >
-                {/* Instagram Button */}
-                <motion.a
-                  href={instagramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-3 bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl transition-shadow"
-                >
-                  <Instagram size={24} />
-                  <span className="text-sm font-medium whitespace-nowrap">
-                    Instagram
-                  </span>
-                </motion.a>
-
-                {/* WhatsApp Button */}
-                <motion.a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-3 bg-[#25D366] text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl transition-shadow"
-                >
-                  <MessageCircle size={24} />
-                  <span className="text-sm font-medium whitespace-nowrap">
-                    WhatsApp
-                  </span>
-                </motion.a>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Main Toggle Button */}
-          <motion.button
-            onClick={() => setIsOpen(!isOpen)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className={`w-14 h-14 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center ${
-              isOpen
-                ? "bg-dark-900 text-light-100 rotate-45"
-                : "bg-aurora-indigo text-white"
-            }`}
-            style={{
-              backgroundColor: isOpen ? "#2A2A2A" : "#6366F1",
-            }}
-          >
-            <motion.div
-              animate={{ rotate: isOpen ? 45 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
-            </motion.div>
-          </motion.button>
-        </motion.div>
-      )}
-    </AnimatePresence>
+          <path d="M17.6 6.32A7.85 7.85 0 0 0 12 4a7.94 7.94 0 0 0-6.88 12.1L4 20l4.05-1.06A7.93 7.93 0 0 0 20 12a7.85 7.85 0 0 0-2.4-5.68ZM12 18a5.88 5.88 0 0 1-3-.82l-.22-.13-2.67.7.71-2.6-.14-.23a5.88 5.88 0 0 1 5.5-8.68 5.88 5.88 0 0 1 5.88 5.88A5.88 5.88 0 0 1 12 18Zm3.4-4.66c-.18-.1-1.07-.53-1.24-.59-.16-.06-.28-.1-.4.1-.12.18-.46.59-.57.71-.1.12-.2.14-.38.04a4.8 4.8 0 0 1-1.4-.87 5.32 5.32 0 0 1-.97-1.2c-.1-.18 0-.28.08-.37.08-.08.18-.2.26-.3.1-.1.12-.18.18-.3.06-.12.03-.22-.02-.3-.04-.1-.4-.97-.55-1.32-.14-.35-.29-.3-.4-.3-.1 0-.22-.03-.34-.03-.12 0-.3.04-.46.22-.16.18-.62.6-.62 1.47 0 .87.63 1.72.72 1.84.1.12 1.24 1.9 3 2.66.42.18.75.29 1 .37.42.13.8.11 1.1.07.34-.05 1.07-.44 1.22-.86.15-.42.15-.78.1-.86-.04-.08-.16-.12-.34-.2Z" />
+        </svg>
+      </a>
+    </div>
   );
 }
