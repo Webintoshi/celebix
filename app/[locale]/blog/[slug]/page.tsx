@@ -108,13 +108,117 @@ export default function BlogPost({ params }: { params: { locale: string; slug: s
   const shareUrl = typeof window !== "undefined" ? window.location.href : "";
   const shareText = isTr ? post.title : post.titleEn;
 
-  // Parse markdown content
-  const renderContent = (text: string) => {
+  // Parse markdown line by line
+  const renderMarkdown = (text: string) => {
     // Handle strong/bold text
     let parsed = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
     // Handle links
-    parsed = parsed.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-aurora-violet hover:underline">$1</a>');
+    parsed = parsed.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-aurora-violet hover:underline font-medium">$1</a>');
     return parsed;
+  };
+
+  // Split content into lines for proper rendering
+  const parseContent = (contentArray: string[]) => {
+    const elements: JSX.Element[] = [];
+    
+    contentArray.forEach((block, blockIndex) => {
+      // Split by double newlines to get individual lines/paragraphs
+      const lines = block.split('\n').filter(line => line.trim());
+      
+      lines.forEach((line, lineIndex) => {
+        const key = `${blockIndex}-${lineIndex}`;
+        
+        // Handle H2 headers
+        if (line.startsWith("## ")) {
+          elements.push(
+            <h2 key={key} className="font-display text-2xl lg:text-3xl text-dark-900 mt-16 mb-6 first:mt-0">
+              {line.replace("## ", "")}
+            </h2>
+          );
+          return;
+        }
+        
+        // Handle H3 headers
+        if (line.startsWith("### ")) {
+          elements.push(
+            <h3 key={key} className="font-display text-xl lg:text-2xl text-dark-900 mt-12 mb-4">
+              {line.replace("### ", "")}
+            </h3>
+          );
+          return;
+        }
+        
+        // Handle numbered list items (1. **Text**)
+        const numberedMatch = line.match(/^(\d+)\.\s+(.+)$/);
+        if (numberedMatch) {
+          elements.push(
+            <div key={key} className="flex items-start gap-3 my-3">
+              <span className="w-6 h-6 rounded-full bg-aurora-violet/10 text-aurora-violet text-xs font-medium flex items-center justify-center flex-shrink-0 mt-0.5">
+                {numberedMatch[1]}
+              </span>
+              <span 
+                className="text-dark-900/80 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: renderMarkdown(numberedMatch[2]) }}
+              />
+            </div>
+          );
+          return;
+        }
+        
+        // Handle bullet list items (- text or • text)
+        if (line.startsWith("- ") || line.startsWith("• ")) {
+          const text = line.replace(/^[-•]\s*/, "");
+          elements.push(
+            <div key={key} className="flex items-start gap-3 my-2">
+              <span className="w-2 h-2 rounded-full bg-aurora-violet mt-2 flex-shrink-0" />
+              <span 
+                className="text-dark-900/80 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: renderMarkdown(text) }}
+              />
+            </div>
+          );
+          return;
+        }
+        
+        // Handle table rows
+        if (line.includes('|') && !line.includes('---')) {
+          const cells = line.split('|').filter(c => c.trim());
+          const isHeader = lineIndex === 0 || elements.length === 0;
+          
+          elements.push(
+            <div key={key} className={`flex ${isHeader ? 'bg-dark-900 text-light-100 font-medium' : 'border-b border-dark-900/10'}`}>
+              {cells.map((cell, i) => (
+                <div 
+                  key={i} 
+                  className="flex-1 p-3 text-sm"
+                  dangerouslySetInnerHTML={{ __html: renderMarkdown(cell.trim()) }}
+                />
+              ))}
+            </div>
+          );
+          return;
+        }
+        
+        // Handle separator line
+        if (line.match(/^[-=]{3,}$/)) {
+          elements.push(<hr key={key} className="my-8 border-dark-900/10" />);
+          return;
+        }
+        
+        // Regular paragraph
+        if (line.trim()) {
+          elements.push(
+            <p 
+              key={key} 
+              className="text-dark-900/80 leading-relaxed mb-6 text-lg"
+              dangerouslySetInnerHTML={{ __html: renderMarkdown(line) }}
+            />
+          );
+        }
+      });
+    });
+    
+    return elements;
   };
 
   return (
@@ -201,120 +305,7 @@ export default function BlogPost({ params }: { params: { locale: string; slug: s
                 className="lg:col-span-8"
               >
                 <div className="prose prose-lg max-w-none">
-                  {content.map((paragraph, index) => {
-                    // Handle H2 headers
-                    if (paragraph.startsWith("## ")) {
-                      return (
-                        <h2 key={index} className="font-display text-2xl lg:text-3xl text-dark-900 mt-16 mb-6 first:mt-0">
-                          {paragraph.replace("## ", "")}
-                        </h2>
-                      );
-                    }
-                    
-                    // Handle H3 headers
-                    if (paragraph.startsWith("### ")) {
-                      return (
-                        <h3 key={index} className="font-display text-xl lg:text-2xl text-dark-900 mt-12 mb-4">
-                          {paragraph.replace("### ", "")}
-                        </h3>
-                      );
-                    }
-                    
-                    // Handle code blocks
-                    if (paragraph.startsWith("```")) {
-                      const lines = paragraph.split('\n');
-                      const language = lines[0].replace('```', '').trim();
-                      const code = lines.slice(1, -1).join('\n');
-                      return (
-                        <div key={index} className="my-8 rounded-xl overflow-hidden bg-dark-900 shadow-lg">
-                          {language && (
-                            <div className="px-4 py-2 bg-dark-800 text-light-100/60 text-xs font-medium">
-                              {language}
-                            </div>
-                          )}
-                          <pre className="p-4 overflow-x-auto">
-                            <code className="text-sm text-light-100 font-mono">{code}</code>
-                          </pre>
-                        </div>
-                      );
-                    }
-                    
-                    // Handle tables
-                    if (paragraph.includes('|')) {
-                      const rows = paragraph.split('\n').filter(r => r.trim());
-                      if (rows.length >= 2) {
-                        return (
-                          <div key={index} className="my-8 overflow-x-auto">
-                            <table className="w-full border-collapse">
-                              <tbody>
-                                {rows.map((row, rowIndex) => {
-                                  if (row.includes('---')) return null;
-                                  const cells = row.split('|').filter(c => c.trim());
-                                  const isHeader = rowIndex === 0;
-                                  return (
-                                    <tr key={rowIndex} className={isHeader ? "bg-dark-900 text-light-100" : "border-b border-dark-900/10"}>
-                                      {cells.map((cell, cellIndex) => (
-                                        <td 
-                                          key={cellIndex} 
-                                          className={`p-4 text-sm ${isHeader ? "font-medium" : "text-dark-900/80"}`}
-                                          dangerouslySetInnerHTML={{ __html: renderContent(cell.trim()) }}
-                                        />
-                                      ))}
-                                    </tr>
-                                  );
-                                })}
-                              </tbody>
-                            </table>
-                          </div>
-                        );
-                      }
-                    }
-                    
-                    // Handle lists with newlines
-                    if (paragraph.includes('\n- ') || paragraph.startsWith('- ')) {
-                      const items = paragraph.split('\n').filter(p => p.trim().startsWith('- '));
-                      if (items.length > 0) {
-                        return (
-                          <ul key={index} className="list-none space-y-3 my-6">
-                            {items.map((item, i) => (
-                              <li key={i} className="flex items-start gap-3 text-dark-900/80">
-                                <span className="w-2 h-2 rounded-full bg-aurora-violet mt-2 flex-shrink-0" />
-                                <span dangerouslySetInnerHTML={{ __html: renderContent(item.replace('- ', '').trim()) }} />
-                              </li>
-                            ))}
-                          </ul>
-                        );
-                      }
-                    }
-                    
-                    // Handle numbered lists
-                    if (/^\d+\./.test(paragraph)) {
-                      const items = paragraph.split('\n').filter(p => /^\d+\./.test(p.trim()));
-                      if (items.length > 0) {
-                        return (
-                          <ol key={index} className="list-none space-y-3 my-6">
-                            {items.map((item, i) => (
-                              <li key={i} className="flex items-start gap-3 text-dark-900/80">
-                                <span className="w-6 h-6 rounded-full bg-aurora-violet/10 text-aurora-violet text-xs font-medium flex items-center justify-center flex-shrink-0 mt-0.5">
-                                  {i + 1}
-                                </span>
-                                <span dangerouslySetInnerHTML={{ __html: renderContent(item.replace(/^\d+\.\s*/, '').trim()) }} />
-                              </li>
-                            ))}
-                          </ol>
-                        );
-                      }
-                    }
-                    
-                    // Regular paragraphs
-                    return (
-                      <p 
-                        key={index} 
-                        className="text-dark-900/80 leading-relaxed mb-6 text-lg"
-                        dangerouslySetInnerHTML={{ __html: renderContent(paragraph) }}
-                      />
-                    );
-                  })}
+                  {parseContent(content)}
                 </div>
 
                 {/* Tags */}
