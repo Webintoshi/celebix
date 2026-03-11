@@ -7,237 +7,9 @@ import { ArrowRight, Calendar, Clock, User, Tag, Search, TrendingUp } from "luci
 import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
 import { generatePlaceholderSVG } from "@/lib/utils";
+import { blogPosts, BlogPost } from "./posts";
 
-type Category = "all" | "software" | "marketing" | "social" | "technology" | "strategy";
-
-interface BlogPost {
-  slug: string;
-  title: string;
-  titleEn: string;
-  excerpt: string;
-  excerptEn: string;
-  category: Category;
-  categoryLabel: string;
-  categoryLabelEn: string;
-  image: number;
-  date: string;
-  readTime: string;
-  readTimeEn: string;
-  author: string;
-  authorRole: string;
-  authorRoleEn: string;
-  featured?: boolean;
-}
-
-const blogPosts: BlogPost[] = [
-  {
-    slug: "nextjs-15-yenilikler",
-    title: "Next.js 15 ile Gelen Yenilikler ve Performans İyileştirmeleri",
-    titleEn: "Next.js 15: New Features and Performance Improvements",
-    excerpt: "Next.js 15'in sunduğu yeni özellikler, partial prerendering ve geliştirilmiş caching mekanizmaları ile web uygulamalarınızı nasıl daha hızlı hale getirebilirsiniz?",
-    excerptEn: "How can you make your web applications faster with Next.js 15's new features, partial prerendering, and improved caching mechanisms?",
-    category: "software",
-    categoryLabel: "Yazılım",
-    categoryLabelEn: "Software",
-    image: 60,
-    date: "2024-03-01",
-    readTime: "8 dk",
-    readTimeEn: "8 min",
-    author: "Ahmet Çelebi",
-    authorRole: "Teknik Direktör",
-    authorRoleEn: "Technical Director",
-    featured: true,
-  },
-  {
-    slug: "google-ads-2024-rehberi",
-    title: "2024 Google Ads Rehberi: Maximizing ROAS",
-    titleEn: "2024 Google Ads Guide: Maximizing ROAS",
-    excerpt: "Yapay zeka destekli teklif stratejileri, Performance Max kampanyaları ve dönüşüm optimizasyonu ile reklam bütçenizi en verimli şekilde kullanın.",
-    excerptEn: "Use your ad budget most efficiently with AI-powered bidding strategies, Performance Max campaigns, and conversion optimization.",
-    category: "marketing",
-    categoryLabel: "Pazarlama",
-    categoryLabelEn: "Marketing",
-    image: 61,
-    date: "2024-02-28",
-    readTime: "12 dk",
-    readTimeEn: "12 min",
-    author: "Zeynep Kaya",
-    authorRole: "Pazarlama Müdürü",
-    authorRoleEn: "Marketing Manager",
-    featured: true,
-  },
-  {
-    slug: "instagram-algoritmasi-2024",
-    title: "Instagram Algoritması 2024: İçerik Stratejinizi Güncelleyin",
-    titleEn: "Instagram Algorithm 2024: Update Your Content Strategy",
-    excerpt: "Reels önceliklendirmesi, etkileşim sinyalleri ve keşfet sekmesinde görünürlük için güncel algoritma faktörlerini öğrenin.",
-    excerptEn: "Learn current algorithm factors for Reels prioritization, engagement signals, and Explore tab visibility.",
-    category: "social",
-    categoryLabel: "Sosyal Medya",
-    categoryLabelEn: "Social Media",
-    image: 62,
-    date: "2024-02-25",
-    readTime: "6 dk",
-    readTimeEn: "6 min",
-    author: "Elif Demir",
-    authorRole: "Sosyal Medya Uzmanı",
-    authorRoleEn: "Social Media Specialist",
-    featured: true,
-  },
-  {
-    slug: "microservices-vs-monolith",
-    title: "Microservices vs Monolith: Hangisi Sizin İçin Doğru?",
-    titleEn: "Microservices vs Monolith: Which is Right for You?",
-    excerpt: "Ölçeklenebilirlik, bakım kolaylığı ve geliştirme hızı açısından iki mimari yaklaşımın detaylı karşılaştırması.",
-    excerptEn: "Detailed comparison of two architectural approaches in terms of scalability, maintenance ease, and development speed.",
-    category: "software",
-    categoryLabel: "Yazılım",
-    categoryLabelEn: "Software",
-    image: 63,
-    date: "2024-02-20",
-    readTime: "10 dk",
-    readTimeEn: "10 min",
-    author: "Ahmet Çelebi",
-    authorRole: "Teknik Direktör",
-    authorRoleEn: "Technical Director",
-  },
-  {
-    slug: "seo-core-web-vitals",
-    title: "Core Web Vitals ve SEO: Sayfa Hızınızı Optimize Edin",
-    titleEn: "Core Web Vitals and SEO: Optimize Your Page Speed",
-    excerpt: "LCP, FID ve CLS metriklerini anlama ve Google sıralamalarında üst sıralara çıkmak için teknik optimizasyonlar.",
-    excerptEn: "Understanding LCP, FID, and CLS metrics and technical optimizations to rank higher in Google rankings.",
-    category: "marketing",
-    categoryLabel: "Pazarlama",
-    categoryLabelEn: "Marketing",
-    image: 64,
-    date: "2024-02-18",
-    readTime: "9 dk",
-    readTimeEn: "9 min",
-    author: "Mehmet Yılmaz",
-    authorRole: "SEO Uzmanı",
-    authorRoleEn: "SEO Specialist",
-  },
-  {
-    slug: "tiktok-trendleri-2024",
-    title: "TikTok Trendleri 2024: Viral Olmak İçin İpuçları",
-    titleEn: "TikTok Trends 2024: Tips for Going Viral",
-    excerpt: "Ses trendleri, formatlar ve içerik stratejileri ile TikTok'ta organik büyüme sağlamanın yolları.",
-    excerptEn: "Ways to achieve organic growth on TikTok with sound trends, formats, and content strategies.",
-    category: "social",
-    categoryLabel: "Sosyal Medya",
-    categoryLabelEn: "Social Media",
-    image: 65,
-    date: "2024-02-15",
-    readTime: "7 dk",
-    readTimeEn: "7 min",
-    author: "Elif Demir",
-    authorRole: "Sosyal Medya Uzmanı",
-    authorRoleEn: "Social Media Specialist",
-  },
-  {
-    slug: "ai-uygulama-gelistirme",
-    title: "AI Entegrasyonu ile Uygulama Geliştirme",
-    titleEn: "Application Development with AI Integration",
-    excerpt: "OpenAI API, LangChain ve vector database kullanarak akıllı uygulamalar nasıl geliştirilir? Pratik örnekler ve best practices.",
-    excerptEn: "How to develop intelligent applications using OpenAI API, LangChain, and vector databases? Practical examples and best practices.",
-    category: "technology",
-    categoryLabel: "Teknoloji",
-    categoryLabelEn: "Technology",
-    image: 66,
-    date: "2024-02-12",
-    readTime: "11 dk",
-    readTimeEn: "11 min",
-    author: "Ahmet Çelebi",
-    authorRole: "Teknik Direktör",
-    authorRoleEn: "Technical Director",
-  },
-  {
-    slug: "dijital-pazarlama-stratejisi",
-    title: "2024 Dijital Pazarlama Stratejisi Oluşturma",
-    titleEn: "Building a 2024 Digital Marketing Strategy",
-    excerpt: "Omni-channel yaklaşım, attribution modellemesi ve veri odaklı karar alma ile kapsamlı bir pazarlama planı oluşturun.",
-    excerptEn: "Create a comprehensive marketing plan with omni-channel approach, attribution modeling, and data-driven decision making.",
-    category: "strategy",
-    categoryLabel: "İş Stratejisi",
-    categoryLabelEn: "Business Strategy",
-    image: 67,
-    date: "2024-02-10",
-    readTime: "13 dk",
-    readTimeEn: "13 min",
-    author: "Zeynep Kaya",
-    authorRole: "Pazarlama Müdürü",
-    authorRoleEn: "Marketing Manager",
-  },
-  {
-    slug: "react-server-components",
-    title: "React Server Components: Derinlemesine İnceleme",
-    titleEn: "React Server Components: Deep Dive",
-    excerpt: "Server Components vs Client Components, hydration ve bundle size optimizasyonu üzerine teknik bir analiz.",
-    excerptEn: "A technical analysis on Server Components vs Client Components, hydration, and bundle size optimization.",
-    category: "software",
-    categoryLabel: "Yazılım",
-    categoryLabelEn: "Software",
-    image: 68,
-    date: "2024-02-08",
-    readTime: "9 dk",
-    readTimeEn: "9 min",
-    author: "Can Şahin",
-    authorRole: "Senior Developer",
-    authorRoleEn: "Senior Developer",
-  },
-  {
-    slug: "linkedin-organik-büyüme",
-    title: "LinkedIn'de Organik Büyüme: B2B Pazarlama Rehberi",
-    titleEn: "Organic Growth on LinkedIn: B2B Marketing Guide",
-    excerpt: "Kişisel marka, thought leadership ve şirket sayfası yönetimi ile LinkedIn'de etkili B2B pazarlama stratejileri.",
-    excerptEn: "Effective B2B marketing strategies on LinkedIn with personal branding, thought leadership, and company page management.",
-    category: "social",
-    categoryLabel: "Sosyal Medya",
-    categoryLabelEn: "Social Media",
-    image: 69,
-    date: "2024-02-05",
-    readTime: "8 dk",
-    readTimeEn: "8 min",
-    author: "Zeynep Kaya",
-    authorRole: "Pazarlama Müdürü",
-    authorRoleEn: "Marketing Manager",
-  },
-  {
-    slug: "web-accessibility",
-    title: "Web Erişilebilirliği: WCAG 2.2 ve Uygulamalar",
-    titleEn: "Web Accessibility: WCAG 2.2 and Implementations",
-    excerpt: "Kapsayıcı web deneyimleri oluşturma, accessibility testing ve hukuki gereklilikler hakkında kapsamlı rehber.",
-    excerptEn: "Comprehensive guide on creating inclusive web experiences, accessibility testing, and legal requirements.",
-    category: "software",
-    categoryLabel: "Yazılım",
-    categoryLabelEn: "Software",
-    image: 70,
-    date: "2024-02-01",
-    readTime: "10 dk",
-    readTimeEn: "10 min",
-    author: "Ayşe Korkmaz",
-    authorRole: "Frontend Developer",
-    authorRoleEn: "Frontend Developer",
-  },
-  {
-    slug: "meta-ads-optimizasyon",
-    title: "Meta Ads Optimizasyonu: Creative ve Audience Stratejileri",
-    titleEn: "Meta Ads Optimization: Creative and Audience Strategies",
-    excerpt: "A/B testleri, lookalike audience'lar ve dynamic creative ile Meta Ads performansınızı artırın.",
-    excerptEn: "Improve your Meta Ads performance with A/B testing, lookalike audiences, and dynamic creative.",
-    category: "marketing",
-    categoryLabel: "Pazarlama",
-    categoryLabelEn: "Marketing",
-    image: 71,
-    date: "2024-01-28",
-    readTime: "11 dk",
-    readTimeEn: "11 min",
-    author: "Zeynep Kaya",
-    authorRole: "Pazarlama Müdürü",
-    authorRoleEn: "Marketing Manager",
-  },
-];
+type Category = "all" | "software" | "marketing" | "social" | "technology" | "strategy" | "ecommerce";
 
 const categories: { key: Category; label: string; labelEn: string }[] = [
   { key: "all", label: "Tümü", labelEn: "All" },
@@ -246,6 +18,7 @@ const categories: { key: Category; label: string; labelEn: string }[] = [
   { key: "social", label: "Sosyal Medya", labelEn: "Social Media" },
   { key: "technology", label: "Teknoloji", labelEn: "Technology" },
   { key: "strategy", label: "İş Stratejisi", labelEn: "Business Strategy" },
+  { key: "ecommerce", label: "E-Ticaret", labelEn: "E-Commerce" },
 ];
 
 const categoryColors: Record<Category, string> = {
@@ -255,6 +28,7 @@ const categoryColors: Record<Category, string> = {
   social: "from-pink-500 to-rose-600",
   technology: "from-emerald-500 to-teal-600",
   strategy: "from-blue-500 to-indigo-600",
+  ecommerce: "from-purple-500 to-violet-600",
 };
 
 export default function Blog({ params }: { params: { locale: string } }) {
