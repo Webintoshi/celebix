@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { blogPosts } from "./[locale]/blog/posts";
 
 export const dynamic = 'force-static';
 
@@ -39,14 +40,6 @@ const pages = [
   { path: "/en/blog", priority: 0.7, changeFrequency: "daily" as const },
 ];
 
-// Blog posts - will be fetched from CMS/database in production
-const blogPosts = [
-  { slug: "e-ticarette-basarili-olmanin-yollari", lastModified: "2025-01-15" },
-  { slug: "seo-optimizasyonu-rehberi", lastModified: "2025-01-10" },
-  { slug: "sosyal-medya-pazarlama-stratejileri", lastModified: "2025-01-05" },
-  { slug: "kurumsal-web-sitesi-olusturma", lastModified: "2025-01-01" },
-];
-
 // Portfolio/Client projects
 const portfolioItems = [
   { slug: "derycraft", lastModified: "2024-12-20" },
@@ -74,13 +67,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   }));
   
-  // Generate sitemap entries for blog posts
+  // Generate sitemap entries for blog posts from posts.ts
   const blogEntries = blogPosts.flatMap((post) => [
     {
       url: `${BASE_URL}/tr/blog/${post.slug}`,
-      lastModified: post.lastModified,
+      lastModified: post.date,
       changeFrequency: "monthly" as const,
-      priority: 0.6,
+      priority: post.featured ? 0.7 : 0.6,
       alternates: {
         languages: {
           tr: `${BASE_URL}/tr/blog/${post.slug}`,
@@ -90,9 +83,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/en/blog/${post.slug}`,
-      lastModified: post.lastModified,
+      lastModified: post.date,
       changeFrequency: "monthly" as const,
-      priority: 0.6,
+      priority: post.featured ? 0.7 : 0.6,
       alternates: {
         languages: {
           tr: `${BASE_URL}/tr/blog/${post.slug}`,
