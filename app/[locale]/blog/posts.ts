@@ -27,10 +27,10 @@ export interface BlogPost {
 export const blogPosts: BlogPost[] = [
   {
     slug: "komisyonsuz-e-ticaret-2025",
-    title: "2025'te Komisyonsuz E-Ticaret: Platform Bağımsızlığının Ekonomik ve Stratejik Avantajları",
-    titleEn: "Commission-Free E-Commerce in 2025: Economic and Strategic Advantages of Platform Independence",
-    excerpt: "Trendyol, Amazon ve Hepsiburada'da %12-22 komisyon oranları mı ödüyorsunuz? Celebix'in uzman ekibi, kendi e-ticaret siteniz üzerinden komisyonsuz satış yapmanın finansal, operasyonel ve stratejik faydalarını derinlemesine analiz ediyor.",
-    excerptEn: "Paying 12-22% commission on Trendyol, Amazon, and Hepsiburada? Celebix's expert team deeply analyzes the financial, operational, and strategic benefits of commission-free sales through your own e-commerce site.",
+    title: "Komisyonsuz E-Ticaret: 2025 Platform Bağımsızlık Rehberi",
+    titleEn: "Commission-Free E-Commerce: 2025 Platform Independence Guide",
+    excerpt: "Trendyol ve Amazon'da yüksek komisyonlar mı ödüyorsunuz? Kendi sitenizden komisyonsuz satışın maliyet avantajlarını ve stratejilerini keşfedin.",
+    excerptEn: "Paying high commissions on Trendyol and Amazon? Discover cost advantages and strategies for commission-free sales from your own site.",
     category: "ecommerce",
     categoryLabel: "E-Ticaret",
     categoryLabelEn: "E-Commerce",
