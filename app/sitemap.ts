@@ -54,7 +54,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const currentDate = new Date().toISOString();
   
   // Generate sitemap entries for static pages
-  const staticEntries = pages.map((page) => ({
+  const staticEntries: MetadataRoute.Sitemap = pages.map((page) => ({
     url: `${BASE_URL}${page.path}`,
     lastModified: currentDate,
     changeFrequency: page.changeFrequency,
@@ -68,10 +68,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
   
   // Generate sitemap entries for blog posts from posts.ts
-  const blogEntries = blogPosts.flatMap((post) => [
+  const blogEntries: MetadataRoute.Sitemap = blogPosts.flatMap((post) => [
     {
       url: `${BASE_URL}/tr/blog/${post.slug}`,
-      lastModified: post.date,
+      lastModified: new Date(post.date).toISOString(),
       changeFrequency: "monthly" as const,
       priority: post.featured ? 0.7 : 0.6,
       alternates: {
@@ -83,7 +83,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     {
       url: `${BASE_URL}/en/blog/${post.slug}`,
-      lastModified: post.date,
+      lastModified: new Date(post.date).toISOString(),
       changeFrequency: "monthly" as const,
       priority: post.featured ? 0.7 : 0.6,
       alternates: {
@@ -96,18 +96,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]);
   
   // Generate sitemap entries for portfolio items
-  const portfolioEntries = portfolioItems.flatMap((item) => [
+  const portfolioEntries: MetadataRoute.Sitemap = portfolioItems.flatMap((item) => [
     {
       url: `${BASE_URL}/tr/portfoy/${item.slug}`,
-      lastModified: item.lastModified,
+      lastModified: new Date(item.lastModified).toISOString(),
       changeFrequency: "monthly" as const,
       priority: 0.6,
+      alternates: {
+        languages: {
+          tr: `${BASE_URL}/tr/portfoy/${item.slug}`,
+          en: `${BASE_URL}/en/portfoy/${item.slug}`,
+        },
+      },
     },
     {
       url: `${BASE_URL}/en/portfoy/${item.slug}`,
-      lastModified: item.lastModified,
+      lastModified: new Date(item.lastModified).toISOString(),
       changeFrequency: "monthly" as const,
       priority: 0.6,
+      alternates: {
+        languages: {
+          tr: `${BASE_URL}/tr/portfoy/${item.slug}`,
+          en: `${BASE_URL}/en/portfoy/${item.slug}`,
+        },
+      },
     },
   ]);
   
