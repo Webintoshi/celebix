@@ -14,8 +14,6 @@ export default function robots(): MetadataRoute.Robots {
           "/private/",
           "/_next/",
           "/static/",
-          "/*.json$",
-          "/*.xml$",
         ],
       },
       {
@@ -29,6 +27,7 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: "https://celebix.co/sitemap.xml",
+    crawlDelay: 1,
     host: "https://celebix.co",
   };
 }
