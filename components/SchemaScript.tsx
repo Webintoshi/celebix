@@ -407,3 +407,56 @@ export function PortfolioSchema({ name, description, url, image, category }: Por
 
   return <SchemaScript schema={schema} id={`portfolio-schema-${name.toLowerCase().replace(/\s+/g, "-")}`} />;
 }
+
+/**
+ * VideoObject Schema Script - For Video SEO
+ */
+interface VideoSchemaProps {
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  contentUrl?: string;
+  embedUrl?: string;
+  uploadDate: string;
+  duration?: string;
+  views?: number;
+}
+
+export function VideoSchema({
+  name,
+  description,
+  thumbnailUrl,
+  contentUrl,
+  embedUrl,
+  uploadDate,
+  duration,
+  views
+}: VideoSchemaProps) {
+  const schema: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "name": name,
+    "description": description,
+    "thumbnailUrl": thumbnailUrl,
+    "uploadDate": uploadDate,
+    "publisher": {
+      "@type": "Organization",
+      "name": "Celebix",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://celebix.co/Logo/koyu logo.svg"
+      }
+    }
+  };
+
+  if (contentUrl) schema.contentUrl = contentUrl;
+  if (embedUrl) schema.embedUrl = embedUrl;
+  if (duration) schema.duration = duration;
+  if (views) schema.interactionStatistic = {
+    "@type": "InteractionCounter",
+    "interactionType": { "@type": "WatchAction" },
+    "userInteractionCount": views
+  };
+
+  return <SchemaScript schema={schema} id={`video-schema-${name.toLowerCase().replace(/\s+/g, "-")}`} />;
+}

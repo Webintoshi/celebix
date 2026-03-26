@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { OrganizationSchema, BreadcrumbSchema, FAQSchema } from "@/components/SchemaScript";
+import { OrganizationSchema, BreadcrumbSchema, FAQSchema, VideoSchema } from "@/components/SchemaScript";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
@@ -86,11 +86,26 @@ export default function VideoMarketingLayout({
     },
   ];
 
+  // Video Schema for featured video
+  const videoSchemaData = {
+    name: isTr ? "E-Ticaret Video Pazarlama Rehberi 2026" : "E-Commerce Video Marketing Guide 2026",
+    description: isTr 
+      ? "YouTube SEO ve video içerik stratejileri rehberi"
+      : "YouTube SEO and video content strategies guide",
+    thumbnailUrl: "https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg",
+    contentUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    embedUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+    uploadDate: "2026-03-15",
+    duration: "PT12M34S",
+    views: 15000,
+  };
+
   return (
     <>
       <OrganizationSchema />
       <BreadcrumbSchema items={breadcrumbItems} />
       <FAQSchema faqs={faqData} />
+      <VideoSchema {...videoSchemaData} />
       {children}
     </>
   );

@@ -11,12 +11,14 @@ import {
   Target,
   ArrowRight,
   Check,
-  BarChart3
+  BarChart3,
+  Youtube
 } from "lucide-react";
 import Link from "next/link";
 import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
 import VideoMarketingVisual from "@/components/landing-visuals/VideoMarketingVisual";
+import YouTubeVideo, { VideoCard } from "@/components/YouTubeVideo";
 
 const stats = [
   { value: "%84", label: "Satın Almadan Önce Video İzliyor", labelEn: "Watch Video Before Purchase" },
@@ -297,6 +299,100 @@ export default function VideoMarketingPage({ params }: { params: { locale: strin
                   </p>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Video Showcase Section */}
+        <section className="py-20 px-4 sm:px-6 lg:px-8 bg-light-100">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-100 text-red-600 text-sm font-medium mb-4">
+                <Youtube size={16} />
+                {isTr ? "Örnek Çalışmalar" : "Sample Works"}
+              </span>
+              <h2 className="font-display text-3xl font-bold text-dark-900 mb-4">
+                {isTr ? "Video Pazarlama Örnekleri" : "Video Marketing Examples"}
+              </h2>
+              <p className="text-dark-600 max-w-2xl mx-auto">
+                {isTr 
+                  ? "Müşterilerimiz için hazırladığımız örnek video içerikleri. YouTube SEO uyumlu, yüksek etkileşimli videolar."
+                  : "Sample video content we prepared for our clients. YouTube SEO compatible, high engagement videos."
+                }
+              </p>
+            </motion.div>
+
+            {/* Featured Video */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-12"
+              itemScope
+              itemType="https://schema.org/VideoObject"
+            >
+              <meta itemProp="name" content={isTr ? "E-Ticaret Video Pazarlama Rehberi" : "E-Commerce Video Marketing Guide"} />
+              <meta itemProp="description" content={isTr ? "2026 E-Ticaret Video Pazarlama Stratejileri" : "2026 E-Commerce Video Marketing Strategies"} />
+              <meta itemProp="thumbnailUrl" content="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" />
+              <meta itemProp="uploadDate" content="2026-03-15" />
+              <YouTubeVideo
+                videoId="dQw4w9WgXcQ"
+                title={isTr ? "E-Ticaret Video Pazarlama Rehberi 2026" : "E-Commerce Video Marketing Guide 2026"}
+                description={isTr ? "YouTube SEO ve video içerik stratejileri" : "YouTube SEO and video content strategies"}
+                duration="12:34"
+                className="shadow-2xl shadow-dark-900/10"
+              />
+            </motion.div>
+
+            {/* Video Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
+              >
+                <VideoCard
+                  videoId="dQw4w9WgXcQ"
+                  title={isTr ? "Instagram Reels İçerik Stratejisi" : "Instagram Reels Content Strategy"}
+                  duration="8:45"
+                  views="12K"
+                  publishedAt={isTr ? "2 hafta önce" : "2 weeks ago"}
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                <VideoCard
+                  videoId="dQw4w9WgXcQ"
+                  title={isTr ? "TikTok Viral İçerik İpuçları" : "TikTok Viral Content Tips"}
+                  duration="6:20"
+                  views="8.5K"
+                  publishedAt={isTr ? "1 ay önce" : "1 month ago"}
+                />
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+              >
+                <VideoCard
+                  videoId="dQw4w9WgXcQ"
+                  title={isTr ? "YouTube SEO Optimizasyonu" : "YouTube SEO Optimization"}
+                  duration="15:10"
+                  views="24K"
+                  publishedAt={isTr ? "3 hafta önce" : "3 weeks ago"}
+                />
+              </motion.div>
             </div>
           </div>
         </section>
