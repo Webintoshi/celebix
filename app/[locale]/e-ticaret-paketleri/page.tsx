@@ -987,6 +987,99 @@ export default function ETicaretPaketleri({ params }: { params: { locale: string
           </div>
         </section>
 
+        {/* Internal Linking - Blog Resources */}
+        <section className="py-16 bg-light-100">
+          <div className="container-max mx-auto px-6 lg:px-16">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="text-center mb-12">
+                <h2 className="font-display text-2xl lg:text-3xl text-dark-900 mb-4">
+                  {isTr ? "Blog'dan E-Ticaret Rehberleri" : "E-Commerce Guides from Our Blog"}
+                </h2>
+                <p className="text-dark-900/60 max-w-2xl mx-auto">
+                  {isTr 
+                    ? "E-ticaret dünyasında başarılı olmanız için hazırladığımız kapsamlı kaynaklar."
+                    : "Comprehensive resources we prepared for your success in the e-commerce world."}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Link href={`/${locale}/blog/e-ticaret-rehberi-2026`} className="group">
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    className="glass-card rounded-2xl p-6 h-full hover:shadow-lg transition-all"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center mb-4">
+                      <ShoppingCart size={24} className="text-white" />
+                    </div>
+                    <h3 className="font-display text-lg text-dark-900 mb-2 group-hover:text-aurora-violet transition-colors">
+                      {isTr ? "E-Ticaret Rehberi 2026" : "E-Commerce Guide 2026"}
+                    </h3>
+                    <p className="text-small text-dark-900/60 mb-4">
+                      {isTr 
+                        ? "Sıfırdan başarıya kapsamlı e-ticaret kurulum rehberi. Platform seçimi, SEO ve pazarlama."
+                        : "Comprehensive e-commerce setup guide from scratch. Platform selection, SEO and marketing."}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-aurora-violet text-sm font-medium">
+                      {isTr ? "Okumaya Devam Et" : "Continue Reading"}
+                      <ArrowRight size={14} />
+                    </span>
+                  </motion.div>
+                </Link>
+
+                <Link href={`/${locale}/blog/komisyonsuz-e-ticaret-2025`} className="group">
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    className="glass-card rounded-2xl p-6 h-full hover:shadow-lg transition-all"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center mb-4">
+                      <CheckCircle size={24} className="text-white" />
+                    </div>
+                    <h3 className="font-display text-lg text-dark-900 mb-2 group-hover:text-aurora-violet transition-colors">
+                      {isTr ? "Komisyonsuz E-Ticaret" : "Commission-Free E-Commerce"}
+                    </h3>
+                    <p className="text-small text-dark-900/60 mb-4">
+                      {isTr 
+                        ? "Trendyol ve Amazon komisyonlarından kurtulun. Kendi markanızı büyütün."
+                        : "Get rid of Trendyol and Amazon commissions. Grow your own brand."}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-aurora-violet text-sm font-medium">
+                      {isTr ? "Okumaya Devam Et" : "Continue Reading"}
+                      <ArrowRight size={14} />
+                    </span>
+                  </motion.div>
+                </Link>
+
+                <Link href={`/${locale}/blog/seo-trendleri-2025`} className="group">
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    className="glass-card rounded-2xl p-6 h-full hover:shadow-lg transition-all"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mb-4">
+                      <Search size={24} className="text-white" />
+                    </div>
+                    <h3 className="font-display text-lg text-dark-900 mb-2 group-hover:text-aurora-violet transition-colors">
+                      {isTr ? "SEO Trendleri 2026" : "SEO Trends 2026"}
+                    </h3>
+                    <p className="text-small text-dark-900/60 mb-4">
+                      {isTr 
+                        ? "E-ticaret sitenizi Google'da üst sıralara taşıyacak güncel SEO stratejileri."
+                        : "Current SEO strategies to rank your e-commerce site higher on Google."}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-aurora-violet text-sm font-medium">
+                      {isTr ? "Okumaya Devam Et" : "Continue Reading"}
+                      <ArrowRight size={14} />
+                    </span>
+                  </motion.div>
+                </Link>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section className="py-12 bg-light-100">
           <div className="container-max mx-auto px-6 lg:px-16">

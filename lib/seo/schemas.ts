@@ -255,18 +255,6 @@ export const portfolioSchema = (project: {
   }
 });
 
-// BreadcrumbList Schema
-export const breadcrumbSchema = (items: { name: string; url: string }[]) => ({
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": items.map((item, index) => ({
-    "@type": "ListItem",
-    "position": index + 1,
-    "name": item.name,
-    "item": item.url
-  }))
-});
-
 // FAQPage Schema
 export const faqSchema = (faqs: { question: string; answer: string }[]) => ({
   "@context": "https://schema.org",
@@ -306,6 +294,55 @@ export const reviewSchema = (review: {
     "@type": "Organization",
     "name": review.itemReviewed
   }
+});
+
+// BreadcrumbList Schema
+export const breadcrumbSchema = (items: { name: string; url: string }[]) => ({
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": items.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.name,
+    "item": item.url
+  }))
+});
+
+// BlogPosting Schema for articles
+export const blogPostingSchema = (post: {
+  title: string;
+  description: string;
+  url: string;
+  image: string;
+  datePublished: string;
+  dateModified?: string;
+  author: string;
+  keywords: string[];
+}) => ({
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": post.url
+  },
+  "headline": post.title,
+  "description": post.description,
+  "image": post.image,
+  "author": {
+    "@type": "Person",
+    "name": post.author
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Celebix",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://celebix.co/Logo/koyu logo.svg"
+    }
+  },
+  "datePublished": post.datePublished,
+  "dateModified": post.dateModified || post.datePublished,
+  "keywords": post.keywords.join(", ")
 });
 
 // Helper function to inject schema

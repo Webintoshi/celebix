@@ -99,12 +99,15 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     notFound();
   }
   
+  const isTr = locale === "tr";
+  const postUrl = `https://celebix.co/${locale}/blog/${slug}`;
+  
   // JSON-LD Schema for BlogPosting
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: locale === "tr" ? post.title : post.titleEn,
-    description: locale === "tr" ? post.excerpt : post.excerptEn,
+    headline: isTr ? post.title : post.titleEn,
+    description: isTr ? post.excerpt : post.excerptEn,
     image: `https://picsum.photos/seed/${post.image}/1200/630`,
     datePublished: post.date,
     dateModified: post.date,
@@ -123,11 +126,37 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://celebix.co/${locale}/blog/${slug}`,
+      "@id": postUrl,
     },
-    keywords: (locale === "tr" ? post.keywords : post.keywordsEn).join(", "),
-    articleSection: locale === "tr" ? post.categoryLabel : post.categoryLabelEn,
-    inLanguage: locale === "tr" ? "tr-TR" : "en-US",
+    keywords: (isTr ? post.keywords : post.keywordsEn).join(", "),
+    articleSection: isTr ? post.categoryLabel : post.categoryLabelEn,
+    inLanguage: isTr ? "tr-TR" : "en-US",
+  };
+  
+  // Breadcrumb Schema for Blog Post
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: isTr ? "Ana Sayfa" : "Home",
+        item: "https://celebix.co",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: isTr ? "Blog" : "Blog",
+        item: `https://celebix.co/${locale}/blog`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: isTr ? post.title : post.titleEn,
+        item: postUrl,
+      },
+    ],
   };
   
   return (
@@ -135,6 +164,10 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
       <BlogPostClient locale={locale} slug={slug} post={post} />
     </>

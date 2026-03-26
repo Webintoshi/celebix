@@ -92,6 +92,48 @@
   }
 }
 
+/* Core Web Vitals Optimizations */
+@layer base {
+  /* Content visibility for off-screen sections - improves LCP */
+  .content-visibility-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+  }
+  
+  /* Containment for complex components - reduces layout shifts */
+  .contain-layout {
+    contain: layout style;
+  }
+  
+  /* Optimize rendering for animations */
+  .optimize-gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+  
+  /* Prevent layout shifts from images */
+  .image-aspect-ratio {
+    aspect-ratio: attr(width) / attr(height);
+  }
+  
+  /* Preload critical above-fold images */
+  .preload-critical {
+    content-visibility: visible;
+  }
+}
+
+/* Respect user motion preferences - Accessibility & Performance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 @layer components {
   .text-gradient {
     @apply bg-clip-text text-transparent;

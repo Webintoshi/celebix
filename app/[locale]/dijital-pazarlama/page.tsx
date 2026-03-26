@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Check, Megaphone, Target, TrendingUp, Search, FileText } from "lucide-react";
+import { ArrowRight, Check, Megaphone, Target, TrendingUp, Search, FileText, Mail } from "lucide-react";
 import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
 import MarketingHeroVisual from "@/components/MarketingHeroVisual";
@@ -276,6 +276,99 @@ export default function DigitalMarketing({ params }: { params: { locale: string 
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Internal Linking - Blog Resources */}
+        <section className="py-16 bg-light-100">
+          <div className="container-max mx-auto px-6 lg:px-16">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="text-center mb-12">
+                <h2 className="font-display text-2xl lg:text-3xl text-dark-900 mb-4">
+                  {isTr ? "Blog'dan Pazarlama Rehberleri" : "Marketing Guides from Our Blog"}
+                </h2>
+                <p className="text-dark-900/60 max-w-2xl mx-auto">
+                  {isTr 
+                    ? "Dijital pazarlama dünyasında başarılı olmanız için uzman rehberlerimiz."
+                    : "Our expert guides for your success in the digital marketing world."}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Link href={`/${locale}/blog/dijital-pazarlama-stratejileri-2026`} className="group">
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    className="glass-card rounded-2xl p-6 h-full hover:shadow-lg transition-all"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-amber-600 flex items-center justify-center mb-4">
+                      <TrendingUp size={24} className="text-white" />
+                    </div>
+                    <h3 className="font-display text-lg text-dark-900 mb-2 group-hover:text-orange-500 transition-colors">
+                      {isTr ? "Dijital Pazarlama Stratejileri 2026" : "Digital Marketing Strategies 2026"}
+                    </h3>
+                    <p className="text-small text-dark-900/60 mb-4">
+                      {isTr 
+                        ? "KOBİ'ler için SEO, Google Ads, sosyal medya ve e-posta pazarlama rehberi."
+                        : "SEO, Google Ads, social media and email marketing guide for SMEs."}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-orange-500 text-sm font-medium">
+                      {isTr ? "Okumaya Devam Et" : "Continue Reading"}
+                      <ArrowRight size={14} />
+                    </span>
+                  </motion.div>
+                </Link>
+
+                <Link href={`/${locale}/blog/google-ads-para-tuketmeden-donusum`} className="group">
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    className="glass-card rounded-2xl p-6 h-full hover:shadow-lg transition-all"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mb-4">
+                      <Target size={24} className="text-white" />
+                    </div>
+                    <h3 className="font-display text-lg text-dark-900 mb-2 group-hover:text-orange-500 transition-colors">
+                      {isTr ? "Google Ads: Bütçe Tüketmeden Dönüşüm" : "Google Ads: Conversions Without Wasting Budget"}
+                    </h3>
+                    <p className="text-small text-dark-900/60 mb-4">
+                      {isTr 
+                        ? "Reklam bütçenizi verimli kullanarak maksimum ROI elde etme stratejileri."
+                        : "Strategies to maximize ROI while using your ad budget efficiently."}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-orange-500 text-sm font-medium">
+                      {isTr ? "Okumaya Devam Et" : "Continue Reading"}
+                      <ArrowRight size={14} />
+                    </span>
+                  </motion.div>
+                </Link>
+
+                <Link href={`/${locale}/blog/eposta-pazarlama-kobi-2026`} className="group">
+                  <motion.div
+                    whileHover={{ y: -4 }}
+                    className="glass-card rounded-2xl p-6 h-full hover:shadow-lg transition-all"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center mb-4">
+                      <Mail size={24} className="text-white" />
+                    </div>
+                    <h3 className="font-display text-lg text-dark-900 mb-2 group-hover:text-orange-500 transition-colors">
+                      {isTr ? "E-posta Pazarlama Rehberi" : "Email Marketing Guide"}
+                    </h3>
+                    <p className="text-small text-dark-900/60 mb-4">
+                      {isTr 
+                        ? "KOBİ'ler için e-posta pazarlama stratejileri ve otomasyon ipuçları."
+                        : "Email marketing strategies and automation tips for SMEs."}
+                    </p>
+                    <span className="inline-flex items-center gap-1 text-orange-500 text-sm font-medium">
+                      {isTr ? "Okumaya Devam Et" : "Continue Reading"}
+                      <ArrowRight size={14} />
+                    </span>
+                  </motion.div>
+                </Link>
+              </div>
+            </motion.div>
           </div>
         </section>
 
