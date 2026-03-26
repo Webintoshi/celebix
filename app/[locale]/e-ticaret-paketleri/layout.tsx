@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { OrganizationSchema, BreadcrumbSchema, EcommerceProductSchema } from "@/components/SchemaScript";
+import { OrganizationSchema, BreadcrumbSchema, EcommerceProductSchema, FAQSchema } from "@/components/SchemaScript";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
@@ -49,11 +49,39 @@ export default function ETicaretLayout({
     { name: isTr ? "E-Ticaret Paketleri" : "E-Commerce Packages", url: `/${locale}/e-ticaret-paketleri` },
   ];
 
+  const faqData = [
+    {
+      question: isTr ? "E-ticaret paketleri ne kadar?" : "How much are e-commerce packages?",
+      answer: isTr 
+        ? "Yıllık 19.000₺'den başlayan fiyatlarla. Komisyon yok, gizli ücret yok. Tüm özellikler dahil."
+        : "Starting from 19,000₺ per year. No commission, no hidden fees. All features included.",
+    },
+    {
+      question: isTr ? "Kaç ürün ekleyebilirim?" : "How many products can I add?",
+      answer: isTr
+        ? "Sınırsız! Dilediğiniz kadar ürün, kategori ve varyant ekleyebilirsiniz."
+        : "Unlimited! You can add as many products, categories and variants as you want.",
+    },
+    {
+      question: isTr ? "Ödeme altyapısı hangileri?" : "Which payment infrastructures?",
+      answer: isTr
+        ? "PayTR, iyzico, Stripe ve havale/EFT entegrasyonları hazır. 12 taksit imkanı."
+        : "PayTR, iyzico, Stripe and wire transfer/EFT integrations are ready. 12 installment option.",
+    },
+    {
+      question: isTr ? "Teknik bilgim olmadan kullanabilir miyim?" : "Can I use without technical knowledge?",
+      answer: isTr
+        ? "Kesinlikle! Kullanıcı dostu panel, 7/24 destek ve eğitim videoları ile kolay yönetim."
+        : "Absolutely! Easy management with user-friendly panel, 24/7 support and training videos.",
+    },
+  ];
+
   return (
     <>
       <OrganizationSchema />
       <EcommerceProductSchema />
       <BreadcrumbSchema items={breadcrumbItems} />
+      <FAQSchema faqs={faqData} />
       {children}
     </>
   );

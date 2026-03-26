@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { OrganizationSchema, BreadcrumbSchema, ServiceSchema } from "@/components/SchemaScript";
+import { OrganizationSchema, BreadcrumbSchema, ServiceSchema, FAQSchema } from "@/components/SchemaScript";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
@@ -54,6 +54,33 @@ export default function SoftwareLayout({
     ? "İşletmelere özel web ve mobil uygulama geliştirme hizmetleri"
     : "Custom web and mobile application development services for businesses";
 
+  const faqData = [
+    {
+      question: isTr ? "Proje süresi ne kadar sürer?" : "How long does the project take?",
+      answer: isTr 
+        ? "Proje kapsamına göre 8-24 hafta arası değişir. Detaylı timeline proje başlangıcında sunulur."
+        : "Varies between 8-24 weeks depending on project scope. Detailed timeline provided at project start.",
+    },
+    {
+      question: isTr ? "Hangi teknolojileri kullanıyorsunuz?" : "What technologies do you use?",
+      answer: isTr
+        ? "React, Next.js, Node.js, React Native, Flutter, Python/Django. Modern ve ölçeklenebilir teknolojiler."
+        : "React, Next.js, Node.js, React Native, Flutter, Python/Django. Modern and scalable technologies.",
+    },
+    {
+      question: isTr ? "Kod mülkiyeti bize ait olacak mı?" : "Will we own the code?",
+      answer: isTr
+        ? "Evet, proje tesliminde tüm kaynak kodları ve dokümantasyon size devredilir."
+        : "Yes, all source code and documentation is transferred to you upon project delivery.",
+    },
+    {
+      question: isTr ? "Sonrası destek sağlıyor musunuz?" : "Do you provide post-launch support?",
+      answer: isTr
+        ? "3-6 ay garanti süresi ve sonrasında aylık bakım paketleri sunuyoruz."
+        : "We offer 3-6 month warranty period and monthly maintenance packages afterwards.",
+    },
+  ];
+
   return (
     <>
       <OrganizationSchema />
@@ -63,6 +90,7 @@ export default function SoftwareLayout({
         description={serviceDesc} 
         url={`/${locale}/kurumsal-yazilim`} 
       />
+      <FAQSchema faqs={faqData} />
       {children}
     </>
   );

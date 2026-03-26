@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { OrganizationSchema, BreadcrumbSchema, ServiceSchema } from "@/components/SchemaScript";
+import { OrganizationSchema, BreadcrumbSchema, ServiceSchema, FAQSchema } from "@/components/SchemaScript";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
@@ -54,6 +54,33 @@ export default function MarketingLayout({
     ? "Google Ads, SEO ve performans pazarlama hizmetleri"
     : "Google Ads, SEO and performance marketing services";
 
+  const faqData = [
+    {
+      question: isTr ? "Dijital pazarlama fiyatları ne kadar?" : "How much does digital marketing cost?",
+      answer: isTr 
+        ? "Proje bazlı ve aylık retainer modelleri sunuyoruz. SEO: 5.000-15.000₺/ay, Google Ads: Reklam bütçesi + %15 yönetim ücreti."
+        : "We offer project-based and monthly retainer models. SEO: 5,000-15,000₺/month, Google Ads: Ad budget + 15% management fee.",
+    },
+    {
+      question: isTr ? "SEO sonuçları ne zaman görünür?" : "When will SEO results be visible?",
+      answer: isTr
+        ? "İlk sonuçlar 2-3 ayda, istikrarlı büyüme 6-12 ayda görülür. SEO uzun vadeli bir yatırımdır."
+        : "First results in 2-3 months, steady growth in 6-12 months. SEO is a long-term investment.",
+    },
+    {
+      question: isTr ? "Hangi sektörlere hizmet veriyorsunuz?" : "Which industries do you serve?",
+      answer: isTr
+        ? "E-ticaret, sağlık, eğitim, turizm, B2B hizmetler ve daha fazlası. Her sektöre özel strateji geliştiriyoruz."
+        : "E-commerce, healthcare, education, tourism, B2B services and more. We develop custom strategies for each industry.",
+    },
+    {
+      question: isTr ? "Raporlama nasıl yapılıyor?" : "How is reporting done?",
+      answer: isTr
+        ? "Aylık detaylı raporlar: Google Analytics, Search Console, Ads performansı. Haftalık kısa özetler."
+        : "Monthly detailed reports: Google Analytics, Search Console, Ads performance. Weekly brief summaries.",
+    },
+  ];
+
   return (
     <>
       <OrganizationSchema />
@@ -63,6 +90,7 @@ export default function MarketingLayout({
         description={serviceDesc} 
         url={`/${locale}/dijital-pazarlama`} 
       />
+      <FAQSchema faqs={faqData} />
       {children}
     </>
   );
