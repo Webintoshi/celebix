@@ -37,8 +37,11 @@ export default function Blog({ params }: { params: { locale: string } }) {
   const [activeCategory, setActiveCategory] = useState<Category>("all");
   const [searchQuery, setSearchQuery] = useState("");
 
-  const featuredPosts = blogPosts.filter(p => p.featured);
-  const regularPosts = blogPosts.filter(p => !p.featured);
+  // Sort posts by date (newest first) for all post lists
+  const sortByDate = (a: BlogPost, b: BlogPost) => new Date(b.date).getTime() - new Date(a.date).getTime();
+  
+  const featuredPosts = blogPosts.filter(p => p.featured).sort(sortByDate);
+  const regularPosts = blogPosts.filter(p => !p.featured).sort(sortByDate);
 
   const filteredPosts = regularPosts.filter(post => {
     const matchesCategory = activeCategory === "all" || post.category === activeCategory;
