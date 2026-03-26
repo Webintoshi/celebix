@@ -90,7 +90,7 @@ export default function EmailMarketingLayout({
     <>
       <OrganizationSchema />
       <BreadcrumbSchema items={breadcrumbItems} />
-      <FAQSchema questions={faqData} />
+      <FAQSchema faqs={faqData} />
       {children}
     </>
   );

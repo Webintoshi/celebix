@@ -102,7 +102,7 @@ export default function OrduSoftwareLayout({
       <OrganizationSchema />
       <LocalBusinessSchema />
       <BreadcrumbSchema items={breadcrumbItems} />
-      <FAQSchema questions={faqData} />
+      <FAQSchema faqs={faqData} />
       {children}
     </>
   );
