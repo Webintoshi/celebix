@@ -1,74 +1,247 @@
-# Celebix - Geliştirici Rehberi
+# Celebix - AI Coding Agent Guide
 
-Bu doküman, Celebix web sitesi projesi için geliştirme standartlarını ve SEO sistemini açıklar.
+This document provides comprehensive information about the Celebix project for AI coding agents. Celebix is a bilingual (Turkish/English) corporate website for a software and digital marketing company based in Ordu, Turkey.
 
-## 🏗️ Proje Yapısı
+---
 
-### Teknoloji Stack'i
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Animation**: Framer Motion
-- **i18n**: next-intl v3
+## 🏗️ Project Overview
 
-### Önemli Dizinler
+**Project Name**: Celebix  
+**Domain**: celebix.co  
+**Location**: Altınordu, Ordu, Turkey  
+**Languages**: Turkish (TR) - default, English (EN)  
+
+### Business Focus
+- E-commerce solutions (E-Ticaret)
+- Enterprise software development (Kurumsal Yazılım)
+- Digital marketing services (Dijital Pazarlama)
+- Social media management (Sosyal Medya Yönetimi)
+- SaaS platform: "Tık Profil" (Commission-free e-commerce)
+
+---
+
+## 🛠️ Technology Stack
+
+| Category | Technology | Version |
+|----------|------------|---------|
+| Framework | Next.js | 14.x |
+| Language | TypeScript | 5.x |
+| Styling | Tailwind CSS | 3.x |
+| Animation | Framer Motion | 11.x |
+| Icons | Lucide React | 0.400.x |
+| Maps | Mapbox GL | 3.x |
+| Build Output | Standalone | - |
+
+---
+
+## 📁 Project Structure
 
 ```
 my-app/
-├── app/                      # Next.js App Router
-│   ├── [locale]/            # Dil routeları (tr, en)
-│   │   ├── page.tsx         # Ana sayfa
-│   │   ├── layout.tsx       # Locale layout
-│   │   └── [page]/          # Alt sayfalar
-│   │       ├── layout.tsx   # Sayfa SEO + Schema
-│   │       └── page.tsx     # Sayfa içeriği
-│   ├── sitemap.ts           # Dinamik sitemap
-│   ├── robots.ts            # Robots.txt
-│   └── layout.tsx           # Root layout (metadata)
+├── app/                          # Next.js App Router
+│   ├── [locale]/                # Locale-based routing (tr, en)
+│   │   ├── page.tsx             # Homepage
+│   │   ├── layout.tsx           # Locale layout with viewport config
+│   │   ├── blog/                # Blog pages
+│   │   │   ├── page.tsx         # Blog listing
+│   │   │   ├── posts.ts         # Blog posts data (215KB+)
+│   │   │   └── [slug]/          # Individual blog posts
+│   │   ├── e-ticaret-paketleri/ # E-commerce packages page
+│   │   ├── celebix-saas-platformu/ # SaaS platform page (Tık Profil)
+│   │   ├── kurumsal-yazilim/    # Enterprise software page
+│   │   ├── dijital-pazarlama/   # Digital marketing page
+│   │   ├── sosyal-medya/        # Social media page
+│   │   ├── hakkimizda/          # About page
+│   │   ├── iletisim/            # Contact page
+│   │   ├── portfoy/             # Portfolio page
+│   │   └── ...                  # Other service pages
+│   ├── api/                     # API routes
+│   │   ├── index-now/           # IndexNow submission API
+│   │   ├── indexer/             # Search indexer APIs
+│   │   └── ping/                # Health check endpoint
+│   ├── sitemap.xml/             # Dynamic sitemap generator
+│   ├── rss.xml/                 # RSS feed generator
+│   ├── robots.ts                # Robots.txt configuration
+│   ├── globals.css              # Global styles with Tailwind
+│   ├── layout.tsx               # Root layout with metadata
+│   └── not-found.tsx            # 404 error page
 ├── components/
-│   ├── sections/            # Sayfa bölümleri
-│   ├── SchemaScript.tsx     # JSON-LD schema bileşenleri
-│   └── ui/                  # UI bileşenleri
+│   ├── sections/                # Page section components
+│   │   ├── Navigation.tsx       # Main navigation
+│   │   ├── Hero.tsx             # Homepage hero
+│   │   ├── Products.tsx         # Products/services grid
+│   │   ├── Portfolio.tsx        # Portfolio showcase
+│   │   ├── Process.tsx          # Workflow process
+│   │   ├── Testimonials.tsx     # Customer testimonials
+│   │   ├── CTA.tsx              # Call-to-action section
+│   │   ├── Footer.tsx           # Site footer
+│   │   └── TrustedBy.tsx        # Trust badges
+│   ├── SchemaScript.tsx         # JSON-LD schema components
+│   ├── FloatingButtons.tsx      # Floating action buttons
+│   └── landing-visuals/         # Page-specific visuals
 ├── lib/
-│   └── seo/                 # SEO utilities
-│       ├── schemas.ts       # Schema şablonları
-│       ├── metadata.ts      # Metadata şablonları
-│       └── README.md        # SEO dokümantasyonu
-├── messages/                # i18n mesajları
-└── public/                  # Statik dosyalar
+│   ├── seo/
+│   │   ├── schemas.ts           # JSON-LD schema definitions
+│   │   ├── metadata.ts          # SEO metadata templates
+│   │   └── README.md            # SEO documentation
+│   ├── analytics/               # Analytics utilities
+│   ├── indexer/                 # Search indexing utilities
+│   ├── i18n.ts                  # Locale configuration
+│   └── utils.ts                 # Utility functions (cn, placeholder SVG)
+├── messages/                    # i18n translation files
+│   ├── tr.json                  # Turkish translations
+│   └── en.json                  # English translations
+├── content/                     # Content marketing files
+│   ├── backlink-strategy.md
+│   ├── editorial-calendar-2026.md
+│   └── *.md                     # Various content files
+├── public/                      # Static assets
+│   ├── Logo/                    # Company logos
+│   ├── images/                  # Image assets
+│   ├── favicon.svg
+│   └── og-image.webp            # Open Graph default image
+├── middleware.ts                # Next.js middleware for i18n routing
+├── tailwind.config.ts           # Tailwind configuration with custom theme
+├── next.config.js               # Next.js configuration
+├── tsconfig.json                # TypeScript configuration
+├── postcss.config.js            # PostCSS configuration
+├── blog-post-template.js        # Template for new blog posts
+└── BLOG_STYLE_GUIDE.md          # Blog writing guidelines
 ```
 
 ---
 
-## 🔍 SEO Sistemi
+## 🚀 Build and Development Commands
 
-### Genel Bakış
-Celebix, kapsamlı bir SEO altyapısına sahiptir:
-- ✅ Dinamik metadata (sayfa başına özelleştirilebilir)
-- ✅ JSON-LD Schema markup (Organization, Product, Service, vb.)
-- ✅ Otomatik sitemap.xml üretimi
-- ✅ Robots.txt yapılandırması
-- ✅ Open Graph ve Twitter Card desteği
-- ✅ Canonical URL'ler ve hreflang etiketleri
-- ✅ Breadcrumb schema
+```bash
+# Install dependencies
+npm install
 
-### SEO Dosyaları
+# Start development server (runs on port 2130)
+npm run dev
 
-| Dosya | Açıklama |
-|-------|----------|
-| `lib/seo/schemas.ts` | JSON-LD schema şablonları |
-| `lib/seo/metadata.ts` | Metadata şablonları ve helper'lar |
-| `lib/seo/README.md` | Detaylı SEO rehberi |
-| `components/SchemaScript.tsx` | Schema markup bileşenleri |
-| `app/sitemap.ts` | Dinamik sitemap |
-| `app/robots.ts` | Robots.txt yapılandırması |
+# Create production build
+npm run build
 
-### Sayfa SEO Yapılandırması
+# Start production server
+npm run start
 
-Her sayfa için **layout.tsx** dosyası SEO'yu yönetir:
+# Run ESLint
+npm run lint
+
+# Clear Next.js cache (useful when build issues occur)
+rm -rf .next && npm run build
+```
+
+### Development URLs
+- Turkish: http://localhost:2130/tr
+- English: http://localhost:2130/en
+
+---
+
+## 🎨 Design System (Aurora Theme)
+
+### Color Palette
+
+| Token | Value | Usage |
+|-------|-------|-------|
+| `light-100` | `#F8F8F8` | Background |
+| `light-50` | `#FFFFFF` | Surface/elevated |
+| `dark-900` | `#2A2A2A` | Primary text |
+| `dark-950` | `#1A1A1A` | Headings/emphasis |
+| `aurora-indigo` | `#6366F1` | Primary accent |
+| `aurora-violet` | `#8B5CF6` | Secondary accent |
+| `aurora-magenta` | `#EC4899` | Tertiary accent |
+| `aurora-coral` | `#F97316` | Quaternary accent |
+
+### Typography
+
+| Style | Font | Size |
+|-------|------|------|
+| Display | Outfit (system fallback) | clamp(3.5rem, 8vw, 7rem) |
+| H1 | Outfit | clamp(2.5rem, 5vw, 4rem) |
+| H2 | Outfit | clamp(1.75rem, 3vw, 2.5rem) |
+| Body | Inter | clamp(1rem, 1.1vw, 1.125rem) |
+
+### Custom CSS Classes
+
+```css
+/* Utility classes available */
+.text-gradient           /* Aurora gradient text */
+.glass-card             /* Frosted glass effect */
+.section-padding        /* Responsive section padding */
+.container-max          /* Max-width container (1400px) */
+.hover-lift             /* Hover elevation effect */
+.content-visibility-auto /* Performance optimization */
+```
+
+---
+
+## 🌍 Internationalization (i18n)
+
+### Locale Configuration
+- **Default Locale**: Turkish (`tr`)
+- **Supported Locales**: `tr`, `en`
+- **URL Pattern**: `/:locale/page-path`
+- **Middleware**: Auto-redirects root `/` to `/tr`
+
+### Adding Translations
+
+1. Add translation keys to `messages/tr.json` and `messages/en.json`
+2. Use in components by passing `locale` prop from page params
+3. Content is manually switched based on `locale === "tr"` checks
+
+### Page Structure Pattern
 
 ```tsx
-// app/[locale]/ornek-sayfa/layout.tsx
+// app/[locale]/example-page/page.tsx
+export default function ExamplePage({ params }: { params: { locale: string } }) {
+  const { locale } = params;
+  const isTr = locale === "tr";
+  
+  return (
+    <div>
+      {isTr ? "Türkçe içerik" : "English content"}
+    </div>
+  );
+}
+```
+
+---
+
+## 🔍 SEO System
+
+### Overview
+Comprehensive SEO implementation with:
+- Dynamic metadata per page
+- JSON-LD Schema markup (Organization, Product, Service, etc.)
+- Automatic sitemap.xml generation
+- Robots.txt configuration
+- Open Graph and Twitter Card support
+- Canonical URLs and hreflang tags
+- Breadcrumb schema
+
+### Available Schema Components
+
+Import from `@/components/SchemaScript`:
+
+| Component | Usage |
+|-----------|-------|
+| `OrganizationSchema` | All pages |
+| `LocalBusinessSchema` | Contact page |
+| `WebSiteSchema` | Homepage, Blog |
+| `BreadcrumbSchema` | All pages |
+| `EcommerceProductSchema` | E-commerce page |
+| `SaaSProductSchema` | SaaS platform page |
+| `ServiceSchema` | Service pages |
+| `FAQSchema` | FAQ sections |
+| `BlogPostSchema` | Blog posts |
+| `VideoSchema` | Video content |
+
+### Page SEO Pattern
+
+```tsx
+// app/[locale]/example/layout.tsx
 import { Metadata } from "next";
 import { OrganizationSchema, BreadcrumbSchema } from "@/components/SchemaScript";
 
@@ -81,16 +254,16 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     description: isTr ? "Türkçe açıklama..." : "English description...",
     keywords: isTr ? ["kelime1", "kelime2"] : ["word1", "word2"],
     alternates: {
-      canonical: `/${locale}/ornek-sayfa`,
+      canonical: `/${locale}/example`,
       languages: {
-        tr: "/tr/ornek-sayfa",
-        en: "/en/ornek-sayfa",
+        tr: "/tr/example",
+        en: "/en/example",
       },
     },
     openGraph: {
       title: isTr ? "OG Başlık TR" : "OG Title EN",
       description: isTr ? "OG Açıklama TR" : "OG Description EN",
-      url: `https://celebix.co/${locale}/ornek-sayfa`,
+      url: `https://celebix.co/${locale}/example`,
     },
   };
 }
@@ -103,7 +276,7 @@ export default function Layout({ children, params: { locale } }) {
       <OrganizationSchema />
       <BreadcrumbSchema items={[
         { name: isTr ? "Ana Sayfa" : "Home", url: `/${locale}` },
-        { name: isTr ? "Sayfa Adı" : "Page Name", url: `/${locale}/ornek-sayfa` },
+        { name: isTr ? "Sayfa Adı" : "Page Name", url: `/${locale}/example` },
       ]} />
       {children}
     </>
@@ -111,173 +284,185 @@ export default function Layout({ children, params: { locale } }) {
 }
 ```
 
-### Mevcut Schema Türleri
+### SEO Guidelines
 
-| Bileşen | Kullanım Alanı |
-|---------|---------------|
-| `OrganizationSchema` | Tüm sayfalar |
-| `LocalBusinessSchema` | İletişim sayfası |
-| `WebSiteSchema` | Ana sayfa, Blog |
-| `BreadcrumbSchema` | Tüm sayfalar |
-| `EcommerceProductSchema` | E-ticaret sayfası |
-| `SaaSProductSchema` | SaaS/Tık Profil sayfası |
-| `ServiceSchema` | Hizmet sayfaları |
-| `FAQSchema` | SSS bölümleri |
-| `BlogPostSchema` | Blog yazıları |
+- **Title**: 50-60 characters, include brand `| Celebix` at end
+- **Description**: 150-160 characters, include CTA
+- **Keywords**: 5-10 keywords, include location ("Ordu", "Türkiye")
+- **OG Image**: 1200x630px, stored in `/public/og-image.webp`
 
 ---
 
-## ✍️ Blog Sistemi
+## 📝 Blog System
 
-### Hızlı Başlangıç
+### Blog Post Data Structure
 
-1. **Template'i kopyalayın**:
-```bash
-cp blog-post-template.js yeni-yazi.js
-```
-
-2. **Dosyayı doldurun** ve objeyi kopyalayın
-
-3. **Blog listesine ekleyin** (`app/[locale]/blog/page.tsx`):
 ```typescript
-const blogPosts: BlogPost[] = [
-  // YENİ YAZI - EN ÜSTTE
-  {
-    slug: "ornek-yazi",
-    title: "Örnek Yazı Başlığı",
-    // ... diğer alanlar
-  },
-];
+interface BlogPost {
+  slug: string;                    // Unique URL identifier
+  title: string;                   // Turkish title
+  titleEn: string;                 // English title
+  category: string;                // "software" | "marketing" | "social" | "technology" | "strategy"
+  categoryEn: string;              // Same value
+  categoryLabel: string;           // Turkish label
+  categoryLabelEn: string;         // English label
+  image: number;                   // 60-99 (unique number for image)
+  date: string;                    // YYYY-MM-DD
+  readTime: string;                // "8 dk" (Turkish)
+  readTimeEn: string;              // "8 min" (English)
+  author: string;
+  authorRole: string;
+  authorRoleEn: string;
+  authorBio: string;
+  authorBioEn: string;
+  tags: string[];                  // 3-5 tags
+  content: string[];               // Turkish paragraphs
+  contentEn: string[];             // English paragraphs
+  featured?: boolean;              // Featured post flag
+}
 ```
 
-4. **Blog detay sayfasına ekleyin** (`app/[locale]/blog/[slug]/page.tsx`):
-```typescript
-const blogPostsData: Record<string, BlogPost> = {
-  "ornek-yazi": {
-    // ... tam içerik
-  },
-};
-```
+### Adding a New Blog Post
 
-### Blog SEO
+1. Copy `blog-post-template.js` and fill in content
+2. Add to `app/[locale]/blog/page.tsx` in `blogPosts` array (prepend to top)
+3. Add to `app/[locale]/blog/[slug]/page.tsx` in `blogPostsData` object
+4. Update `app/sitemap.xml/route.ts` if needed
 
-Blog yazıları için `BlogPostSchema` kullanın:
+### Content Formatting
+- Headings: `## Heading Text`
+- Lists: `- Item 1\n- Item 2\n- Item 3`
+- Code blocks: `` ```typescript\n...\n``` ``
 
+---
+
+## ✅ Code Style Guidelines
+
+### TypeScript
+- Strict mode enabled
+- Use explicit types for function parameters
+- Prefer `interface` over `type` for object definitions
+
+### Component Structure
 ```tsx
-import { BlogPostSchema } from "@/components/SchemaScript";
+// 1. Imports
+import { Metadata } from "next";
+import Component from "@/components/Component";
 
-<BlogPostSchema
-  title={post.title}
-  description={post.excerpt}
-  url={`https://celebix.co/${locale}/blog/${post.slug}`}
-  image={post.image}
-  datePublished={post.date}
-  dateModified={post.date}
-  author={post.author}
-  tags={post.tags}
-/>
+// 2. Metadata export (for pages)
+export async function generateMetadata(): Promise<Metadata> { }
+
+// 3. Main component
+export default function PageName({ params }: { params: { locale: string } }) {
+  const { locale } = params;
+  const isTr = locale === "tr";
+  
+  return ();
+}
 ```
 
----
+### Styling Conventions
+- Use Tailwind classes exclusively
+- Custom classes defined in `globals.css` with `@layer`
+- Color tokens from `tailwind.config.ts`
+- Responsive prefixes: `sm:`, `md:`, `lg:`, `xl:`
 
-## 🎨 Tema Standartları
-
-### Renkler
-| Renk | Kod | Kullanım |
-|------|-----|----------|
-| Light Background | `#F8F8F8` | Ana arka plan |
-| Dark Text | `#2A2A2A` | Ana metin |
-| Aurora Indigo | `#6366F1` | Birincil vurgu |
-| Aurora Violet | `#8B5CF6` | İkincil vurgu |
-
-### Tipografi
-- **Başlıklar**: `font-display` (Outfit)
-- **Gövde**: `font-sans` (Inter)
-- **H1**: 3.815rem (61px)
-- **H2**: 2.441rem (39px)
-- **Body**: 1rem (16px)
+### File Naming
+- Components: PascalCase (e.g., `Hero.tsx`)
+- Pages: lowercase with hyphens (e.g., `e-ticaret-paketleri`)
+- Utilities: camelCase (e.g., `utils.ts`)
 
 ---
 
-## ✅ Kalite Kontrol Listesi
+## 🧪 Testing Strategy
 
-### Genel Kontroller
-- [ ] TypeScript hatası yok (`npm run build`)
-- [ ] Tüm sayfalar dil desteği içeriyor (TR/EN)
-- [ ] Responsive tasarım çalışıyor
-- [ ] Görseller optimize edilmiş (WebP)
+Currently, the project does not have automated tests configured. Testing is done via:
 
-### SEO Kontrolleri
-- [ ] Her sayfa için metadata tanımlı
-- [ ] Schema markup doğru yerleştirilmiş
-- [ ] Canonical URL'ler tanımlı
-- [ ] Başlıklar 50-60 karakter
-- [ ] Açıklamalar 150-160 karakter
-- [ ] OG görseli tanımlı (1200x630)
-
-### Blog Kontrolleri
-- [ ] İki dilde içerik tam
-- [ ] `slug` benzersiz
-- [ ] `image` 60-99 arası
-- [ ] `tags` 3-5 adet
-- [ ] `BlogPostSchema` eklenmiş
+1. **Manual Testing**: Check both TR and EN versions
+2. **Build Verification**: `npm run build` must pass without errors
+3. **SEO Validation**: 
+   - Check metadata in page source
+   - Validate schemas with Google's Rich Results Test
+   - Verify sitemap at `/sitemap.xml`
 
 ---
 
-## 🚀 Build ve Test
+## 🔒 Security Considerations
 
+### Environment Variables
+- No sensitive environment variables currently used
+- API keys (if needed) should be added to `.env.local` (not in repo)
+
+### API Routes
+- All API routes in `app/api/` should validate inputs
+- IndexNow API uses hardcoded key in `public/celebix-index-key-2025.txt`
+
+### Content Security
+- Google Tag Manager ID is hardcoded: `GTM-WXQCTF5D`
+- Scripts use `dangerouslySetInnerHTML` for GTM (unavoidable)
+
+---
+
+## 📦 Deployment
+
+### Build Configuration
+- Output mode: `standalone` (for Docker/containerized deployment)
+- Images: Unoptimized (handled by CDN)
+- Trailing slash: Not configured (default)
+
+### Pre-deployment Checklist
+- [ ] `npm run build` completes successfully
+- [ ] No TypeScript errors
+- [ ] Both TR and EN versions render correctly
+- [ ] All SchemaScript components have unique IDs
+- [ ] Sitemap includes new pages
+- [ ] OG images are accessible
+
+---
+
+## 🆘 Troubleshooting
+
+### Common Issues
+
+**Build fails with TypeScript error**
 ```bash
-# Geliştirme sunucusu
-npm run dev
-
-# Production build
-npm run build
-
-# Cache temizleme (hata durumunda)
 rm -rf .next && npm run build
-
-# Erişim adresleri
-http://localhost:2852/tr    # Türkçe
-http://localhost:2852/en    # İngilizce
 ```
 
----
+**Schema not appearing in page source**
+- Ensure `SchemaScript` is imported correctly
+- Check that `id` prop is unique
+- Verify component is in a Server Component (not "use client")
 
-## 📚 Önemli Dokümanlar
+**Metadata not working**
+- `generateMetadata` must be async
+- Ensure params are destructured correctly
+- Layout must be Server Component (no "use client")
 
-| Doküman | Açıklama |
-|---------|----------|
-| `BLOG_STYLE_GUIDE.md` | Blog yazı stil rehberi |
-| `blog-post-template.js` | Blog yazı template'i |
-| `lib/seo/README.md` | Detaylı SEO rehberi |
-
----
-
-## 🆘 Sık Sorulan Sorunlar
-
-### Metadata Çalışmıyor
-- `generateMetadata` fonksiyonu async olmalı
-- `params` doğru alınmalı
-- `layout.tsx` Server Component olmalı ("use client" olmamalı)
-
-### Schema Görünmüyor
-- `SchemaScript` import'u kontrol edin
-- `id` prop'u benzersiz olmalı
-- Sayfa kaynağında `<script type="application/ld+json">` arayın
-
-### Build Hatası
-- TypeScript hatalarını kontrol edin
-- Ekseni modül importlarını kontrol edin
-- `.next` cache dizinini temizleyin
+**i18n redirect not working**
+- Check `middleware.ts` matcher config
+- Verify locale is in URL (`/tr/` or `/en/`)
 
 ---
 
-## 📞 İletişim
+## 📚 Additional Documentation
 
-- **Website**: celebix.co
+| File | Description |
+|------|-------------|
+| `BLOG_STYLE_GUIDE.md` | Blog writing style guide |
+| `lib/seo/README.md` | Detailed SEO documentation |
+| `blog-post-template.js` | Blog post template |
+
+---
+
+## 📞 Contact Information
+
+- **Website**: https://celebix.co
 - **Email**: merhaba@celebix.co
-- **Telefon**: +90 530 209 96 28
+- **Phone**: +90 530 209 96 28
+- **Address**: Altınordu, Ordu, Turkey
 
 ---
 
-**Son Güncelleme**: 2025-03-05
+**Last Updated**: 2025-03-29  
+**Version**: 1.0.0
