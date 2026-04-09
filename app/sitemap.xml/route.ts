@@ -28,15 +28,6 @@ const pages = [
   { path: "/en/blog", priority: 0.7, changeFrequency: "daily" },
 ];
 
-const portfolioItems = [
-  { slug: "derycraft", lastModified: "2024-12-20" },
-  { slug: "okur-otomasyon", lastModified: "2024-12-18" },
-  { slug: "dolka", lastModified: "2024-12-15" },
-  { slug: "guzide", lastModified: "2024-12-10" },
-  { slug: "flowpart", lastModified: "2024-12-05" },
-  { slug: "lilyum-flora", lastModified: "2024-12-01" },
-];
-
 export async function GET() {
   const currentDate = new Date().toISOString();
 
@@ -50,8 +41,10 @@ export async function GET() {
     </url>
   `).join('');
 
-  // Blog posts
-  const blogUrls = blogPosts.flatMap((post) => [
+  // Blog posts - sadece içeriği olan yazılar
+  const blogUrls = blogPosts
+    .filter(post => post.content && post.content.length > 0 && post.slug)
+    .flatMap((post) => [
     `
     <url>
       <loc>${BASE_URL}/tr/blog/${post.slug}</loc>
@@ -70,31 +63,10 @@ export async function GET() {
     `
   ]).join('');
 
-  // Portfolio items
-  const portfolioUrls = portfolioItems.flatMap((item) => [
-    `
-    <url>
-      <loc>${BASE_URL}/tr/portfoy/${item.slug}</loc>
-      <lastmod>${new Date(item.lastModified).toISOString()}</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.6</priority>
-    </url>
-    `,
-    `
-    <url>
-      <loc>${BASE_URL}/en/portfoy/${item.slug}</loc>
-      <lastmod>${new Date(item.lastModified).toISOString()}</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.6</priority>
-    </url>
-    `
-  ]).join('');
-
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   ${staticUrls}
   ${blogUrls}
-  ${portfolioUrls}
 </urlset>`;
 
   return new Response(sitemap, {

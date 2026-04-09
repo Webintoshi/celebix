@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const navLinksTr = [
   { href: "/", label: "Ana Sayfa" },
   { 
-    href: "/urunler", 
+    href: "/e-ticaret-paketleri", 
     label: "Ürünler",
     children: [
       { href: "/e-ticaret-paketleri", label: "Celebix E-Ticaret" },
@@ -27,7 +27,7 @@ const navLinksTr = [
 const navLinksEn = [
   { href: "/", label: "Home" },
   { 
-    href: "/products", 
+    href: "/e-ticaret-paketleri", 
     label: "Products",
     children: [
       { href: "/e-ticaret-paketleri", label: "Celebix E-Commerce" },
@@ -151,7 +151,7 @@ export default function Navigation({ locale }: { locale: string }) {
 
               {/* CTA Button */}
               <Link
-                href={`/${locale}${isTr ? "/iletisim" : "/contact"}`}
+                href={`/${locale}/iletisim`}
                 className="px-5 py-2.5 bg-dark-900 text-light-100 text-small font-medium rounded-full hover:bg-dark-800 transition-colors"
               >
                 {isTr ? "Projeye Başla" : "Start Project"}
@@ -208,7 +208,7 @@ export default function Navigation({ locale }: { locale: string }) {
                   </div>
                 ))}
                 <Link
-                  href={`/${locale}${isTr ? "/iletisim" : "/contact"}`}
+                  href={`/${locale}/iletisim`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="mt-4 px-6 py-4 bg-dark-900 text-light-100 text-center text-body font-medium rounded-full"
                 >
