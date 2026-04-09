@@ -1,6 +1,6 @@
 import { blogPosts } from "../[locale]/blog/posts";
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
 const BASE_URL = "https://celebix.co";
 
@@ -26,52 +26,45 @@ const pages = [
   { path: "/en/portfoy", priority: 0.8, changeFrequency: "weekly" },
   { path: "/tr/blog", priority: 0.7, changeFrequency: "daily" },
   { path: "/en/blog", priority: 0.7, changeFrequency: "daily" },
+  { path: "/tr/gizlilik", priority: 0.3, changeFrequency: "monthly" },
+  { path: "/en/gizlilik", priority: 0.3, changeFrequency: "monthly" },
+  { path: "/tr/kullanim-kosullari", priority: 0.3, changeFrequency: "monthly" },
+  { path: "/en/kullanim-kosullari", priority: 0.3, changeFrequency: "monthly" },
 ];
 
 export async function GET() {
   const currentDate = new Date().toISOString();
 
   // Static pages
-  const staticUrls = pages.map((page) => `
-    <url>
-      <loc>${BASE_URL}${page.path}</loc>
-      <lastmod>${currentDate}</lastmod>
-      <changefreq>${page.changeFrequency}</changefreq>
-      <priority>${page.priority}</priority>
-    </url>
-  `).join('');
+  const staticUrls = pages
+    .map((page) => {
+      return `<url><loc>${BASE_URL}${page.path}</loc><lastmod>${currentDate}</lastmod><changefreq>${page.changeFrequency}</changefreq><priority>${page.priority}</priority></url>`;
+    })
+    .join("\n");
 
   // Blog posts - sadece içeriği olan yazılar
   const blogUrls = blogPosts
-    .filter(post => post.content && post.content.length > 0 && post.slug)
-    .flatMap((post) => [
-    `
-    <url>
-      <loc>${BASE_URL}/tr/blog/${post.slug}</loc>
-      <lastmod>${new Date(post.date).toISOString()}</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>${post.featured ? 0.7 : 0.6}</priority>
-    </url>
-    `,
-    `
-    <url>
-      <loc>${BASE_URL}/en/blog/${post.slug}</loc>
-      <lastmod>${new Date(post.date).toISOString()}</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>${post.featured ? 0.7 : 0.6}</priority>
-    </url>
-    `
-  ]).join('');
+    .filter((post) => post.content && post.content.length > 0 && post.slug)
+    .flatMap((post) => {
+      const lastmod = post.date ? new Date(post.date).toISOString() : currentDate;
+      const priority = post.featured ? 0.7 : 0.6;
+      return [
+        `<url><loc>${BASE_URL}/tr/blog/${post.slug}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>${priority}</priority></url>`,
+        `<url><loc>${BASE_URL}/en/blog/${post.slug}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>${priority}</priority></url>`,
+      ];
+    })
+    .join("\n");
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ${staticUrls}
-  ${blogUrls}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+${staticUrls}
+${blogUrls}
 </urlset>`;
 
   return new Response(sitemap, {
     headers: {
-      'Content-Type': 'application/xml',
+      "Content-Type": "text/xml; charset=utf-8",
+      "Cache-Control": "public, max-age=3600",
     },
   });
 }
