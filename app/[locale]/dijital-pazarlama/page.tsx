@@ -345,7 +345,7 @@ export default function DigitalMarketing({ params }: { params: { locale: string 
                   </motion.div>
                 </Link>
 
-                <Link href={`/${locale}/blog/eposta-pazarlama-kobi-2026`} className="group">
+                <Link href={`/${locale}/blog/eposta-pazarlama-kobi`} className="group">
                   <motion.div
                     whileHover={{ y: -4 }}
                     className="glass-card rounded-2xl p-6 h-full hover:shadow-lg transition-all"
