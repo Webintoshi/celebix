@@ -18,10 +18,10 @@ export default function Footer({ locale }: { locale: string }) {
 
   const quickLinks = [
     { label: isTr ? "Ana Sayfa" : "Home", href: "/" },
-    { label: isTr ? "Hakkımızda" : "About", href: isTr ? "/hakkimizda" : "/about" },
-    { label: isTr ? "Portföy" : "Portfolio", href: isTr ? "/portfoy" : "/portfolio" },
+    { label: isTr ? "Hakkımızda" : "About", href: "/hakkimizda" },
+    { label: isTr ? "Portföy" : "Portfolio", href: "/portfoy" },
     { label: "Blog", href: "/blog" },
-    { label: isTr ? "İletişim" : "Contact", href: isTr ? "/iletisim" : "/contact" },
+    { label: isTr ? "İletişim" : "Contact", href: "/iletisim" },
   ];
 
   const productLinks = [
@@ -219,10 +219,10 @@ export default function Footer({ locale }: { locale: string }) {
             © {currentYear} Celebix. {isTr ? "Tüm hakları saklıdır." : "All rights reserved."}
           </p>
           <div className="flex items-center gap-6">
-            <Link href={`/${locale}${isTr ? "/gizlilik" : "/privacy"}`} className="text-micro text-light-100/40 hover:text-light-100/60 transition-colors">
+            <Link href={`/${locale}/gizlilik`} className="text-micro text-light-100/40 hover:text-light-100/60 transition-colors">
               {isTr ? "Gizlilik Politikası" : "Privacy Policy"}
             </Link>
-            <Link href={`/${locale}${isTr ? "/kullanim-kosullari" : "/terms"}`} className="text-micro text-light-100/40 hover:text-light-100/60 transition-colors">
+            <Link href={`/${locale}/kullanim-kosullari`} className="text-micro text-light-100/40 hover:text-light-100/60 transition-colors">
               {isTr ? "Kullanım Koşulları" : "Terms of Use"}
             </Link>
           </div>
