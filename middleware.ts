@@ -1,30 +1,21 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-
-const locales = ["tr", "en"];
-const defaultLocale = "tr";
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
 export function middleware(request: NextRequest) {
-  // Check if there is any supported locale in the pathname
-  const pathname = request.nextUrl.pathname;
-  
-  // Check if the pathname starts with a locale
-  const pathnameStartsWithLocale = locales.some(
-    (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
-  );
+  const host = request.headers.get('host')
+  const url = request.nextUrl.clone()
 
-  if (pathnameStartsWithLocale) {
-    return NextResponse.next();
+  // www.celebix.co -> celebix.co yönlendirmesi
+  if (host === 'www.celebix.co') {
+    url.host = 'celebix.co'
+    return NextResponse.redirect(url, 301)
   }
 
-  // Redirect to default locale if no locale is present
-  const newUrl = new URL(`/${defaultLocale}${pathname}`, request.url);
-  return NextResponse.redirect(newUrl);
+  return NextResponse.next()
 }
 
 export const config = {
   matcher: [
-    // Skip all internal paths (_next, api, favicon, etc)
-    "/((?!api|_next|favicon.ico|.*\\..*).*)",
+    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
-};
+}

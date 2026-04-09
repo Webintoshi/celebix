@@ -70,7 +70,7 @@ export default function Hero({ locale }: { locale: string }) {
             {/* CTAs */}
             <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
               <Link
-                href={`/${locale}${isTr ? "/iletisim" : "/contact"}`}
+                href={`/${locale}/iletisim`}
                 className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-dark-900 text-light-100 text-base font-medium rounded-full hover:bg-dark-800 transition-all duration-300 hover:shadow-lg hover:shadow-dark-900/20"
               >
                 {isTr ? "Projeye Başla" : "Start Project"}
@@ -80,7 +80,7 @@ export default function Hero({ locale }: { locale: string }) {
                 />
               </Link>
               <Link
-                href={`/${locale}${isTr ? "/portfoy" : "/portfolio"}`}
+                href={`/${locale}/portfoy`}
                 className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-transparent text-dark-900 text-base font-medium rounded-full border border-dark-900/20 hover:border-dark-900/40 hover:bg-dark-900/5 transition-all duration-300"
               >
                 {isTr ? "Portföyü Gör" : "View Portfolio"}

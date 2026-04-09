@@ -89,7 +89,7 @@ export default function SocialMedia({ params }: { params: { locale: string } }) 
                 transition={{ duration: 0.6 }}
               >
                 <Link 
-                  href={`/${locale}/urunler`}
+                  href={`/${locale}/e-ticaret-paketleri`}
                   className="inline-flex items-center gap-2 text-small text-dark-900/60 hover:text-dark-900 mb-6"
                 >
                   <ArrowRight size={16} className="rotate-180" />
