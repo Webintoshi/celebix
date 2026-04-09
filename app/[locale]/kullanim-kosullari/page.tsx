@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
   return {
     title: "Kullanım Koşulları | Celebix",
     description: "Celebix web sitesi kullanım koşulları ve hükümleri.",
     robots: {
       index: true,
       follow: true,
+    },
+    alternates: {
+      canonical: `https://celebix.co/${locale}/kullanim-kosullari`,
     },
   };
 }

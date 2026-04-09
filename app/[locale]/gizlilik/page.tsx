@@ -1,12 +1,16 @@
 import { Metadata } from "next";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const { locale } = params;
   return {
     title: "Gizlilik Politikası | Celebix",
     description: "Celebix gizlilik politikası ve KVKK aydınlatma metni. Kişisel verilerinizin korunması hakkında bilgiler.",
     robots: {
       index: true,
       follow: true,
+    },
+    alternates: {
+      canonical: `https://celebix.co/${locale}/gizlilik`,
     },
   };
 }
