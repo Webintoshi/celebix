@@ -31,6 +31,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         : "Our completed projects and client success stories.",
       url: `https://celebix.co/${locale}/portfoy`,
       type: "website",
+      images: [
+        {
+          url: "https://celebix.co/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: isTr ? "Portföy" : "Portfolio",
+        },
+      ],
     },
   };
 }

@@ -31,6 +31,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         : "Google Ads and SEO expertise. Grow your business in the digital world.",
       url: `https://celebix.co/${locale}/dijital-pazarlama`,
       type: "website",
+      images: [
+        {
+          url: "https://celebix.co/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: isTr ? "Dijital Pazarlama Hizmetleri" : "Digital Marketing Services",
+        },
+      ],
     },
   };
 }

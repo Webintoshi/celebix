@@ -31,6 +31,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         : "AI-powered, unlimited product capacity premium e-commerce. 19,000₺/year, no commission!",
       url: `https://celebix.co/${locale}/e-ticaret-paketleri`,
       type: "website",
+      images: [
+        {
+          url: "https://celebix.co/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: isTr ? "Celebix E-Ticaret Platformu" : "Celebix E-Commerce Platform",
+        },
+      ],
     },
   };
 }

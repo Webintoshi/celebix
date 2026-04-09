@@ -31,6 +31,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         : "Get free consultation for your project.",
       url: `https://celebix.co/${locale}/iletisim`,
       type: "website",
+      images: [
+        {
+          url: "https://celebix.co/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: isTr ? "İletişim" : "Contact",
+        },
+      ],
     },
   };
 }

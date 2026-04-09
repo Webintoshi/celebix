@@ -31,6 +31,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         : "The Celebix team and our digital transformation journey.",
       url: `https://celebix.co/${locale}/hakkimizda`,
       type: "website",
+      images: [
+        {
+          url: "https://celebix.co/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: isTr ? "Hakkımızda" : "About Us",
+        },
+      ],
     },
   };
 }

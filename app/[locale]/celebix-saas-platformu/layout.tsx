@@ -31,6 +31,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         : "68 sectors, unlimited products, no commission! Professional e-commerce at 700₺/month fixed price.",
       url: `https://celebix.co/${locale}/celebix-saas-platformu`,
       type: "website",
+      images: [
+        {
+          url: "https://celebix.co/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: "Celebix SaaS",
+        },
+      ],
     },
   };
 }

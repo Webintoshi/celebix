@@ -31,6 +31,14 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         : "Professional social media management for Instagram, Facebook, LinkedIn.",
       url: `https://celebix.co/${locale}/sosyal-medya`,
       type: "website",
+      images: [
+        {
+          url: "https://celebix.co/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: isTr ? "Sosyal Medya Yönetimi" : "Social Media Management",
+        },
+      ],
     },
   };
 }
