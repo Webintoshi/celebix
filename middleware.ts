@@ -7,15 +7,24 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   // www.celebix.co -> celebix.co yönlendirmesi (301 Permanent)
-  if (host === 'www.celebix.co') {
+  if (host?.startsWith('www.')) {
     url.host = 'celebix.co'
     return NextResponse.redirect(url, 301)
   }
 
-  // Root URL / -> /tr/ yönlendirmesi (301 Permanent)
-  // SEO için 307 Temporary yerine 301 Permanent kullan
+  // Root URL / -> /tr yönlendirmesi (301 Permanent)
   if (pathname === '/') {
     url.pathname = '/tr'
+    return NextResponse.redirect(url, 301)
+  }
+
+  // Tailing slash düzeltmesi - /tr/ -> /tr (301 Permanent)
+  if (pathname === '/tr/') {
+    url.pathname = '/tr'
+    return NextResponse.redirect(url, 301)
+  }
+  if (pathname === '/en/') {
+    url.pathname = '/en'
     return NextResponse.redirect(url, 301)
   }
 
@@ -25,6 +34,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/',
-    '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
+    '/tr/:path*',
+    '/en/:path*',
   ],
 }
