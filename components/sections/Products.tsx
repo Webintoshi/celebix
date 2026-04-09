@@ -19,7 +19,7 @@ const productsData = {
       image: 8,
       gradient: "from-aurora-indigo to-aurora-violet",
       span: "lg:col-span-7",
-      href: "/kurumsal-yazilim",
+      href: "/tr/kurumsal-yazilim",
     },
     {
       key: "marketing",
@@ -30,7 +30,7 @@ const productsData = {
       image: 9,
       gradient: "from-aurora-violet to-aurora-magenta",
       span: "lg:col-span-5",
-      href: "/dijital-pazarlama",
+      href: "/tr/dijital-pazarlama",
     },
     {
       key: "social",
@@ -41,7 +41,7 @@ const productsData = {
       image: 10,
       gradient: "from-aurora-magenta to-aurora-coral",
       span: "lg:col-span-12",
-      href: "/sosyal-medya",
+      href: "/tr/sosyal-medya",
     },
   ],
   en: [
@@ -54,7 +54,7 @@ const productsData = {
       image: 8,
       gradient: "from-aurora-indigo to-aurora-violet",
       span: "lg:col-span-7",
-      href: "/kurumsal-yazilim",
+      href: "/tr/kurumsal-yazilim",
     },
     {
       key: "marketing",
@@ -65,7 +65,7 @@ const productsData = {
       image: 9,
       gradient: "from-aurora-violet to-aurora-magenta",
       span: "lg:col-span-5",
-      href: "/dijital-pazarlama",
+      href: "/tr/dijital-pazarlama",
     },
     {
       key: "social",
@@ -76,7 +76,7 @@ const productsData = {
       image: 10,
       gradient: "from-aurora-magenta to-aurora-coral",
       span: "lg:col-span-12",
-      href: "/sosyal-medya",
+      href: "/tr/sosyal-medya",
     },
   ],
 };
