@@ -519,7 +519,7 @@ KOBİ bütçesiyle, akıllı telefonunuzla ve doğru stratejiyle, büyük markal
 ---
 
 📞 **Video Pazarlama Danışmanlığı:** [+90 530 209 96 28](tel:+905302099628)  
-📧 **İletişim:** [merhaba@celebix.co](mailto:merhaba@celebix.co)  
+📧 **İletişim:** [merhaba@celebix.net](mailto:merhaba@celebix.net)
 🎥 **YouTube Kanalımız:** [Celebix TV](https://youtube.com/@celebix) *(örnek)*
 
 ---

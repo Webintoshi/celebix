@@ -683,7 +683,7 @@ Unutmayın:
 
 ---
 
-📧 **E-posta Pazarlama Danışmanlığı:** [merhaba@celebix.co](mailto:merhaba@celebix.co)  
+📧 **E-posta Pazarlama Danışmanlığı:** [merhaba@celebix.net](mailto:merhaba@celebix.net)
 📞 **Telefon:** [+90 530 209 96 28](tel:+905302099628)  
 📬 **Bültenimize Katılın:** [Abone Ol](/tr/abone-ol) *(örnek)*
 

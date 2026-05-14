@@ -367,7 +367,7 @@ Bu proje, Celebix (celebix.net) web sitesinin kapsamlı SEO optimizasyonu ve dij
 - **Google Analytics:** (Giriş bilgileri ayrı tutulur)
 
 ### İletişim
-- **E-posta:** merhaba@celebix.co
+- **E-posta:** merhaba@celebix.net
 - **Telefon:** +90 530 209 96 28
 
 ---

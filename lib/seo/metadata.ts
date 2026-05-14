@@ -8,7 +8,7 @@ export const siteConfig = {
   url: SITE_URL,
   ogImage: absoluteSiteUrl("/images/og-image.jpg"),
   twitter: "@celebix",
-  email: "merhaba@celebix.co",
+  email: "merhaba@celebix.net",
   phone: "+90 530 209 96 28",
   address: {
     city: "Altınordu",

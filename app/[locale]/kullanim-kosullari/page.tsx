@@ -80,8 +80,8 @@ export default function TermsPage({ params }: { params: { locale: string } }) {
           <h2 className="text-2xl font-semibold mt-8 mb-4">8. İletişim</h2>
           <p className="mb-4">
             Kullanım koşulları hakkında sorularınız için{" "}
-            <a href="mailto:merhaba@celebix.co" className="text-aurora-indigo hover:underline">
-              merhaba@celebix.co
+            <a href="mailto:merhaba@celebix.net" className="text-aurora-indigo hover:underline">
+              merhaba@celebix.net
             </a>{" "}
             adresinden bize ulaşabilirsiniz.
           </p>

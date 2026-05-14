@@ -20,7 +20,7 @@ export default function CTA({ locale }: { locale: string }) {
   };
 
   return (
-    <section className="py-12 relative overflow-hidden">
+    <section className="relative w-full overflow-hidden py-12">
       {/* Background - Placeholder_IMG_022 */}
       <div className="absolute inset-0">
         <img
@@ -35,7 +35,7 @@ export default function CTA({ locale }: { locale: string }) {
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-aurora-indigo/30 rounded-full blur-[120px]" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-aurora-magenta/20 rounded-full blur-[120px]" />
 
-      <div className="container-max mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="container-max relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 40 }}

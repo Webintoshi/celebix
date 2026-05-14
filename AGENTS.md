@@ -458,7 +458,7 @@ rm -rf .next && npm run build
 ## 📞 Contact Information
 
 - **Website**: https://celebix.net
-- **Email**: merhaba@celebix.co
+- **Email**: merhaba@celebix.net
 - **Phone**: +90 530 209 96 28
 - **Address**: Altınordu, Ordu, Turkey
 

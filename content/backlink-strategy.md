@@ -60,7 +60,7 @@ Değerlendirmenizi rica ederim.
 Saygılarımla,
 [İsim]
 Celebix - Dijital Pazarlama Uzmanı
-merhaba@celebix.co
+merhaba@celebix.net
 ```
 
 ## C. Sponsorluk ve İşbirlikleri

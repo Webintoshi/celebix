@@ -33,8 +33,8 @@ export default function Footer({ locale }: { locale: string }) {
   ];
 
   return (
-    <footer className="bg-dark-900 text-light-100 pt-20 pb-8 w-full">
-      <div className="w-full px-3 sm:px-4 lg:px-6 xl:px-8">
+    <footer className="w-full bg-dark-900 pt-20 pb-8 text-light-100">
+      <div className="container-max">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Column */}
           <motion.div
@@ -127,7 +127,7 @@ export default function Footer({ locale }: { locale: string }) {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <Mail size={18} className="text-aurora-indigo mt-0.5 flex-shrink-0" />
-                <span className="text-small text-light-100/60">merhaba@celebix.co</span>
+                <span className="text-small text-light-100/60">merhaba@celebix.net</span>
               </li>
               <li className="flex items-start gap-3">
                 <Phone size={18} className="text-aurora-indigo mt-0.5 flex-shrink-0" />

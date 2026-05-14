@@ -79,7 +79,7 @@ export function LocalBusinessSchema() {
     "@id": SITE_URL,
     "url": SITE_URL,
     "telephone": "+90 530 209 96 28",
-    "email": "merhaba@celebix.co",
+    "email": "merhaba@celebix.net",
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "Altınordu",
