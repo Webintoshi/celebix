@@ -22,23 +22,6 @@ const nextConfig = {
       },
     ];
   },
-  
-  async redirects() {
-    return [
-      // WWW yönlendirmesi - www -> non-www
-      {
-        source: '/:path*',
-        has: [
-          {
-            type: 'host',
-            value: 'www.celebix.co',
-          },
-        ],
-        destination: 'https://celebix.co/:path*',
-        permanent: true,
-      },
-    ];
-  },
 };
 
 module.exports = nextConfig;

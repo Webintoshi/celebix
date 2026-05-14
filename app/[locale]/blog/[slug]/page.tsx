@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const title = isTr ? post.title : post.titleEn;
   const description = isTr ? post.excerpt : post.excerptEn;
   const keywords = isTr ? post.keywords : post.keywordsEn;
-  const url = `https://celebix.co/${locale}/blog/${slug}`;
+  const url = `https://celebix.net/${locale}/blog/${slug}`;
   
   return {
     title: `${title} | Celebix`,
@@ -61,8 +61,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     alternates: {
       canonical: url,
       languages: {
-        tr: `https://celebix.co/tr/blog/${slug}`,
-        en: `https://celebix.co/en/blog/${slug}`,
+        tr: `https://celebix.net/tr/blog/${slug}`,
+        en: `https://celebix.net/en/blog/${slug}`,
       },
     },
     robots: {
@@ -100,7 +100,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   }
   
   const isTr = locale === "tr";
-  const postUrl = `https://celebix.co/${locale}/blog/${slug}`;
+  const postUrl = `https://celebix.net/${locale}/blog/${slug}`;
   
   // JSON-LD Schema for BlogPosting
   const jsonLd = {
@@ -114,14 +114,14 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     author: {
       "@type": "Organization",
       name: post.author,
-      url: "https://celebix.co",
+      url: "https://celebix.net",
     },
     publisher: {
       "@type": "Organization",
       name: "Celebix",
       logo: {
         "@type": "ImageObject",
-        url: "https://celebix.co/Logo/Frame%201.svg",
+        url: "https://celebix.net/Logo/Frame%201.svg",
       },
     },
     mainEntityOfPage: {
@@ -142,13 +142,13 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         "@type": "ListItem",
         position: 1,
         name: isTr ? "Ana Sayfa" : "Home",
-        item: "https://celebix.co",
+        item: "https://celebix.net",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: isTr ? "Blog" : "Blog",
-        item: `https://celebix.co/${locale}/blog`,
+        item: `https://celebix.net/${locale}/blog`,
       },
       {
         "@type": "ListItem",

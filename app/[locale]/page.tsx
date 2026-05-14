@@ -48,7 +48,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "Celebix yazılım şirketi olarak e-ticaret, kurumsal yazılım ve dijital pazarlama hizmetleri sunuyoruz."
         : "Celebix software company offers e-commerce, enterprise software and digital marketing services.",
-      url: `https://celebix.co/${locale}`,
+      url: `https://celebix.net/${locale}`,
     },
   };
 }

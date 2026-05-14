@@ -2,6 +2,7 @@
  * SEO Schema Markup Utilities
  * Celebix - JSON-LD Schema Templates
  */
+import { SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
 // Organization Schema
 export const organizationSchema = {
@@ -9,8 +10,8 @@ export const organizationSchema = {
   "@type": "Organization",
   "name": "Celebix",
   "alternateName": "Celebix Digital Agency",
-  "url": "https://celebix.co",
-  "logo": "https://celebix.co/Logo/celebix beyaz logo.svg",
+  "url": SITE_URL,
+  "logo": absoluteSiteUrl("/Logo/celebix beyaz logo.svg"),
   "sameAs": [
     "https://twitter.com/celebix",
     "https://linkedin.com/company/celebix",
@@ -37,10 +38,10 @@ export const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Celebix",
-  "url": "https://celebix.co",
+  "url": SITE_URL,
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://celebix.co/tr/blog?q={search_term_string}",
+    "target": `${SITE_URL}/tr/blog?q={search_term_string}`,
     "query-input": "required name=search_term_string"
   }
 };
@@ -50,8 +51,8 @@ export const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "Celebix",
-  "image": "https://celebix.co/Logo/koyu logo.svg",
-  "url": "https://celebix.co",
+  "image": absoluteSiteUrl("/Logo/koyu logo.svg"),
+  "url": SITE_URL,
   "telephone": "+90 530 209 96 28",
   "email": "merhaba@celebix.co",
   "address": {
@@ -84,7 +85,7 @@ export const ecommerceProductSchema = {
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "Celebix E-Ticaret",
-  "image": "https://celebix.co/images/ecommerce-product.jpg",
+  "image": absoluteSiteUrl("/images/ecommerce-product.jpg"),
   "description": "AI destekli, sınırsız ürün kapasiteli premium e-ticaret platformu",
   "brand": {
     "@type": "Brand",
@@ -92,7 +93,7 @@ export const ecommerceProductSchema = {
   },
   "offers": {
     "@type": "Offer",
-    "url": "https://celebix.co/tr/e-ticaret-paketleri",
+    "url": absoluteSiteUrl("/tr/e-ticaret-paketleri"),
     "price": "19000",
     "priceCurrency": "TRY",
     "priceValidUntil": "2025-12-31",
@@ -114,10 +115,12 @@ export const saasProductSchema = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "Tık Profil - Celebix SaaS",
+  "url": absoluteSiteUrl("/tr/celebix-saas-platformu"),
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web, iOS, Android",
   "offers": {
     "@type": "Offer",
+    "url": absoluteSiteUrl("/tr/celebix-saas-platformu"),
     "price": "700",
     "priceCurrency": "TRY",
     "priceValidUntil": "2025-12-31"
@@ -134,6 +137,7 @@ export const softwareServiceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
   "serviceType": "Kurumsal Yazılım Geliştirme",
+  "url": absoluteSiteUrl("/tr/kurumsal-yazilim"),
   "provider": {
     "@type": "Organization",
     "name": "Celebix"
@@ -169,6 +173,7 @@ export const marketingServiceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
   "serviceType": "Dijital Pazarlama",
+  "url": absoluteSiteUrl("/tr/dijital-pazarlama"),
   "provider": {
     "@type": "Organization",
     "name": "Celebix"
@@ -224,7 +229,7 @@ export const blogPostSchema = (post: {
     "name": "Celebix",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://celebix.co/Logo/celebix beyaz logo.svg"
+      "url": absoluteSiteUrl("/Logo/celebix beyaz logo.svg")
     }
   },
   "keywords": post.tags.join(", "),
@@ -337,7 +342,7 @@ export const blogPostingSchema = (post: {
     "name": "Celebix",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://celebix.co/Logo/koyu logo.svg"
+      "url": absoluteSiteUrl("/Logo/koyu logo.svg")
     }
   },
   "datePublished": post.datePublished,

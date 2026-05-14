@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "2026 video pazarlama stratejileri. YouTube SEO, TikTok, Reels rehberi."
         : "2026 video marketing strategies. YouTube SEO, TikTok, Reels guide.",
-      url: `https://celebix.co/${locale}/video-pazarlama-2026`,
+      url: `https://celebix.net/${locale}/video-pazarlama-2026`,
       type: "article",
       images: [
         {
-          url: "https://celebix.co/og-video-marketing.webp",
+          url: "https://celebix.net/og-video-marketing.webp",
           width: 1200,
           height: 630,
           alt: isTr ? "Video Pazarlama 2026 - Celebix" : "Video Marketing 2026 - Celebix",
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "2026 video pazarlama stratejileri ve rehberi!"
         : "2026 video marketing strategies and guide!",
-      images: ["https://celebix.co/og-video-marketing.webp"],
+      images: ["https://celebix.net/og-video-marketing.webp"],
     },
   };
 }

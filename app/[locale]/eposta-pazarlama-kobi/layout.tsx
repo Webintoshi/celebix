@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "KOBİ'ler için kapsamlı e-posta pazarlama rehberi. Otomasyon, şablonlar, stratejiler."
         : "Comprehensive email marketing guide for SMEs. Automation, templates, strategies.",
-      url: `https://celebix.co/${locale}/eposta-pazarlama-kobi`,
+      url: `https://celebix.net/${locale}/eposta-pazarlama-kobi`,
       type: "article",
       images: [
         {
-          url: "https://celebix.co/og-email-marketing.webp",
+          url: "https://celebix.net/og-email-marketing.webp",
           width: 1200,
           height: 630,
           alt: isTr ? "E-posta Pazarlama Rehberi - Celebix" : "Email Marketing Guide - Celebix",
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "KOBİ'ler için e-posta pazarlama rehberi!"
         : "Email marketing guide for SMEs!",
-      images: ["https://celebix.co/og-email-marketing.webp"],
+      images: ["https://celebix.net/og-email-marketing.webp"],
     },
   };
 }

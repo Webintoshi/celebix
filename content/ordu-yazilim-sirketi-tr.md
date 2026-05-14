@@ -237,7 +237,7 @@ Celebix olarak, Karadeniz Bölgesi'nin dijital dönüşümüne öncülük etmek 
 📍 **Adres:** Akyazı Mahallesi, Altınordu/Ordu  
 📞 **Telefon:** [+90 530 209 96 28](tel:+905302099628)  
 📧 **E-posta:** [merhaba@celebix.co](mailto:merhaba@celebix.co)  
-🌐 **Web:** [celebix.co](/tr)
+🌐 **Web:** [celebix.net](/tr)
 
 ---
 

@@ -8,7 +8,7 @@
 
 ## 📋 PROJE ÖZETİ
 
-Bu proje, Celebix (celebix.co) web sitesinin kapsamlı SEO optimizasyonu ve dijital pazarlama stratejisini içerir. 6 ana aşamada tamamlanmıştır.
+Bu proje, Celebix (celebix.net) web sitesinin kapsamlı SEO optimizasyonu ve dijital pazarlama stratejisini içerir. 6 ana aşamada tamamlanmıştır.
 
 ### Hedefler
 - Organik trafik artışı (Hedef: Aylık 5.000 ziyaretçi)
@@ -356,10 +356,10 @@ Bu proje, Celebix (celebix.co) web sitesinin kapsamlı SEO optimizasyonu ve diji
 ## 📞 ÖNEMLİ BAĞLANTILAR
 
 ### Canlı Site
-- **URL:** https://celebix.co
-- **Blog:** https://celebix.co/tr/blog
-- **Sitemap:** https://celebix.co/sitemap.xml
-- **Robots:** https://celebix.co/robots.txt
+- **URL:** https://celebix.net
+- **Blog:** https://celebix.net/tr/blog
+- **Sitemap:** https://celebix.net/sitemap.xml
+- **Robots:** https://celebix.net/robots.txt
 
 ### Yönetim Paneli
 - **GitHub:** https://github.com/Webintoshi/celebix

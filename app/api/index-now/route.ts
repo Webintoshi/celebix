@@ -4,6 +4,11 @@
  * 
  * Docs: https://www.indexnow.org/documentation
  */
+import {
+  absoluteSiteUrl,
+  isRecognizedSiteHost,
+  normalizeSiteUrl,
+} from "@/lib/site";
 
 export const dynamic = 'force-dynamic';
 
@@ -157,13 +162,15 @@ export async function POST(request: Request) {
     }
     
     // Tek URL veya liste
-    const urlList = Array.isArray(urls) ? urls : [urls];
+    const urlList = (Array.isArray(urls) ? urls : [urls]).map((url) =>
+      normalizeSiteUrl(url)
+    );
     
     // URL validasyonu
     const invalidUrls = urlList.filter(url => {
       try {
         const parsed = new URL(url);
-        return !parsed.hostname.includes('celebix.co');
+        return !isRecognizedSiteHost(parsed.hostname);
       } catch {
         return true;
       }
@@ -215,7 +222,7 @@ export async function GET() {
   return Response.json({
     service: 'IndexNow API',
     description: 'Bing, Yandex ve diğer motorlara anlık index bildirimi',
-    keyLocation: `https://celebix.co/${key}.txt`,
+    keyLocation: absoluteSiteUrl(`/${key}.txt`),
     setup: {
       step1: `${key}.txt dosyasını public dizinine oluştur`,
       step2: `İçeriği sadece key olacak şekilde ayarla: ${key}`,
@@ -223,7 +230,7 @@ export async function GET() {
       step4: 'INDEXNOW_KEY environment variable\'ını ayarla'
     },
     usage: {
-      single: 'POST /api/index-now { "urls": "https://celebix.co/tr/blog/yazi" }',
+      single: `POST /api/index-now { "urls": "${absoluteSiteUrl("/tr/blog/yazi")}" }`,
       bulk: 'POST /api/index-now { "urls": ["url1", "url2", "url3"] }'
     },
     limits: {

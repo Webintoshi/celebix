@@ -1,6 +1,7 @@
 "use client";
 
 import Script from "next/script";
+import { SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
 interface SchemaScriptProps {
   schema: object | object[];
@@ -39,8 +40,8 @@ export function OrganizationSchema() {
     "@type": "Organization",
     "name": "Celebix",
     "alternateName": "Celebix Digital Agency",
-    "url": "https://celebix.co",
-    "logo": "https://celebix.co/Logo/celebix beyaz logo.svg",
+    "url": SITE_URL,
+    "logo": absoluteSiteUrl("/Logo/celebix beyaz logo.svg"),
     "sameAs": [
       "https://twitter.com/celebix",
       "https://linkedin.com/company/celebix",
@@ -74,9 +75,9 @@ export function LocalBusinessSchema() {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "Celebix",
-    "image": "https://celebix.co/Logo/koyu logo.svg",
-    "@id": "https://celebix.co",
-    "url": "https://celebix.co",
+    "image": absoluteSiteUrl("/Logo/koyu logo.svg"),
+    "@id": SITE_URL,
+    "url": SITE_URL,
     "telephone": "+90 530 209 96 28",
     "email": "merhaba@celebix.co",
     "address": {
@@ -114,12 +115,12 @@ export function WebSiteSchema() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "Celebix",
-    "url": "https://celebix.co",
+    "url": SITE_URL,
     "potentialAction": {
       "@type": "SearchAction",
       "target": {
         "@type": "EntryPoint",
-        "urlTemplate": "https://celebix.co/tr/blog?q={search_term_string}"
+        "urlTemplate": `${SITE_URL}/tr/blog?q={search_term_string}`
       },
       "query-input": "required name=search_term_string"
     }
@@ -144,7 +145,7 @@ export function BreadcrumbSchema({ items }: { items: BreadcrumbItem[] }) {
       "@type": "ListItem",
       "position": index + 1,
       "name": item.name,
-      "item": item.url.startsWith("http") ? item.url : `https://celebix.co${item.url}`
+      "item": item.url.startsWith("http") ? item.url : absoluteSiteUrl(item.url)
     }))
   };
 
@@ -160,8 +161,8 @@ export function EcommerceProductSchema() {
     "@type": "Product",
     "name": "Celebix E-Ticaret",
     "image": [
-      "https://celebix.co/images/ecommerce-1.jpg",
-      "https://celebix.co/images/ecommerce-2.jpg"
+      absoluteSiteUrl("/images/ecommerce-1.jpg"),
+      absoluteSiteUrl("/images/ecommerce-2.jpg")
     ],
     "description": "AI destekli, sınırsız ürün kapasiteli premium e-ticaret platformu. Komisyon yok, sınırsız özellik!",
     "brand": {
@@ -170,7 +171,7 @@ export function EcommerceProductSchema() {
     },
     "offers": {
       "@type": "Offer",
-      "url": "https://celebix.co/tr/e-ticaret-paketleri",
+      "url": absoluteSiteUrl("/tr/e-ticaret-paketleri"),
       "price": "19000",
       "priceCurrency": "TRY",
       "priceValidUntil": "2025-12-31",
@@ -228,7 +229,7 @@ export function SaaSProductSchema() {
     ],
     "softwareVersion": "2.0",
     "fileSize": "Cloud-based",
-    "installUrl": "https://celebix.co/tr/celebix-saas-platformu"
+    "installUrl": absoluteSiteUrl("/tr/celebix-saas-platformu")
   };
 
   return <SchemaScript schema={schema} id="saas-product-schema" />;
@@ -258,7 +259,7 @@ export function ServiceSchema({ name, description, url, provider = "Celebix" }: 
       "@type": "Country",
       "name": "Turkey"
     },
-    "url": url.startsWith("http") ? url : `https://celebix.co${url}`
+    "url": url.startsWith("http") ? url : absoluteSiteUrl(url)
   };
 
   return <SchemaScript schema={schema} id={`service-schema-${name.toLowerCase().replace(/\s+/g, "-")}`} />;
@@ -331,7 +332,7 @@ export function BlogPostSchema({
       "name": "Celebix",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://celebix.co/Logo/celebix beyaz logo.svg"
+        "url": absoluteSiteUrl("/Logo/celebix beyaz logo.svg")
       }
     },
     "keywords": tags.join(", "),
@@ -444,7 +445,7 @@ export function VideoSchema({
       "name": "Celebix",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://celebix.co/Logo/koyu logo.svg"
+        "url": absoluteSiteUrl("/Logo/koyu logo.svg")
       }
     }
   };

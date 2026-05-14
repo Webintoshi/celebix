@@ -1,4 +1,5 @@
 import { MetadataRoute } from "next";
+import { SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
 export const dynamic = 'force-static';
 
@@ -26,7 +27,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://celebix.co/sitemap.xml",
-    host: "https://celebix.co",
+    sitemap: absoluteSiteUrl("/sitemap.xml"),
+    host: SITE_URL,
   };
 }

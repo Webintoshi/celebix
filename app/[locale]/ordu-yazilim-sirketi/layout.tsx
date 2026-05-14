@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "Ordu'da profesyonel yazılım hizmetleri. Web, mobil, kurumsal yazılım. %30 uygun fiyat, 7/24 destek."
         : "Professional software services in Ordu. Web, mobile, enterprise software. Affordable prices, 24/7 support.",
-      url: `https://celebix.co/${locale}/ordu-yazilim-sirketi`,
+      url: `https://celebix.net/${locale}/ordu-yazilim-sirketi`,
       type: "website",
       images: [
         {
-          url: "https://celebix.co/og-ordu-software.webp",
+          url: "https://celebix.net/og-ordu-software.webp",
           width: 1200,
           height: 630,
           alt: isTr ? "Ordu Yazılım Şirketi - Celebix" : "Ordu Software Company - Celebix",
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "Ordu'da profesyonel yazılım hizmetleri. %30 uygun fiyat!"
         : "Professional software services in Ordu. Affordable prices!",
-      images: ["https://celebix.co/og-ordu-software.webp"],
+      images: ["https://celebix.net/og-ordu-software.webp"],
     },
     robots: {
       index: true,

@@ -2,15 +2,15 @@
  * RSS Feed Generator
  * Blog yazıları için otomatik RSS beslemesi
  * 
- * URL: https://celebix.co/rss.xml
+ * URL: https://celebix.net/rss.xml
  * Otomatik ping: Google FeedBurner, Flipboard, Feedly vb.
  */
 
 import { blogPosts } from "../[locale]/blog/posts";
+import { SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
 export const dynamic = 'force-static';
 
-const SITE_URL = 'https://celebix.co';
 const SITE_NAME = 'Celebix Blog';
 const SITE_DESCRIPTION = 'Yazılım, dijital pazarlama ve sosyal medya dünyasından en güncel bilgiler, ipuçları ve stratejiler.';
 
@@ -96,7 +96,7 @@ export async function GET() {
   <sy:updateFrequency>1</sy:updateFrequency>
   <generator>Celebix RSS Generator</generator>
   <image>
-    <url>${SITE_URL}/Logo/Frame%201.svg</url>
+    <url>${absoluteSiteUrl("/Logo/Frame%201.svg")}</url>
     <title>${SITE_NAME}</title>
     <link>${SITE_URL}/blog</link>
     <width>144</width>

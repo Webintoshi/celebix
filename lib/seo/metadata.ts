@@ -1,11 +1,12 @@
 import { Metadata } from "next";
+import { SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
 // Domain configuration
 export const siteConfig = {
   name: "Celebix",
   description: "AI destekli e-ticaret çözümleri, kurumsal yazılım ve dijital pazarlama hizmetleri",
-  url: "https://celebix.co",
-  ogImage: "https://celebix.co/images/og-image.jpg",
+  url: SITE_URL,
+  ogImage: absoluteSiteUrl("/images/og-image.jpg"),
   twitter: "@celebix",
   email: "merhaba@celebix.co",
   phone: "+90 530 209 96 28",

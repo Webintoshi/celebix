@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       follow: true,
     },
     alternates: {
-      canonical: `https://celebix.co/${locale}/kullanim-kosullari`,
+      canonical: `https://celebix.net/${locale}/kullanim-kosullari`,
     },
   };
 }

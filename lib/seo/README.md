@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     openGraph: {
       title: isTr ? "OG Başlık TR" : "OG Title EN",
       description: isTr ? "OG Açıklama TR" : "OG Description EN",
-      url: `https://celebix.co/${locale}/yeni-sayfa`,
+      url: `https://celebix.net/${locale}/yeni-sayfa`,
       type: "website", // veya "article", "product"
     },
   };
@@ -198,8 +198,8 @@ import { BlogPostSchema } from "@/components/SchemaScript";
 <BlogPostSchema
   title="Yazı Başlığı"
   description="Yazı açıklaması"
-  url="https://celebix.co/tr/blog/yazi"
-  image="https://celebix.co/images/yazi.jpg"
+  url="https://celebix.net/tr/blog/yazi"
+  image="https://celebix.net/images/yazi.jpg"
   datePublished="2025-01-15"
   dateModified="2025-01-15"
   author="Yazar Adı"

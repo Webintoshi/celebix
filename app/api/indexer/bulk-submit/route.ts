@@ -7,10 +7,11 @@
  */
 
 import { blogPosts } from "@/app/[locale]/blog/posts";
+import { PRIMARY_HOST, SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
 export const dynamic = 'force-dynamic';
 
-const BASE_URL = "https://celebix.co";
+const BASE_URL = SITE_URL;
 
 // Tüm statik sayfalar
 const staticPages = [
@@ -63,9 +64,9 @@ async function submitToIndexNow(urls: string[]): Promise<{ success: boolean; mes
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          host: 'celebix.co',
+          host: PRIMARY_HOST,
           key: key,
-          keyLocation: `https://celebix.co/${key}.txt`,
+          keyLocation: absoluteSiteUrl(`/${key}.txt`),
           urlList: batch
         }),
         signal: AbortSignal.timeout(30000)
@@ -88,7 +89,7 @@ async function submitToIndexNow(urls: string[]): Promise<{ success: boolean; mes
 
 async function pingGoogleSitemap(): Promise<{ success: boolean; message: string }> {
   try {
-    const sitemapUrl = encodeURIComponent('https://celebix.co/sitemap.xml');
+    const sitemapUrl = encodeURIComponent(absoluteSiteUrl("/sitemap.xml"));
     const response = await fetch(
       `https://www.google.com/ping?sitemap=${sitemapUrl}`,
       { signal: AbortSignal.timeout(10000) }

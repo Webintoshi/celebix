@@ -7,7 +7,7 @@ This document provides comprehensive information about the Celebix project for A
 ## 🏗️ Project Overview
 
 **Project Name**: Celebix  
-**Domain**: celebix.co  
+**Domain**: celebix.net
 **Location**: Altınordu, Ordu, Turkey  
 **Languages**: Turkish (TR) - default, English (EN)  
 
@@ -263,7 +263,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     openGraph: {
       title: isTr ? "OG Başlık TR" : "OG Title EN",
       description: isTr ? "OG Açıklama TR" : "OG Description EN",
-      url: `https://celebix.co/${locale}/example`,
+      url: `https://celebix.net/${locale}/example`,
     },
   };
 }
@@ -457,7 +457,7 @@ rm -rf .next && npm run build
 
 ## 📞 Contact Information
 
-- **Website**: https://celebix.co
+- **Website**: https://celebix.net
 - **Email**: merhaba@celebix.co
 - **Phone**: +90 530 209 96 28
 - **Address**: Altınordu, Ordu, Turkey

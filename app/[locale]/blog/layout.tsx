@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "Dijital dünyadan güncel haberler ve uzman görüşleri."
         : "Current news and expert opinions from the digital world.",
-      url: `https://celebix.co/${locale}/blog`,
+      url: `https://celebix.net/${locale}/blog`,
       type: "website",
       images: [
         {
-          url: "https://celebix.co/og-image.webp",
+          url: "https://celebix.net/og-image.webp",
           width: 1200,
           height: 630,
           alt: "Blog",
