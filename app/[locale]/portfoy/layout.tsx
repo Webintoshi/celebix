@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "Tamamladığımız projeler ve müşteri başarı hikayeleri."
         : "Our completed projects and client success stories.",
-      url: `https://celebix.co/${locale}/portfoy`,
+      url: `https://celebix.net/${locale}/portfoy`,
       type: "website",
       images: [
         {
-          url: "https://celebix.co/og-image.webp",
+          url: "https://celebix.net/og-image.webp",
           width: 1200,
           height: 630,
           alt: isTr ? "Portföy" : "Portfolio",

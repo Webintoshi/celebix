@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "Celebix ekibi ve dijital dönüşüm yolculuğumuz."
         : "The Celebix team and our digital transformation journey.",
-      url: `https://celebix.co/${locale}/hakkimizda`,
+      url: `https://celebix.net/${locale}/hakkimizda`,
       type: "website",
       images: [
         {
-          url: "https://celebix.co/og-image.webp",
+          url: "https://celebix.net/og-image.webp",
           width: 1200,
           height: 630,
           alt: isTr ? "Hakkımızda" : "About Us",

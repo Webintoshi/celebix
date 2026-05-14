@@ -9,6 +9,7 @@
  * 2. Vercel Deploy Hook ile otomatik tetiklenir
  * 3. Manuel olarak çalıştırılabilir
  */
+import { PRIMARY_HOST, SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
 export interface PingConfig {
   url: string;
@@ -67,8 +68,6 @@ export async function pingUrl(config: PingConfig): Promise<PingResult[]> {
  * Belirli bir motor'a ping at
  */
 async function pingEngine(url: string, engine: string): Promise<{ success: boolean; message: string }> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://celebix.co';
-  
   switch (engine) {
     case 'google':
       return pingGoogleSitemap();
@@ -92,7 +91,7 @@ async function pingEngine(url: string, engine: string): Promise<{ success: boole
  */
 async function pingGoogleSitemap(): Promise<{ success: boolean; message: string }> {
   try {
-    const sitemapUrl = encodeURIComponent('https://celebix.co/sitemap.xml');
+    const sitemapUrl = encodeURIComponent(absoluteSiteUrl("/sitemap.xml"));
     const response = await fetch(
       `https://www.google.com/ping?sitemap=${sitemapUrl}`,
       { 
@@ -124,9 +123,9 @@ async function pingIndexNow(url: string): Promise<{ success: boolean; message: s
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        host: 'celebix.co',
+        host: PRIMARY_HOST,
         key: key,
-        keyLocation: `https://celebix.co/${key}.txt`,
+        keyLocation: absoluteSiteUrl(`/${key}.txt`),
         urlList: [url]
       }),
       signal: AbortSignal.timeout(15000)
@@ -164,7 +163,7 @@ async function pingBing(url: string): Promise<{ success: boolean; message: strin
         'api-key': process.env.BING_API_KEY || ''
       },
       body: JSON.stringify({
-        siteUrl: 'https://celebix.co',
+        siteUrl: SITE_URL,
         urlList: [url]
       }),
       signal: AbortSignal.timeout(10000)
@@ -199,7 +198,7 @@ async function pingYandex(url: string): Promise<{ success: boolean; message: str
  * posts.ts dosyasından çağrılır
  */
 export async function notifyNewBlogPost(slug: string, title: string): Promise<void> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://celebix.co';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || SITE_URL;
   const trUrl = `${baseUrl}/tr/blog/${slug}`;
   const enUrl = `${baseUrl}/en/blog/${slug}`;
   

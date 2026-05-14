@@ -25,7 +25,7 @@ const nextConfig = {
   
   async redirects() {
     return [
-      // WWW yönlendirmesi - www -> non-www
+      // Legacy domain redirects
       {
         source: '/:path*',
         has: [
@@ -34,7 +34,29 @@ const nextConfig = {
             value: 'www.celebix.co',
           },
         ],
-        destination: 'https://celebix.co/:path*',
+        destination: 'https://celebix.net/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'celebix.co',
+          },
+        ],
+        destination: 'https://celebix.net/:path*',
+        permanent: true,
+      },
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'www.celebix.net',
+          },
+        ],
+        destination: 'https://celebix.net/:path*',
         permanent: true,
       },
     ];

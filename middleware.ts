@@ -1,40 +1,42 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { PRIMARY_HOST, getHostName, isOldHost } from "@/lib/site";
 
 export function middleware(request: NextRequest) {
-  const host = request.headers.get('host')
-  const url = request.nextUrl.clone()
-  const pathname = request.nextUrl.pathname
+  const host = getHostName(request.headers.get("host"));
+  const url = request.nextUrl.clone();
+  const pathname = request.nextUrl.pathname;
+  let shouldRedirect = false;
 
-  // www.celebix.co -> celebix.co yönlendirmesi (301 Permanent)
-  if (host?.startsWith('www.')) {
-    url.host = 'celebix.co'
-    return NextResponse.redirect(url, 301)
+  if (isOldHost(host)) {
+    url.protocol = "https";
+    url.host = PRIMARY_HOST;
+    shouldRedirect = true;
   }
 
-  // Root URL / -> /tr yönlendirmesi (301 Permanent)
-  if (pathname === '/') {
-    url.pathname = '/tr'
-    return NextResponse.redirect(url, 301)
+  if (pathname === "/") {
+    url.pathname = "/tr";
+    shouldRedirect = true;
   }
 
-  // Tailing slash düzeltmesi - /tr/ -> /tr (301 Permanent)
-  if (pathname === '/tr/') {
-    url.pathname = '/tr'
-    return NextResponse.redirect(url, 301)
+  if (pathname === "/tr/") {
+    url.pathname = "/tr";
+    shouldRedirect = true;
   }
-  if (pathname === '/en/') {
-    url.pathname = '/en'
-    return NextResponse.redirect(url, 301)
+  if (pathname === "/en/") {
+    url.pathname = "/en";
+    shouldRedirect = true;
   }
 
-  return NextResponse.next()
+  if (shouldRedirect) {
+    return NextResponse.redirect(url, 301);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    '/',
-    '/tr/:path*',
-    '/en/:path*',
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|avif|ico|css|js|map)$).*)",
   ],
-}
+};

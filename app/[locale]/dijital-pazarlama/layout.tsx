@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "Google Ads ve SEO uzmanlığı. Dijital dünyada işletmenizi büyütün."
         : "Google Ads and SEO expertise. Grow your business in the digital world.",
-      url: `https://celebix.co/${locale}/dijital-pazarlama`,
+      url: `https://celebix.net/${locale}/dijital-pazarlama`,
       type: "website",
       images: [
         {
-          url: "https://celebix.co/og-image.webp",
+          url: "https://celebix.net/og-image.webp",
           width: 1200,
           height: 630,
           alt: isTr ? "Dijital Pazarlama Hizmetleri" : "Digital Marketing Services",

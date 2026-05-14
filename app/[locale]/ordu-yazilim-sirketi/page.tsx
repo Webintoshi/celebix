@@ -387,7 +387,7 @@ export default function OrduSoftwarePage({ params }: { params: { locale: string 
                   </div>
                   <div className="flex items-center gap-4 text-white">
                     <Mail size={24} />
-                    <span>merhaba@celebix.co</span>
+                    <span>merhaba@celebix.net</span>
                   </div>
                   <div className="flex items-center gap-4 text-white">
                     <Clock size={24} />

@@ -2,15 +2,15 @@
  * RSS Feed Generator
  * Blog yazıları için otomatik RSS beslemesi
  * 
- * URL: https://celebix.co/rss.xml
+ * URL: https://celebix.net/rss.xml
  * Otomatik ping: Google FeedBurner, Flipboard, Feedly vb.
  */
 
 import { blogPosts } from "../[locale]/blog/posts";
+import { SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
 export const dynamic = 'force-static';
 
-const SITE_URL = 'https://celebix.co';
 const SITE_NAME = 'Celebix Blog';
 const SITE_DESCRIPTION = 'Yazılım, dijital pazarlama ve sosyal medya dünyasından en güncel bilgiler, ipuçları ve stratejiler.';
 
@@ -73,7 +73,7 @@ export async function GET() {
     <description>${description}</description>
     <author>${escapeXml(post.author)}</author>
     ${categories}
-    <enclosure url="https://picsum.photos/seed/${post.image}/800/400" type="image/jpeg" length="0" />
+    <enclosure url="${absoluteSiteUrl("/og-image.webp")}" type="image/webp" length="0" />
   </item>`;
   }).join('\n');
   
@@ -88,7 +88,7 @@ export async function GET() {
 <channel>
   <title>${SITE_NAME}</title>
   <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
-  <link>${SITE_URL}/blog</link>
+  <link>${SITE_URL}/tr/blog</link>
   <description>${SITE_DESCRIPTION}</description>
   <lastBuildDate>${lastBuildDate}</lastBuildDate>
   <language>tr-TR</language>
@@ -96,9 +96,9 @@ export async function GET() {
   <sy:updateFrequency>1</sy:updateFrequency>
   <generator>Celebix RSS Generator</generator>
   <image>
-    <url>${SITE_URL}/Logo/Frame%201.svg</url>
+    <url>${absoluteSiteUrl("/Logo/Frame%201.svg")}</url>
     <title>${SITE_NAME}</title>
-    <link>${SITE_URL}/blog</link>
+    <link>${SITE_URL}/tr/blog</link>
     <width>144</width>
     <height>144</height>
   </image>

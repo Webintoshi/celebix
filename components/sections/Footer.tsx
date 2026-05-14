@@ -127,7 +127,7 @@ export default function Footer({ locale }: { locale: string }) {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <Mail size={18} className="text-aurora-indigo mt-0.5 flex-shrink-0" />
-                <span className="text-small text-light-100/60">merhaba@celebix.co</span>
+                <span className="text-small text-light-100/60">merhaba@celebix.net</span>
               </li>
               <li className="flex items-start gap-3">
                 <Phone size={18} className="text-aurora-indigo mt-0.5 flex-shrink-0" />

@@ -1,10 +1,10 @@
 # Video Pazarlama 2026: YouTube SEO ve Sosyal Video Stratejisi
 
-**Meta Title:** Video Pazarlama 2026 | YouTube SEO ve Sosyal Video Rehberi  
-**Meta Description:** 2026 video pazarlama stratejileri. YouTube SEO, TikTok, Instagram Reels için içerik üretimi. KOBİ'ler için adım adım video pazarlama rehberi.  
-**URL Slug:** video-pazarlama-2026  
-**Schema:** Article + HowTo + VideoObject  
-**Word Count:** ~2,000 kelime  
+**Meta Title:** Video Pazarlama 2026 | YouTube SEO ve Sosyal Video Rehberi
+**Meta Description:** 2026 video pazarlama stratejileri. YouTube SEO, TikTok, Instagram Reels için içerik üretimi. KOBİ'ler için adım adım video pazarlama rehberi.
+**URL Slug:** video-pazarlama-2026
+**Schema:** Article + HowTo + VideoObject
+**Word Count:** ~2,000 kelime
 **Reading Time:** ~10 dakika
 
 ---
@@ -23,15 +23,15 @@ Bu kapsamlı rehberde, 2026'nın video pazarlama trendlerini, platform spesifik 
 
 ### Tüketici Davranışlarındaki Değişim
 
-**Dikkat Süresi Daralması:**  
+**Dikkat Süresi Daralması:**
 2020'de ortalama 12 saniye olan dikkat süresi, 2026'da 8 saniyeye indi. Video, bu kısa sürede maksimum etki yaratan format.
 
-**Satın Alma Kararları:**  
+**Satın Alma Kararları:**
 - %84'ü satın almadan önce marka videosu izliyor [Google, 2025]
 - %74'ü ürün videosu izledikten sonra satın alıyor [HubSpot, 2025]
 - Video içeren landing page'ler %86 daha yüksek dönüşüm sağlıyor [Unbounce, 2025]
 
-**SEO Etkisi:**  
+**SEO Etkisi:**
 - Video içeren sayfalar arama sonuçlarında %53 daha fazla görünürlük elde ediyor
 - YouTube, dünyanın 2. büyük arama motoru (Google'dan sonra)
 - Video snippet'leri SERP'te %300 daha fazla tıklama alıyor
@@ -42,7 +42,7 @@ Bu kapsamlı rehberde, 2026'nın video pazarlama trendlerini, platform spesifik 
 
 ### 1. Sessiz İzleme Çağı (Caption Zorunluluğu)
 
-**Durum:** 
+**Durum:**
 - LinkedIn videolarının %85'i sessiz izleniyor
 - Instagram Stories'lerin %70'i ses kapalı izleniyor
 - Ofis ortamında ve toplu taşımada sessiz tüketim norm haline geldi
@@ -78,7 +78,7 @@ Bu kapsamlı rehberde, 2026'nın video pazarlama trendlerini, platform spesifik 
 - **Edit:** Descript, CapCut (otomatik altyazı, kurgu)
 - **Analiz:** VidIQ, TubeBuddy (SEO optimizasyonu)
 
-**Maliyet Avantajı:**  
+**Maliyet Avantajı:**
 Eskiden 50.000 TL'ye mal olan tanıtım videosu, şimdi AI araçlarıyla 5.000 TL'ye üretilebiliyor.
 
 ### 4. Etkileşimli Video ve Shoppable Content
@@ -167,7 +167,7 @@ YouTube, izleyiciyi platformda tutma süresini (watch time) optimize eder. Bu ne
 
 ### TikTok: Organik Erişim
 
-**TikTok Avantajı:**  
+**TikTok Avantajı:**
 Diğer platformlara göre çok daha yüksek organik erişim. Doğru stratejiyle viral olma şansı yüksek.
 
 **TikTok İçerik Türleri:**
@@ -433,25 +433,25 @@ Gelecek Ay Fokusu:
 
 ### ❌ Yapılmaması Gerekenler
 
-1. **Over-Production**  
+1. **Over-Production**
    Çok profesyonel videolar bazen samimiyetsiz algılanır. Gerçekçilik önemli.
 
-2. **Inconsistent Posting**  
+2. **Inconsistent Posting**
    3 video atıp 1 ay kaybolmak. Düzenlilik şart.
 
-3. **Platform Copy-Paste**  
+3. **Platform Copy-Paste**
    Aynı videoyu her platforma aynı şekilde atmak. Her platformun dili farklı.
 
-4. **No CTA**  
+4. **No CTA**
    İzleyiciye ne yapması gerektiğini söylememek.
 
-5. **Ignoring Analytics**  
+5. **Ignoring Analytics**
    Veriye bakmadan içerik üretmek. Ne işe yarıyor bilmek lazım.
 
-6. **Sales-Only Content**  
+6. **Sales-Only Content**
    Sürekli satış yapma. %80 değer, %20 tanıtım kuralı.
 
-7. **Long Intros**  
+7. **Long Intros**
    10 saniyelik jingle/intro. İlk 3 saniyede kanca gerekli.
 
 ---
@@ -518,13 +518,13 @@ KOBİ bütçesiyle, akıllı telefonunuzla ve doğru stratejiyle, büyük markal
 
 ---
 
-📞 **Video Pazarlama Danışmanlığı:** [+90 530 209 96 28](tel:+905302099628)  
-📧 **İletişim:** [merhaba@celebix.co](mailto:merhaba@celebix.co)  
+📞 **Video Pazarlama Danışmanlığı:** [+90 530 209 96 28](tel:+905302099628)
+📧 **İletişim:** [merhaba@celebix.net](mailto:merhaba@celebix.net)
 🎥 **YouTube Kanalımız:** [Celebix TV](https://youtube.com/@celebix) *(örnek)*
 
 ---
 
-*Son Güncelleme: 15 Mart 2026*  
-*Yazar: Celebix Dijital Pazarlama Ekibi*  
-*Okuma Süresi: 10 dakika*  
+*Son Güncelleme: 15 Mart 2026*
+*Yazar: Celebix Dijital Pazarlama Ekibi*
+*Okuma Süresi: 10 dakika*
 *Video İçerik Uzunluğu Önerisi: 15-60 saniye (short-form), 8-15 dakika (long-form)*

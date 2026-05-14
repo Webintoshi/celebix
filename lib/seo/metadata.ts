@@ -1,27 +1,26 @@
 import { Metadata } from "next";
+import { SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
-// Domain configuration
 export const siteConfig = {
   name: "Celebix",
   description: "AI destekli e-ticaret çözümleri, kurumsal yazılım ve dijital pazarlama hizmetleri",
-  url: "https://celebix.co",
-  ogImage: "https://celebix.co/images/og-image.jpg",
+  url: SITE_URL,
+  ogImage: absoluteSiteUrl("/images/og-image.jpg"),
   twitter: "@celebix",
-  email: "merhaba@celebix.co",
+  email: "merhaba@celebix.net",
   phone: "+90 530 209 96 28",
   address: {
     city: "Altınordu",
     region: "Ordu",
-    country: "TR"
-  }
+    country: "TR",
+  },
 };
 
-// Default metadata for all pages
 export const defaultMetadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
     default: "Celebix | Premium E-Ticaret ve Dijital Çözümler",
-    template: "%s | Celebix"
+    template: "%s | Celebix",
   },
   description: siteConfig.description,
   keywords: [
@@ -33,7 +32,7 @@ export const defaultMetadata: Metadata = {
     "SEO",
     "sosyal medya yönetimi",
     "Google Ads",
-    "Türkiye"
+    "Türkiye",
   ],
   authors: [{ name: "Celebix" }],
   creator: "Celebix",
@@ -53,7 +52,6 @@ export const defaultMetadata: Metadata = {
     type: "website",
     locale: "tr_TR",
     alternateLocale: ["en_US"],
-    url: siteConfig.url,
     siteName: siteConfig.name,
     title: "Celebix | Premium E-Ticaret ve Dijital Çözümler",
     description: siteConfig.description,
@@ -73,35 +71,22 @@ export const defaultMetadata: Metadata = {
     images: [siteConfig.ogImage],
     creator: siteConfig.twitter,
   },
-  verification: {
-    google: "your-google-verification-code",
-    yandex: "your-yandex-verification-code",
-  },
-  alternates: {
-    canonical: "/",
-    languages: {
-      "tr": "/tr",
-      "en": "/en",
-    },
-  },
   category: "technology",
 };
 
-// Page-specific metadata templates
 export const pageMetadata = {
-  // Ana Sayfa
   home: (locale: string): Metadata => ({
-    title: locale === "tr" 
+    title: locale === "tr"
       ? "Celebix | AI Destekli E-Ticaret ve Dijital Çözümler"
       : "Celebix | AI-Powered E-Commerce & Digital Solutions",
     description: locale === "tr"
       ? "Celebix ile işletmenizi dijital dünyada büyütün. AI destekli e-ticaret, kurumsal yazılım, sosyal medya yönetimi ve profesyonel dijital pazarlama hizmetleri."
       : "Grow your business in the digital world with Celebix. AI-powered e-commerce, enterprise software, social media management, and professional digital marketing services.",
-    keywords: locale === "tr" 
+    keywords: locale === "tr"
       ? ["e-ticaret", "dijital ajans", "yazılım şirketi", "web tasarım", "SEO", "sosyal medya"]
       : ["e-commerce", "digital agency", "software company", "web design", "SEO", "social media"],
     openGraph: {
-      title: locale === "tr" 
+      title: locale === "tr"
         ? "Celebix | AI Destekli E-Ticaret ve Dijital Çözümler"
         : "Celebix | AI-Powered E-Commerce & Digital Solutions",
       description: locale === "tr"
@@ -109,8 +94,6 @@ export const pageMetadata = {
         : "Grow your business with Celebix. AI-powered e-commerce, enterprise software and more.",
     },
   }),
-
-  // E-Ticaret
   ecommerce: (locale: string): Metadata => ({
     title: locale === "tr"
       ? "Celebix E-Ticaret | Premium Online Satış Platformu"
@@ -125,8 +108,6 @@ export const pageMetadata = {
       canonical: "/e-ticaret-paketleri",
     },
   }),
-
-  // SaaS / Tık Profil
   saas: (locale: string): Metadata => ({
     title: locale === "tr"
       ? "Tık Profil | 700₺/Ay Komisyonsuz E-Ticaret"
@@ -141,8 +122,6 @@ export const pageMetadata = {
       canonical: "/celebix-saas-platformu",
     },
   }),
-
-  // Kurumsal Yazılım
   software: (locale: string): Metadata => ({
     title: locale === "tr"
       ? "Kurumsal Yazılım Geliştirme | Celebix"
@@ -157,8 +136,6 @@ export const pageMetadata = {
       canonical: "/kurumsal-yazilim",
     },
   }),
-
-  // Dijital Pazarlama
   marketing: (locale: string): Metadata => ({
     title: locale === "tr"
       ? "Dijital Pazarlama Hizmetleri | Celebix"
@@ -173,8 +150,6 @@ export const pageMetadata = {
       canonical: "/dijital-pazarlama",
     },
   }),
-
-  // Sosyal Medya
   socialMedia: (locale: string): Metadata => ({
     title: locale === "tr"
       ? "Sosyal Medya Yönetimi | Celebix"
@@ -189,8 +164,6 @@ export const pageMetadata = {
       canonical: "/sosyal-medya",
     },
   }),
-
-  // Portfolyo
   portfolio: (locale: string): Metadata => ({
     title: locale === "tr"
       ? "Portfolyo | Celebix Projeleri"
@@ -205,8 +178,6 @@ export const pageMetadata = {
       canonical: "/portfoy",
     },
   }),
-
-  // Hakkımızda
   about: (locale: string): Metadata => ({
     title: locale === "tr"
       ? "Hakkımızda | Celebix Ekibi ve Değerlerimiz"
@@ -221,8 +192,6 @@ export const pageMetadata = {
       canonical: "/hakkimizda",
     },
   }),
-
-  // İletişim
   contact: (locale: string): Metadata => ({
     title: locale === "tr"
       ? "İletişim | Celebix ile Projenizi Konuşun"
@@ -237,8 +206,6 @@ export const pageMetadata = {
       canonical: "/iletisim",
     },
   }),
-
-  // Blog
   blog: (locale: string): Metadata => ({
     title: locale === "tr"
       ? "Blog | Dijital Dünya ve E-Ticaret Rehberi"
@@ -253,8 +220,6 @@ export const pageMetadata = {
       canonical: "/blog",
     },
   }),
-
-  // Blog Post
   blogPost: (locale: string, post: { title: string; description: string; slug: string; tags: string[] }): Metadata => ({
     title: `${post.title} | Celebix Blog`,
     description: post.description,
@@ -270,11 +235,7 @@ export const pageMetadata = {
   }),
 };
 
-// Helper to merge metadata
-export function mergeMetadata(
-  base: Metadata,
-  override: Metadata
-): Metadata {
+export function mergeMetadata(base: Metadata, override: Metadata): Metadata {
   return {
     ...base,
     ...override,

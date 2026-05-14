@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import { SITE_URL, absoluteSiteUrl } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,7 +21,7 @@ export const viewport: Viewport = {
 
 // Comprehensive SEO metadata
 export const metadata: Metadata = {
-  metadataBase: new URL("https://celebix.co"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Premium Yazılım ve Dijital Çözümler | Celebix",
     template: "%s | Celebix"
@@ -43,7 +44,7 @@ export const metadata: Metadata = {
     "yazılım şirketi",
     "dijital ajans"
   ],
-  authors: [{ name: "Celebix", url: "https://celebix.co" }],
+  authors: [{ name: "Celebix", url: SITE_URL }],
   creator: "Celebix",
   publisher: "Celebix",
   robots: {
@@ -63,13 +64,12 @@ export const metadata: Metadata = {
     type: "website",
     locale: "tr_TR",
     alternateLocale: ["en_US"],
-    url: "https://celebix.co",
     siteName: "Celebix",
     title: "Celebix | Premium E-Ticaret ve Dijital Çözümler",
     description: "Celebix ile işletmenizi dijital dünyada büyütün. AI destekli e-ticaret, kurumsal yazılım ve daha fazlası.",
     images: [
       {
-        url: "https://celebix.co/og-image.webp",
+        url: absoluteSiteUrl("/og-image.webp"),
         width: 1200,
         height: 630,
         alt: "Celebix - Premium Yazılım ve Dijital Çözümler",
@@ -82,7 +82,7 @@ export const metadata: Metadata = {
     creator: "@celebix",
     title: "Celebix | Premium E-Ticaret ve Dijital Çözümler",
     description: "Celebix ile işletmenizi dijital dünyada büyütün. AI destekli e-ticaret, kurumsal yazılım ve daha fazlası.",
-    images: ["https://celebix.co/og-image.webp"],
+    images: [absoluteSiteUrl("/og-image.webp")],
   },
   icons: {
     icon: [
@@ -92,13 +92,6 @@ export const metadata: Metadata = {
     apple: [
       { url: '/Logo/koyu logo.svg', type: 'image/svg+xml' },
     ],
-  },
-  alternates: {
-    canonical: "/",
-    languages: {
-      tr: "/tr",
-      en: "/en",
-    },
   },
   category: "technology",
   classification: "Business & Technology",

@@ -10,7 +10,12 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       follow: true,
     },
     alternates: {
-      canonical: `https://celebix.co/${locale}/gizlilik`,
+      canonical: `https://celebix.net/${locale}/gizlilik`,
+      languages: {
+        tr: "https://celebix.net/tr/gizlilik",
+        en: "https://celebix.net/en/gizlilik",
+        "x-default": "https://celebix.net/tr/gizlilik",
+      },
     },
   };
 }
@@ -80,8 +85,8 @@ export default function PrivacyPage({ params }: { params: { locale: string } }) 
           <h2 className="text-2xl font-semibold mt-8 mb-4">7. İletişim</h2>
           <p className="mb-4">
             Gizlilik politikamız hakkında sorularınız için{" "}
-            <a href="mailto:merhaba@celebix.co" className="text-aurora-indigo hover:underline">
-              merhaba@celebix.co
+            <a href="mailto:merhaba@celebix.net" className="text-aurora-indigo hover:underline">
+              merhaba@celebix.net
             </a>{" "}
             adresinden bize ulaşabilirsiniz.
           </p>

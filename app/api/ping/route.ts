@@ -4,8 +4,15 @@
  * 
  * Kullanım:
  * POST /api/ping
- * Body: { "url": "https://celebix.co/tr/blog/yeni-yazi", "engines": ["google", "bing"] }
+ * Body: { "url": "https://celebix.net/tr/blog/yeni-yazi", "engines": ["google", "bing"] }
  */
+import {
+  PRIMARY_HOST,
+  SITE_URL,
+  absoluteSiteUrl,
+  isRecognizedSiteHost,
+  normalizeSiteUrl,
+} from "@/lib/site";
 
 export const dynamic = 'force-dynamic';
 
@@ -24,7 +31,7 @@ interface PingResult {
 async function pingGoogle(url: string): Promise<PingResult> {
   try {
     // Google Sitemap ping
-    const sitemapUrl = encodeURIComponent('https://celebix.co/sitemap.xml');
+    const sitemapUrl = encodeURIComponent(absoluteSiteUrl("/sitemap.xml"));
     const response = await fetch(
       `https://www.google.com/ping?sitemap=${sitemapUrl}`,
       { method: 'GET', signal: AbortSignal.timeout(10000) }
@@ -53,7 +60,7 @@ async function pingBing(url: string): Promise<PingResult> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        siteUrl: 'https://celebix.co',
+        siteUrl: SITE_URL,
         urlList: [url]
       }),
       signal: AbortSignal.timeout(10000)
@@ -78,7 +85,7 @@ async function pingBing(url: string): Promise<PingResult> {
 async function pingYandex(url: string): Promise<PingResult> {
   try {
     const response = await fetch(
-      `https://webmaster.yandex.com/api/v2/hosts/https:celebix.co:443/robots.txt`,
+      `https://webmaster.yandex.com/api/v2/hosts/https:${PRIMARY_HOST}:443/robots.txt`,
       { signal: AbortSignal.timeout(10000) }
     );
     
@@ -115,9 +122,9 @@ async function pingIndexNow(url: string): Promise<PingResult> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        host: 'celebix.co',
+        host: PRIMARY_HOST,
         key: key,
-        keyLocation: `https://celebix.co/${key}.txt`,
+        keyLocation: absoluteSiteUrl(`/${key}.txt`),
         urlList: [url]
       }),
       signal: AbortSignal.timeout(15000)
@@ -160,12 +167,14 @@ export async function POST(request: Request) {
     }
     
     // Domain kontrolü
-    if (!url.includes('celebix.co')) {
+    if (!isRecognizedSiteHost(new URL(url).hostname)) {
       return Response.json(
-        { error: 'Sadece celebix.co domainine izin verilir' },
+        { error: `Sadece ${PRIMARY_HOST} alan adı ve tanımlı geçiş hostları desteklenir` },
         { status: 403 }
       );
     }
+
+    const normalizedUrl = normalizeSiteUrl(url);
     
     const results: PingResult[] = [];
     
@@ -173,17 +182,17 @@ export async function POST(request: Request) {
     for (const engine of engines) {
       switch (engine) {
         case 'google':
-          results.push(await pingGoogle(url));
+          results.push(await pingGoogle(normalizedUrl));
           break;
         case 'bing':
-          results.push(await pingBing(url));
+          results.push(await pingBing(normalizedUrl));
           break;
         case 'yandex':
-          results.push(await pingYandex(url));
+          results.push(await pingYandex(normalizedUrl));
           break;
         default:
           if (engine === 'indexnow' || !engine) {
-            results.push(await pingIndexNow(url));
+            results.push(await pingIndexNow(normalizedUrl));
           }
       }
     }
@@ -192,7 +201,7 @@ export async function POST(request: Request) {
     
     return Response.json({
       success: successCount > 0,
-      url,
+      url: normalizedUrl,
       results,
       timestamp: new Date().toISOString(),
       message: `${successCount}/${results.length} servis başarılı`
@@ -218,7 +227,7 @@ export async function GET() {
       method: 'POST',
       endpoint: '/api/ping',
       body: {
-        url: 'https://celebix.co/tr/blog/yeni-yazi',
+        url: absoluteSiteUrl("/tr/blog/yeni-yazi"),
         engines: ['google', 'bing', 'indexnow']
       }
     },

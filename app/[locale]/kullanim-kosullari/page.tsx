@@ -10,7 +10,12 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       follow: true,
     },
     alternates: {
-      canonical: `https://celebix.co/${locale}/kullanim-kosullari`,
+      canonical: `https://celebix.net/${locale}/kullanim-kosullari`,
+      languages: {
+        tr: "https://celebix.net/tr/kullanim-kosullari",
+        en: "https://celebix.net/en/kullanim-kosullari",
+        "x-default": "https://celebix.net/tr/kullanim-kosullari",
+      },
     },
   };
 }
@@ -80,8 +85,8 @@ export default function TermsPage({ params }: { params: { locale: string } }) {
           <h2 className="text-2xl font-semibold mt-8 mb-4">8. İletişim</h2>
           <p className="mb-4">
             Kullanım koşulları hakkında sorularınız için{" "}
-            <a href="mailto:merhaba@celebix.co" className="text-aurora-indigo hover:underline">
-              merhaba@celebix.co
+            <a href="mailto:merhaba@celebix.net" className="text-aurora-indigo hover:underline">
+              merhaba@celebix.net
             </a>{" "}
             adresinden bize ulaşabilirsiniz.
           </p>

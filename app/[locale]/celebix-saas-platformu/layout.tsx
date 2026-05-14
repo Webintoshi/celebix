@@ -29,11 +29,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       description: isTr
         ? "68 sektör, sınırsız ürün, komisyon yok! 700₺/ay sabit ücretle profesyonel e-ticaret."
         : "68 sectors, unlimited products, no commission! Professional e-commerce at 700₺/month fixed price.",
-      url: `https://celebix.co/${locale}/celebix-saas-platformu`,
+      url: `https://celebix.net/${locale}/celebix-saas-platformu`,
       type: "website",
       images: [
         {
-          url: "https://celebix.co/og-image.webp",
+          url: "https://celebix.net/og-image.webp",
           width: 1200,
           height: 630,
           alt: "Celebix SaaS",

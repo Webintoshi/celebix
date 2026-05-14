@@ -34,7 +34,7 @@ BING_API_KEY=your_bing_api_key
 INDEXER_SECRET=your_secret_here
 
 # Site URL
-NEXT_PUBLIC_SITE_URL=https://celebix.co
+NEXT_PUBLIC_SITE_URL=https://celebix.net
 ```
 
 ### 3. Search Console Kayıtları
@@ -53,7 +53,7 @@ POST /api/ping
 Content-Type: application/json
 
 {
-  "url": "https://celebix.co/tr/blog/yeni-yazi",
+  "url": "https://celebix.net/tr/blog/yeni-yazi",
   "engines": ["google", "bing", "indexnow"]
 }
 ```
@@ -67,8 +67,8 @@ Content-Type: application/json
 
 {
   "urls": [
-    "https://celebix.co/tr/blog/yazi-1",
-    "https://celebix.co/tr/blog/yazi-2"
+    "https://celebix.net/tr/blog/yazi-1",
+    "https://celebix.net/tr/blog/yazi-2"
   ],
   "key": "celebix-index-key-2025"
 }
@@ -100,7 +100,7 @@ GET /rss.xml
 
 1. Vercel Dashboard > Project > Settings > Git
 2. Deploy Hooks bölümünde yeni hook oluştur
-3. URL: `https://celebix.co/api/indexer/notify`
+3. URL: `https://celebix.net/api/indexer/notify`
 4. Payload:
 ```json
 {
@@ -124,7 +124,7 @@ jobs:
     steps:
       - name: Trigger Index
         run: |
-          curl -X POST https://celebix.co/api/indexer/notify \
+          curl -X POST https://celebix.net/api/indexer/notify \
             -H "Content-Type: application/json" \
             -d '{"slug":"son-yazi","secret":"${{ secrets.INDEXER_SECRET }}"}'
 ```
@@ -175,7 +175,7 @@ await notifyNewBlogPost('yeni-yazi-slug', 'Yeni Yazı Başlığı');
 
 ### IndexNow 403 Hatası
 - Key dosyasının erişilebilir olduğundan emin ol
-- `https://celebix.co/celebix-index-key-2025.txt` kontrol et
+- `https://celebix.net/celebix-index-key-2025.txt` kontrol et
 
 ### Google Index Alamıyor
 - Search Console'da URL Inspection Tool kullan

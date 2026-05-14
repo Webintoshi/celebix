@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { blogPosts } from "../posts";
+import { absoluteSiteUrl } from "@/lib/site";
 import BlogPostClient from "./BlogPostClient";
 
 interface BlogPostPageProps {
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   const title = isTr ? post.title : post.titleEn;
   const description = isTr ? post.excerpt : post.excerptEn;
   const keywords = isTr ? post.keywords : post.keywordsEn;
-  const url = `https://celebix.co/${locale}/blog/${slug}`;
+  const url = absoluteSiteUrl(`/${locale}/blog/${slug}`);
   
   return {
     title: `${title} | Celebix`,
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       url,
       images: [
         {
-          url: `https://picsum.photos/seed/${post.image}/1200/630`,
+          url: absoluteSiteUrl("/og-image.webp"),
           width: 1200,
           height: 630,
           alt: title,
@@ -56,13 +57,14 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       card: "summary_large_image",
       title: `${title} | Celebix`,
       description,
-      images: [`https://picsum.photos/seed/${post.image}/1200/630`],
+      images: [absoluteSiteUrl("/og-image.webp")],
     },
     alternates: {
       canonical: url,
       languages: {
-        tr: `https://celebix.co/tr/blog/${slug}`,
-        en: `https://celebix.co/en/blog/${slug}`,
+        tr: absoluteSiteUrl(`/tr/blog/${slug}`),
+        en: absoluteSiteUrl(`/en/blog/${slug}`),
+        "x-default": absoluteSiteUrl(`/tr/blog/${slug}`),
       },
     },
     robots: {
@@ -100,7 +102,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   }
   
   const isTr = locale === "tr";
-  const postUrl = `https://celebix.co/${locale}/blog/${slug}`;
+  const postUrl = absoluteSiteUrl(`/${locale}/blog/${slug}`);
   
   // JSON-LD Schema for BlogPosting
   const jsonLd = {
@@ -108,20 +110,20 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     "@type": "BlogPosting",
     headline: isTr ? post.title : post.titleEn,
     description: isTr ? post.excerpt : post.excerptEn,
-    image: `https://picsum.photos/seed/${post.image}/1200/630`,
+    image: absoluteSiteUrl("/og-image.webp"),
     datePublished: post.date,
     dateModified: post.date,
     author: {
       "@type": "Organization",
       name: post.author,
-      url: "https://celebix.co",
+      url: absoluteSiteUrl("/tr"),
     },
     publisher: {
       "@type": "Organization",
       name: "Celebix",
       logo: {
         "@type": "ImageObject",
-        url: "https://celebix.co/Logo/Frame%201.svg",
+        url: absoluteSiteUrl("/Logo/Frame%201.svg"),
       },
     },
     mainEntityOfPage: {
@@ -142,13 +144,13 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         "@type": "ListItem",
         position: 1,
         name: isTr ? "Ana Sayfa" : "Home",
-        item: "https://celebix.co",
+        item: absoluteSiteUrl(`/${locale}`),
       },
       {
         "@type": "ListItem",
         position: 2,
         name: isTr ? "Blog" : "Blog",
-        item: `https://celebix.co/${locale}/blog`,
+        item: absoluteSiteUrl(`/${locale}/blog`),
       },
       {
         "@type": "ListItem",

@@ -25,8 +25,8 @@ const contactInfo = [
     icon: Mail,
     label: "E-posta",
     labelEn: "Email",
-    value: "merhaba@celebix.co",
-    href: "mailto:merhaba@celebix.co",
+    value: "merhaba@celebix.net",
+    href: "mailto:merhaba@celebix.net",
   },
   {
     icon: Phone,
