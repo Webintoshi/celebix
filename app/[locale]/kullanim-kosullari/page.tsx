@@ -11,6 +11,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     },
     alternates: {
       canonical: `https://celebix.net/${locale}/kullanim-kosullari`,
+      languages: {
+        tr: "https://celebix.net/tr/kullanim-kosullari",
+        en: "https://celebix.net/en/kullanim-kosullari",
+        "x-default": "https://celebix.net/tr/kullanim-kosullari",
+      },
     },
   };
 }

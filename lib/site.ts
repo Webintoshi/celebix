@@ -33,7 +33,8 @@ export function normalizeSiteUrl(url: string) {
 
   if (isRecognizedSiteHost(normalizedUrl.host)) {
     normalizedUrl.protocol = "https:";
-    normalizedUrl.host = PRIMARY_HOST;
+    normalizedUrl.hostname = PRIMARY_HOST;
+    normalizedUrl.port = "";
   }
 
   return normalizedUrl.toString();

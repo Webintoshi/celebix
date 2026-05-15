@@ -19,7 +19,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       canonical: `/${locale}/eposta-pazarlama-kobi`,
       languages: {
         tr: "/tr/eposta-pazarlama-kobi",
-        en: "/en/email-marketing-sme",
+        en: "/en/eposta-pazarlama-kobi",
+        "x-default": "/tr/eposta-pazarlama-kobi",
       },
     },
     openGraph: {

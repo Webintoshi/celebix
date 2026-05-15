@@ -19,7 +19,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       canonical: `/${locale}/ordu-yazilim-sirketi`,
       languages: {
         tr: "/tr/ordu-yazilim-sirketi",
-        en: "/en/ordu-software-company",
+        en: "/en/ordu-yazilim-sirketi",
+        "x-default": "/tr/ordu-yazilim-sirketi",
       },
     },
     openGraph: {

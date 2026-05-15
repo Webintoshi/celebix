@@ -64,7 +64,6 @@ export const metadata: Metadata = {
     type: "website",
     locale: "tr_TR",
     alternateLocale: ["en_US"],
-    url: SITE_URL,
     siteName: "Celebix",
     title: "Celebix | Premium E-Ticaret ve Dijital Çözümler",
     description: "Celebix ile işletmenizi dijital dünyada büyütün. AI destekli e-ticaret, kurumsal yazılım ve daha fazlası.",
@@ -93,13 +92,6 @@ export const metadata: Metadata = {
     apple: [
       { url: '/Logo/koyu logo.svg', type: 'image/svg+xml' },
     ],
-  },
-  alternates: {
-    canonical: "/",
-    languages: {
-      tr: "/tr",
-      en: "/en",
-    },
   },
   category: "technology",
   classification: "Business & Technology",

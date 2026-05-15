@@ -73,7 +73,7 @@ export async function GET() {
     <description>${description}</description>
     <author>${escapeXml(post.author)}</author>
     ${categories}
-    <enclosure url="https://picsum.photos/seed/${post.image}/800/400" type="image/jpeg" length="0" />
+    <enclosure url="${absoluteSiteUrl("/og-image.webp")}" type="image/webp" length="0" />
   </item>`;
   }).join('\n');
   
@@ -88,7 +88,7 @@ export async function GET() {
 <channel>
   <title>${SITE_NAME}</title>
   <atom:link href="${SITE_URL}/rss.xml" rel="self" type="application/rss+xml" />
-  <link>${SITE_URL}/blog</link>
+  <link>${SITE_URL}/tr/blog</link>
   <description>${SITE_DESCRIPTION}</description>
   <lastBuildDate>${lastBuildDate}</lastBuildDate>
   <language>tr-TR</language>
@@ -98,7 +98,7 @@ export async function GET() {
   <image>
     <url>${absoluteSiteUrl("/Logo/Frame%201.svg")}</url>
     <title>${SITE_NAME}</title>
-    <link>${SITE_URL}/blog</link>
+    <link>${SITE_URL}/tr/blog</link>
     <width>144</width>
     <height>144</height>
   </image>

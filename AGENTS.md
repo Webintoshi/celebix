@@ -6,10 +6,10 @@ This document provides comprehensive information about the Celebix project for A
 
 ## 🏗️ Project Overview
 
-**Project Name**: Celebix  
+**Project Name**: Celebix
 **Domain**: celebix.net
-**Location**: Altınordu, Ordu, Turkey  
-**Languages**: Turkish (TR) - default, English (EN)  
+**Location**: Altınordu, Ordu, Turkey
+**Languages**: Turkish (TR) - default, English (EN)
 
 ### Business Focus
 - E-commerce solutions (E-Ticaret)
@@ -198,7 +198,7 @@ rm -rf .next && npm run build
 export default function ExamplePage({ params }: { params: { locale: string } }) {
   const { locale } = params;
   const isTr = locale === "tr";
-  
+
   return (
     <div>
       {isTr ? "Türkçe içerik" : "English content"}
@@ -248,7 +248,7 @@ import { OrganizationSchema, BreadcrumbSchema } from "@/components/SchemaScript"
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   const isTr = locale === "tr";
-  
+
   return {
     title: isTr ? "Sayfa Başlığı | Celebix" : "Page Title | Celebix",
     description: isTr ? "Türkçe açıklama..." : "English description...",
@@ -270,7 +270,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 
 export default function Layout({ children, params: { locale } }) {
   const isTr = locale === "tr";
-  
+
   return (
     <>
       <OrganizationSchema />
@@ -356,7 +356,7 @@ export async function generateMetadata(): Promise<Metadata> { }
 export default function PageName({ params }: { params: { locale: string } }) {
   const { locale } = params;
   const isTr = locale === "tr";
-  
+
   return ();
 }
 ```
@@ -380,7 +380,7 @@ Currently, the project does not have automated tests configured. Testing is done
 
 1. **Manual Testing**: Check both TR and EN versions
 2. **Build Verification**: `npm run build` must pass without errors
-3. **SEO Validation**: 
+3. **SEO Validation**:
    - Check metadata in page source
    - Validate schemas with Google's Rich Results Test
    - Verify sitemap at `/sitemap.xml`
@@ -464,5 +464,5 @@ rm -rf .next && npm run build
 
 ---
 
-**Last Updated**: 2025-03-29  
+**Last Updated**: 2025-03-29
 **Version**: 1.0.0

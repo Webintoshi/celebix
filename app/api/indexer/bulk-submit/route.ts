@@ -15,7 +15,7 @@ const BASE_URL = SITE_URL;
 
 // Tüm statik sayfalar
 const staticPages = [
-  "/", "/tr", "/en",
+  "/tr", "/en",
   "/tr/e-ticaret-paketleri", "/en/e-ticaret-paketleri",
   "/tr/celebix-saas-platformu", "/en/celebix-saas-platformu",
   "/tr/kurumsal-yazilim", "/en/kurumsal-yazilim",

@@ -9,7 +9,6 @@
  * 2. Vercel Deploy Hook ile otomatik tetiklenir
  * 3. Manuel olarak çalıştırılabilir
  */
-
 import { PRIMARY_HOST, SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
 export interface PingConfig {

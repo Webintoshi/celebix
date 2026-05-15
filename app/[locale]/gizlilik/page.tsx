@@ -11,6 +11,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     },
     alternates: {
       canonical: `https://celebix.net/${locale}/gizlilik`,
+      languages: {
+        tr: "https://celebix.net/tr/gizlilik",
+        en: "https://celebix.net/en/gizlilik",
+        "x-default": "https://celebix.net/tr/gizlilik",
+      },
     },
   };
 }

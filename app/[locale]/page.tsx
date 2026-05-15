@@ -39,6 +39,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       languages: {
         tr: "/tr",
         en: "/en",
+        "x-default": "/tr",
       },
     },
     openGraph: {

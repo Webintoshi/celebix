@@ -1,10 +1,10 @@
 # E-posta Pazarlama: KOBİ'ler İçin 2026 Başlangıç Rehberi
 
-**Meta Title:** E-posta Pazarlama 2026 | KOBİ'ler İçin Email Marketing Rehberi  
-**Meta Description:** 2026 e-posta pazarlama stratejileri. Otomasyon, segmentasyon, A/B testleri. KOBİ bütçesine uygun email marketing rehberi ve şablonlar.  
-**URL Slug:** eposta-pazarlama-kobi  
-**Schema:** Article + HowTo + FAQPage  
-**Word Count:** ~1,800 kelime  
+**Meta Title:** E-posta Pazarlama 2026 | KOBİ'ler İçin Email Marketing Rehberi
+**Meta Description:** 2026 e-posta pazarlama stratejileri. Otomasyon, segmentasyon, A/B testleri. KOBİ bütçesine uygun email marketing rehberi ve şablonlar.
+**URL Slug:** eposta-pazarlama-kobi
+**Schema:** Article + HowTo + FAQPage
+**Word Count:** ~1,800 kelime
 **Reading Time:** ~9 dakika
 
 ---
@@ -230,10 +230,10 @@ E-posta içinde form doldurma, anket, rezervasyon yapma gibi işlemler.
 
 ### Kaçınılması Gerekenler (SPAM Yasakları)
 
-❌ Satın alınmış liste kullanma  
-❌ İzin almadan e-posta gönderme  
-❌ Gizli CC ile toplu gönderim  
-❌ Yanıltıcı konu satırları  
+❌ Satın alınmış liste kullanma
+❌ İzin almadan e-posta gönderme
+❌ Gizli CC ile toplu gönderim
+❌ Yanıltıcı konu satırları
 ❌ Opt-out (abonelikten çıkma) zorlaştırma
 
 ---
@@ -440,12 +440,12 @@ E-posta içinde form doldurma, anket, rezervasyon yapma gibi işlemler.
 
 ### Test Edilmiş Örnekler (Yüksek Açılma)
 
-✅ "Ahmet, kaçırmak üzere olduğunuz fırsat"  
-✅ "Teşekkürler + küçük bir hediye 🎁"  
-✅ "Sorunuzun cevabı (PDF içinde)"  
-✅ "Yalnızca davetlilere özel..."  
-❌ "Şubat Bülteni"  
-❌ "Yeni ürünlerimizi görün"  
+✅ "Ahmet, kaçırmak üzere olduğunuz fırsat"
+✅ "Teşekkürler + küçük bir hediye 🎁"
+✅ "Sorunuzun cevabı (PDF içinde)"
+✅ "Yalnızca davetlilere özel..."
+❌ "Şubat Bülteni"
+❌ "Yeni ürünlerimizi görün"
 ❌ "Güncellemeler ve duyurular"
 
 ---
@@ -610,9 +610,9 @@ Başlangıç için ücretsiz planlar yeterli (Mailchimp 500 kontak). KOBİ ölç
 
 ### Kaç e-posta göndermeliyim?
 
-Bülten: Haftada 1-2  
-Promosyon: Ayda 2-4  
-Otomasyon: Trigger bazlı (sınırsız)  
+Bülten: Haftada 1-2
+Promosyon: Ayda 2-4
+Otomasyon: Trigger bazlı (sınırsız)
 
 **Altın Kural:** Değer verdiğiniz sürece gönderin. Spam olmaktan kaçının.
 
@@ -641,22 +641,22 @@ Kod yazmanıza gerek yok. Mailchimp, Brevo gibi araçlar sürükle-bırak editö
 
 ### Hafta 1: Altyapı ve Liste
 
-**Gün 1:** ESP seçimi ve kayıt (Mailchimp/Brevo)  
-**Gün 2:** Liste import veya sıfırdan başlama  
-**Gün 3:** Website popup/form kurulumu  
-**Gün 4:** Hoş geldin e-postası tasarımı  
-**Gün 5:** Bülten şablonu oluşturma  
-**Gün 6:** İlk 3 e-postanın içeriğini hazırlama  
+**Gün 1:** ESP seçimi ve kayıt (Mailchimp/Brevo)
+**Gün 2:** Liste import veya sıfırdan başlama
+**Gün 3:** Website popup/form kurulumu
+**Gün 4:** Hoş geldin e-postası tasarımı
+**Gün 5:** Bülten şablonu oluşturma
+**Gün 6:** İlk 3 e-postanın içeriğini hazırlama
 **Gün 7:** Test gönderim ve kontrol
 
 ### Hafta 2: Lansman ve Optimize
 
-**Gün 8:** İlk bülteni gönderme  
-**Gün 9:** Sonuçları analiz etme  
-**Gün 10:** İkinci e-posta (farklı konu satırı testi)  
-**Gün 11:** Otomasyon kurulumu (hoş geldin serisi)  
-**Gün 12:** Segment oluşturma  
-**Gün 13:** Üçüncü e-posta (A/B test)  
+**Gün 8:** İlk bülteni gönderme
+**Gün 9:** Sonuçları analiz etme
+**Gün 10:** İkinci e-posta (farklı konu satırı testi)
+**Gün 11:** Otomasyon kurulumu (hoş geldin serisi)
+**Gün 12:** Segment oluşturma
+**Gün 13:** Üçüncü e-posta (A/B test)
 **Gün 14:** Aylık rapor ve strateji planlama
 
 ---
@@ -684,11 +684,11 @@ Unutmayın:
 ---
 
 📧 **E-posta Pazarlama Danışmanlığı:** [merhaba@celebix.net](mailto:merhaba@celebix.net)
-📞 **Telefon:** [+90 530 209 96 28](tel:+905302099628)  
+📞 **Telefon:** [+90 530 209 96 28](tel:+905302099628)
 📬 **Bültenimize Katılın:** [Abone Ol](/tr/abone-ol) *(örnek)*
 
 ---
 
-*Son Güncelleme: 15 Mart 2026*  
-*Yazar: Celebix Pazarlama Ekibi*  
+*Son Güncelleme: 15 Mart 2026*
+*Yazar: Celebix Pazarlama Ekibi*
 *Okuma Süresi: 9 dakika*

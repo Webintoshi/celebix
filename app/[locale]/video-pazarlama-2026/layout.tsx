@@ -19,7 +19,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       canonical: `/${locale}/video-pazarlama-2026`,
       languages: {
         tr: "/tr/video-pazarlama-2026",
-        en: "/en/video-marketing-2026",
+        en: "/en/video-pazarlama-2026",
+        "x-default": "/tr/video-pazarlama-2026",
       },
     },
     openGraph: {
