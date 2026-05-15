@@ -11,8 +11,6 @@
  */
 import { PRIMARY_HOST, SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
-import { PRIMARY_HOST, SITE_URL, absoluteSiteUrl } from "@/lib/site";
-
 export interface PingConfig {
   url: string;
   engines?: ('google' | 'bing' | 'yandex' | 'indexnow')[];
