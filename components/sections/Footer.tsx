@@ -33,8 +33,8 @@ export default function Footer({ locale }: { locale: string }) {
   ];
 
   return (
-    <footer className="bg-dark-900 text-light-100 pt-20 pb-8 w-full">
-      <div className="w-full px-3 sm:px-4 lg:px-6 xl:px-8">
+    <footer className="w-full bg-dark-900 pt-20 pb-8 text-light-100">
+      <div className="container-max">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Column */}
           <motion.div

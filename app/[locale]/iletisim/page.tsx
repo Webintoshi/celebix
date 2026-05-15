@@ -53,7 +53,7 @@ const contactInfo = [
 ];
 
 const socialLinks = [
-  { icon: Instagram, label: "Instagram", href: "https://instagram.com/celebix.co" },
+  { icon: Instagram, label: "Instagram", href: "https://instagram.com/celebix.net" },
   { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/company/celebix" },
   { icon: Twitter, label: "X (Twitter)", href: "https://x.com/celebix" },
 ];

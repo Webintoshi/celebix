@@ -38,7 +38,7 @@ export default function LocaleLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
-      <body className={`${inter.className} bg-light-100 text-dark-900 antialiased overflow-x-hidden safe-area-inset`}>
+      <body className={`${inter.className} bg-light-100 text-dark-900 antialiased overflow-x-hidden`}>
         {/* Google Tag Manager - NoScript */}
         <noscript
           dangerouslySetInnerHTML={{
