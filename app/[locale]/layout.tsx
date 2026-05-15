@@ -20,7 +20,7 @@ export const viewport: Viewport = {
 };
 
 // Google Tag Manager ID
-const GTM_ID = "GTM-WXQCTF5D";
+const GTM_ID = "GTM-NLZFTZ3L";
 
 export default function LocaleLayout({
   children,

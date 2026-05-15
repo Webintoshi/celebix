@@ -398,7 +398,7 @@ Currently, the project does not have automated tests configured. Testing is done
 - IndexNow API uses hardcoded key in `public/celebix-index-key-2025.txt`
 
 ### Content Security
-- Google Tag Manager ID is hardcoded: `GTM-WXQCTF5D`
+- Google Tag Manager ID is hardcoded: `GTM-NLZFTZ3L`
 - Scripts use `dangerouslySetInnerHTML` for GTM (unavoidable)
 
 ---

@@ -7,7 +7,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 // Google Tag Manager ID
-const GTM_ID = "GTM-WXQCTF5D";
+const GTM_ID = "GTM-NLZFTZ3L";
 
 // Viewport configuration (separate export for Next.js 14+)
 export const viewport: Viewport = {
