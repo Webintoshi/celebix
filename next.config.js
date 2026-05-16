@@ -25,6 +25,29 @@ const nextConfig = {
   
   async redirects() {
     return [
+      // Specific legacy SEO redirects
+      {
+        source: '/tr/blog/google-ads-2024-rehberi',
+        has: [
+          {
+            type: 'host',
+            value: 'www.celebix.co',
+          },
+        ],
+        destination: 'https://celebix.net/tr/blog/google-ads-butce-optimizasyonu-2026',
+        statusCode: 301,
+      },
+      {
+        source: '/tr/blog/google-ads-2024-rehberi',
+        has: [
+          {
+            type: 'host',
+            value: 'celebix.co',
+          },
+        ],
+        destination: 'https://celebix.net/tr/blog/google-ads-butce-optimizasyonu-2026',
+        statusCode: 301,
+      },
       // Legacy domain redirects
       {
         source: '/:path*',
