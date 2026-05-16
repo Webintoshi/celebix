@@ -25,17 +25,18 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
   
   const title = isTr ? post.title : post.titleEn;
-  const description = isTr ? post.excerpt : post.excerptEn;
+  const metaTitle = isTr ? post.metaTitle ?? `${title} | Celebix` : post.metaTitleEn ?? `${title} | Celebix`;
+  const description = isTr ? post.metaDescription ?? post.excerpt : post.metaDescriptionEn ?? post.excerptEn;
   const keywords = isTr ? post.keywords : post.keywordsEn;
   const url = absoluteSiteUrl(`/${locale}/blog/${slug}`);
   
   return {
-    title: `${title} | Celebix`,
+    title: metaTitle,
     description,
     keywords: keywords.join(", "),
     authors: [{ name: post.author }],
     openGraph: {
-      title: `${title} | Celebix`,
+      title: metaTitle,
       description,
       type: "article",
       publishedTime: post.date,
@@ -55,7 +56,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     },
     twitter: {
       card: "summary_large_image",
-      title: `${title} | Celebix`,
+      title: metaTitle,
       description,
       images: [absoluteSiteUrl("/og-image.webp")],
     },
@@ -109,7 +110,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     headline: isTr ? post.title : post.titleEn,
-    description: isTr ? post.excerpt : post.excerptEn,
+    description: isTr ? post.metaDescription ?? post.excerpt : post.metaDescriptionEn ?? post.excerptEn,
     image: absoluteSiteUrl("/og-image.webp"),
     datePublished: post.date,
     dateModified: post.date,
