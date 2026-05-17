@@ -2,6 +2,10 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { SITE_URL, getHostName, isOldHost } from "@/lib/site";
 
+const LEGACY_PATH_REDIRECTS: Record<string, string> = {
+  "/tr/blog/google-ads-2024-rehberi": "/tr/blog/google-ads-butce-optimizasyonu-2026",
+};
+
 function buildPublicRedirectUrl(request: NextRequest, pathname: string) {
   const destination = new URL(pathname, SITE_URL);
   destination.search = request.nextUrl.search;
@@ -13,6 +17,12 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   let targetPathname = pathname;
   let shouldRedirect = false;
+
+  const legacyRedirectTarget = LEGACY_PATH_REDIRECTS[pathname];
+  if (legacyRedirectTarget) {
+    targetPathname = legacyRedirectTarget;
+    shouldRedirect = true;
+  }
 
   if (isOldHost(host)) {
     shouldRedirect = true;
