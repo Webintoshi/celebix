@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       languages: {
         tr: "/tr/portfoy",
         en: "/en/portfoy",
+        "x-default": "/tr/portfoy",
       },
     },
     openGraph: {

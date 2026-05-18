@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       languages: {
         tr: "/tr/e-ticaret-paketleri",
         en: "/en/e-ticaret-paketleri",
+        "x-default": "/tr/e-ticaret-paketleri",
       },
     },
     openGraph: {

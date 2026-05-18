@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       languages: {
         tr: "/tr/dijital-pazarlama",
         en: "/en/dijital-pazarlama",
+        "x-default": "/tr/dijital-pazarlama",
       },
     },
     openGraph: {

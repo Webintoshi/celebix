@@ -51,6 +51,7 @@ export default function Navigation({ locale }: { locale: string }) {
   const isTr = locale === "tr";
   const navLinks = isTr ? navLinksTr : navLinksEn;
   const otherLocale = isTr ? "en" : "tr";
+  const buildLocalizedHref = (href: string) => href === "/" ? `/${locale}` : `/${locale}${href}`;
   
   const switchLocalePath = pathname.replace(`/${locale}`, `/${otherLocale}`);
 
@@ -113,7 +114,7 @@ export default function Navigation({ locale }: { locale: string }) {
                               {link.children.map((child) => (
                                 <Link
                                   key={child.href}
-                                  href={`/${locale}${child.href}`}
+                                  href={buildLocalizedHref(child.href)}
                                   className="block px-4 py-2 text-small text-dark-900/70 hover:text-dark-900 hover:bg-light-100 transition-colors"
                                 >
                                   {child.label}
@@ -126,7 +127,7 @@ export default function Navigation({ locale }: { locale: string }) {
                     </>
                   ) : (
                     <Link
-                      href={`/${locale}${link.href}`}
+                      href={buildLocalizedHref(link.href)}
                       className="text-small text-dark-900/70 hover:text-dark-900 transition-colors relative group"
                     >
                       {link.label}
@@ -185,7 +186,7 @@ export default function Navigation({ locale }: { locale: string }) {
                 {navLinks.map((link) => (
                   <div key={link.href}>
                     <Link
-                      href={`/${locale}${link.href}`}
+                      href={buildLocalizedHref(link.href)}
                       onClick={() => !link.children && setIsMobileMenuOpen(false)}
                       className="text-h3 text-dark-900 py-3 border-b border-dark-900/5"
                     >
@@ -196,7 +197,7 @@ export default function Navigation({ locale }: { locale: string }) {
                         {link.children.map((child) => (
                           <Link
                             key={child.href}
-                            href={`/${locale}${child.href}`}
+                            href={buildLocalizedHref(child.href)}
                             onClick={() => setIsMobileMenuOpen(false)}
                             className="block text-body text-dark-900/70 py-2"
                           >
