@@ -180,6 +180,31 @@ export default function OrduSoftwarePage({ params }: { params: { locale: string 
                     : "Leading software company in the Black Sea Region. Web, mobile and enterprise software solutions. Istanbul quality, 30% more affordable."
                   }
                 </p>
+                <p className="text-base text-dark-600 mb-8 leading-relaxed">
+                  {isTr ? (
+                    <>
+                      Yerel görünürlüğünü reklam tarafında da güçlendirmek isteyen ekipler için hazırladığımız{" "}
+                      <Link
+                        href={`/${locale}/blog/ordu-google-ads-danismanligi`}
+                        className="font-medium text-dark-900 underline decoration-indigo-500/50 underline-offset-4 transition-colors hover:text-indigo-600"
+                      >
+                        Ordu işletmeleri için Google Ads rehberi
+                      </Link>
+                      , kampanya kurgusu ile dönüşüm ölçümünü aynı çerçevede özetler.
+                    </>
+                  ) : (
+                    <>
+                      If you also want stronger local visibility on the advertising side, our{" "}
+                      <Link
+                        href={`/${locale}/blog/ordu-google-ads-danismanligi`}
+                        className="font-medium text-dark-900 underline decoration-indigo-500/50 underline-offset-4 transition-colors hover:text-indigo-600"
+                      >
+                        guide for Ordu businesses using Google Ads
+                      </Link>{" "}
+                      brings campaign structure and conversion measurement together in one place.
+                    </>
+                  )}
+                </p>
                 
                 <div className="flex flex-col sm:flex-row gap-4 mb-8">
                   <Link

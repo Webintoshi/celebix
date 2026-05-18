@@ -191,6 +191,33 @@ export default function DigitalMarketing({ params }: { params: { locale: string 
                         </div>
                         <h3 className="font-display text-xl text-dark-900 mb-3">{isTr ? feature.title : feature.titleEn}</h3>
                         <p className="text-small text-dark-900/60">{isTr ? feature.description : feature.descriptionEn}</p>
+                        {index === 0 && (
+                          <p className="mt-3 text-small text-dark-900/60">
+                            {isTr ? (
+                              <>
+                                Ordu ve çevresinde kampanya kurulumu ile dönüşüm takibini birlikte ele aldığımız{" "}
+                                <Link
+                                  href={`/${locale}/blog/ordu-google-ads-danismanligi`}
+                                  className="font-medium text-dark-900 underline decoration-orange-500/50 underline-offset-4 transition-colors hover:text-orange-500"
+                                >
+                                  Ordu Google Ads danışmanlığı rehberimiz
+                                </Link>{" "}
+                                iyi bir başlangıç noktasıdır.
+                              </>
+                            ) : (
+                              <>
+                                For businesses targeting Ordu and nearby cities, our{" "}
+                                <Link
+                                  href={`/${locale}/blog/ordu-google-ads-danismanligi`}
+                                  className="font-medium text-dark-900 underline decoration-orange-500/50 underline-offset-4 transition-colors hover:text-orange-500"
+                                >
+                                  Google Ads consulting in Ordu guide
+                                </Link>{" "}
+                                covers the core checks around campaign setup and conversion tracking.
+                              </>
+                            )}
+                          </p>
+                        )}
                       </div>
                       <div className="lg:w-1/2">
                         <div className="rounded-xl overflow-hidden">
