@@ -1,6 +1,6 @@
 export const SITE_URL = "https://celebix.net";
 export const PRIMARY_HOST = "celebix.net";
-export const OLD_HOSTS = ["celebix.co", "www.celebix.co", "www.celebix.net"] as const;
+export const REDIRECT_HOSTS = ["www.celebix.net"] as const;
 
 export function absoluteSiteUrl(pathname = "/") {
   const normalizedPathname = pathname.startsWith("/") ? pathname : `/${pathname}`;
@@ -16,16 +16,16 @@ export function getHostName(value?: string | null) {
   return value?.split(":")[0].toLowerCase() ?? "";
 }
 
-export function isOldHost(value?: string | null) {
+export function isRedirectHost(value?: string | null) {
   const hostname = getHostName(value);
 
-  return OLD_HOSTS.includes(hostname as (typeof OLD_HOSTS)[number]);
+  return REDIRECT_HOSTS.includes(hostname as (typeof REDIRECT_HOSTS)[number]);
 }
 
 export function isRecognizedSiteHost(value?: string | null) {
   const hostname = getHostName(value);
 
-  return hostname === PRIMARY_HOST || isOldHost(hostname);
+  return hostname === PRIMARY_HOST || isRedirectHost(hostname);
 }
 
 export function normalizeSiteUrl(url: string) {

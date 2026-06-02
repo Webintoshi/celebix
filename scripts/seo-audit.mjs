@@ -17,9 +17,14 @@ const importantUrls = [
 ];
 
 const forbiddenPatterns = [
-  { pattern: "https://celebix.co", label: "old HTTPS production domain" },
-  { pattern: "http://celebix.co", label: "old HTTP production domain" },
-  { pattern: "merhaba@celebix.co", label: "old contact email" },
+  {
+    pattern: /https?:\/\/(?:www\.)?celebix\.(?!net\b)[a-z.]+/gi,
+    label: "non-.net Celebix production domain",
+  },
+  {
+    pattern: /merhaba@celebix\.(?!net\b)[a-z.]+/gi,
+    label: "non-.net contact email",
+  },
 ];
 
 const previewPatterns = [
@@ -79,8 +84,18 @@ function collectProductionFiles() {
 function ensureNoForbiddenProductionStrings(files) {
   for (const file of files) {
     for (const { pattern, label } of forbiddenPatterns) {
-      if (file.content.includes(pattern)) {
-        addError(`${file.relativePath} still contains ${label}: ${pattern}`);
+      if (typeof pattern === "string") {
+        if (file.content.includes(pattern)) {
+          addError(`${file.relativePath} still contains ${label}: ${pattern}`);
+        }
+        continue;
+      }
+
+      const matches = file.content.match(pattern);
+      if (matches) {
+        addError(
+          `${file.relativePath} still contains ${label}: ${[...new Set(matches)].join(", ")}`
+        );
       }
     }
 

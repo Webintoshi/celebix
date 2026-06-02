@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { SITE_URL, getHostName, isOldHost } from "@/lib/site";
+import { SITE_URL, getHostName, isRedirectHost } from "@/lib/site";
 
 const LEGACY_PATH_REDIRECTS: Record<string, string> = {
   "/tr/blog/google-ads-2024-rehberi": "/tr/blog/google-ads-butce-optimizasyonu-2026",
@@ -24,7 +24,7 @@ export function middleware(request: NextRequest) {
     shouldRedirect = true;
   }
 
-  if (isOldHost(host)) {
+  if (isRedirectHost(host)) {
     shouldRedirect = true;
   }
 
