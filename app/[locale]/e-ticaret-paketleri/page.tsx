@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { 
   ArrowRight, 
@@ -29,6 +30,7 @@ import ETicaretHeroVisual from "@/components/ETicaretHeroVisual";
 import MarketplaceVisual from "@/components/MarketplaceVisual";
 import AISEOVisual from "@/components/AISEOVisual";
 import FeatureVisual from "@/components/FeatureVisual";
+import { buildPolarEcommerceCheckoutUrl } from "@/lib/polar";
 
 // Comparison Table Cell Component
 function ComparisonCell({ data, isHighlight = false }: { data: { value: string; label: string }; isHighlight?: boolean }) {
@@ -472,6 +474,10 @@ const faqs = [
 export default function ETicaretPaketleri({ params }: { params: { locale: string } }) {
   const { locale } = params;
   const isTr = locale === "tr";
+  const checkoutUrl = buildPolarEcommerceCheckoutUrl(locale);
+  const searchParams = useSearchParams();
+  const checkoutSuccess = searchParams.get("checkout") === "success";
+  const checkoutId = searchParams.get("checkout_id");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
@@ -488,6 +494,35 @@ export default function ETicaretPaketleri({ params }: { params: { locale: string
     <>
       <Navigation locale={locale} />
       <main>
+        {checkoutSuccess && (
+          <section className="pt-28 pb-4 bg-light-100">
+            <div className="container-max mx-auto px-6 lg:px-16">
+              <div className="rounded-2xl border border-green-200 bg-green-50 px-6 py-5 text-green-900">
+                <div className="flex items-start gap-3">
+                  <CheckCircle size={22} className="mt-0.5 flex-shrink-0 text-green-600" />
+                  <div>
+                    <p className="font-medium">
+                      {isTr
+                        ? "Ödeme başarılı görünüyor. Siparişiniz bize ulaştı."
+                        : "Payment looks successful. Your order has reached us."}
+                    </p>
+                    <p className="mt-1 text-sm text-green-800/80">
+                      {isTr
+                        ? "Ekibimiz kısa süre içinde sizinle iletişime geçecek."
+                        : "Our team will contact you shortly."}
+                    </p>
+                    {checkoutId && (
+                      <p className="mt-2 text-xs text-green-900/60">
+                        Checkout ID: {checkoutId}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Hero Section */}
         <section className="relative pt-32 pb-12 overflow-hidden bg-light-100">
           <div className="container-max mx-auto px-6 lg:px-16">
@@ -515,18 +550,18 @@ export default function ETicaretPaketleri({ params }: { params: { locale: string
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Link
-                    href="#demo"
+                  <a
+                    href={checkoutUrl}
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-dark-900 text-light-100 font-medium rounded-full hover:bg-dark-800 transition-colors"
                   >
-                    {isTr ? "Ücretsiz Demo Talep Et" : "Request Free Demo"}
+                    {isTr ? "Güvenli Ödeme ile Başla" : "Start Secure Checkout"}
                     <ArrowRight size={18} />
-                  </Link>
+                  </a>
                   <Link
-                    href="#pricing"
+                    href="#demo"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 text-dark-900 font-medium rounded-full border border-dark-900/20 hover:border-dark-900/40 transition-colors"
                   >
-                    {isTr ? "Fiyatları Gör" : "See Pricing"}
+                    {isTr ? "Ücretsiz Demo Talep Et" : "Request Free Demo"}
                   </Link>
                 </div>
 
@@ -773,16 +808,28 @@ export default function ETicaretPaketleri({ params }: { params: { locale: string
                   ))}
                 </ul>
 
-                <Link
-                  href="#demo"
+                <a
+                  href={checkoutUrl}
                   className="inline-flex items-center justify-center gap-2 w-full px-8 py-4 bg-dark-900 text-light-100 font-medium rounded-full hover:bg-dark-800 transition-colors"
                 >
-                  {isTr ? "Hemen Başla" : "Get Started"}
+                  {isTr ? "Güvenli Ödeme ile Devam Et" : "Continue to Secure Checkout"}
                   <ArrowRight size={18} />
+                </a>
+
+                <Link
+                  href="#demo"
+                  className="mt-4 inline-flex items-center justify-center gap-2 text-sm font-medium text-dark-900/70 hover:text-dark-900 transition-colors"
+                >
+                  {isTr ? "Önce ücretsiz demo isteyin" : "Request a free demo first"}
                 </Link>
 
                 <p className="mt-4 text-small text-dark-900/40">
                   {isTr ? "Rakiplerde yıllık ortalama 35.000₺ - 50.000₺+" : "Competitors average 35K-50K+ annually"}
+                </p>
+                <p className="mt-2 text-small text-dark-900/50">
+                  {isTr
+                    ? "Ödeme, Polar secure checkout üzerinden alınır."
+                    : "Payment is processed through Polar secure checkout."}
                 </p>
               </div>
             </motion.div>
