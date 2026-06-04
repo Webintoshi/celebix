@@ -1,7 +1,9 @@
 import type { Viewport } from 'next';
 import { Inter } from "next/font/google";
+import { notFound } from "next/navigation";
 import "../globals.css";
 import FloatingButtons from "@/components/FloatingButtons";
+import { isLocale } from "@/lib/i18n";
 
 // Font optimization for Core Web Vitals
 const inter = Inter({ 
@@ -29,6 +31,10 @@ export default function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  if (!isLocale(locale)) {
+    notFound();
+  }
+
   return (
     <html lang={locale} className="scroll-smooth">
       <head>
