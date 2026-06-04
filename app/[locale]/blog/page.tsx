@@ -40,8 +40,11 @@ export default function Blog({ params }: { params: { locale: string } }) {
   // Sort posts by date (newest first) for all post lists
   const sortByDate = (a: BlogPost, b: BlogPost) => new Date(b.date).getTime() - new Date(a.date).getTime();
   
-  const featuredPosts = blogPosts.filter(p => p.featured).sort(sortByDate);
-  const regularPosts = blogPosts.filter(p => !p.featured).sort(sortByDate);
+  // Always surface the newest content first so freshly published posts are visible
+  const sortedPosts = [...blogPosts].sort(sortByDate);
+  const featuredPosts = sortedPosts.slice(0, 3);
+  const featuredSlugs = new Set(featuredPosts.map((post) => post.slug));
+  const regularPosts = sortedPosts.filter((post) => !featuredSlugs.has(post.slug));
 
   const filteredPosts = regularPosts.filter(post => {
     const matchesCategory = activeCategory === "all" || post.category === activeCategory;
