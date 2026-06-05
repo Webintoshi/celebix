@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       languages: {
         tr: "/tr/hakkimizda",
         en: "/en/hakkimizda",
+        "x-default": "/tr/hakkimizda",
       },
     },
     openGraph: {

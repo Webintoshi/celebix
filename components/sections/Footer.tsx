@@ -15,6 +15,7 @@ const socialLinks = [
 export default function Footer({ locale }: { locale: string }) {
   const isTr = locale === "tr";
   const currentYear = new Date().getFullYear();
+  const buildLocalizedHref = (href: string) => href === "/" ? `/${locale}` : `/${locale}${href}`;
 
   const quickLinks = [
     { label: isTr ? "Ana Sayfa" : "Home", href: "/" },
@@ -84,7 +85,7 @@ export default function Footer({ locale }: { locale: string }) {
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
-                    href={`/${locale}${link.href}`}
+                    href={buildLocalizedHref(link.href)}
                     className="text-small text-light-100/60 hover:text-light-100 transition-colors"
                   >
                     {link.label}
@@ -106,7 +107,7 @@ export default function Footer({ locale }: { locale: string }) {
               {productLinks.map((link) => (
                 <li key={link.href}>
                   <Link
-                    href={`/${locale}${link.href}`}
+                    href={buildLocalizedHref(link.href)}
                     className="text-small text-light-100/60 hover:text-light-100 transition-colors"
                   >
                     {link.label}
