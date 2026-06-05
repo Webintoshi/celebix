@@ -1,15 +1,183 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { isLocale, type Locale } from "@/lib/i18n";
 import { SITE_URL, getHostName, isRedirectHost } from "@/lib/site";
 
 const LEGACY_PATH_REDIRECTS: Record<string, string> = {
   "/tr/blog/google-ads-2024-rehberi": "/tr/blog/google-ads-butce-optimizasyonu-2026",
 };
 
+const NON_LOCALIZED_ALLOWED_PREFIXES = new Set(["checkout"]);
+
+const STATIC_PAGE_REDIRECTS: Record<string, string> = {
+  privacy: "gizlilik",
+  terms: "kullanim-kosullari",
+  portfolio: "portfoy",
+  "ordu-software-company": "ordu-yazilim-sirketi",
+};
+
+const STATIC_LOCALIZED_SEGMENTS = new Set([
+  "blog",
+  "celebix-saas-platformu",
+  "dijital-pazarlama",
+  "e-ticaret-paketleri",
+  "eposta-pazarlama-kobi",
+  "gizlilik",
+  "hakkimizda",
+  "iletisim",
+  "kullanim-kosullari",
+  "kurumsal-yazilim",
+  "ordu-yazilim-sirketi",
+  "portfoy",
+  "sosyal-medya",
+  "video-pazarlama-2026",
+]);
+
+const BLOG_PAGE_REDIRECTS: Record<string, string> = {
+  "e-ticarette-basarili-olmanin-yollari": "e-ticaret-rehberi-2026",
+  "eposta-pazarlama-kobi-2026": "eposta-pazarlama-kobi",
+  "google-ads-2024-rehberi": "google-ads-butce-optimizasyonu-2026",
+  "seo-nasil-yapilir-2025": "seo-trendleri-2025",
+  "seo-optimizasyonu-rehberi": "seo-trendleri-2025",
+  "sosyal-medya-trendleri": "sosyal-medya-trendleri-2026",
+};
+
+const BLOG_POST_SLUGS = new Set([
+  "ai-overviews-seo-rehberi-2026",
+  "crm-programi-nedir-kobi-secim-rehberi",
+  "dijital-ajans-secimi",
+  "dijital-pazarlama-stratejileri-2026",
+  "e-ticaret-kargo-lojistik-yonetimi",
+  "e-ticaret-odeme-sistemleri-rehberi",
+  "e-ticaret-paketleri-karsilastirma",
+  "e-ticaret-rehberi-2026",
+  "e-ticaret-seo-urun-sayfalari-optimizasyonu",
+  "e-ticaret-sitesi-kurarken-seo-ve-donusum-hatalari",
+  "e-ticaret-urun-fotografciligi",
+  "eposta-pazarlama-kobi",
+  "erp-yazilimi-nedir",
+  "ga4-ve-gtm-ile-donusum-takibi-rehberi-2026",
+  "google-ads-butce-optimizasyonu-2026",
+  "google-ads-gecersiz-tiklamalar-ve-click-bot-koruma",
+  "google-ads-hesap-denetimi-kontrol-listesi-2026",
+  "google-ads-para-tuketmeden-donusum",
+  "google-haritalar-yorum-yonetimi-2026",
+  "google-isletme-profili-askiya-alindiysa-ne-yapmali",
+  "google-merchant-center-feed-optimizasyonu-2026",
+  "google-search-console-performans-raporu-rehberi-2026",
+  "google-trends-ile-icerik-planlama-2026",
+  "instagram-algoritmasi-2025",
+  "instagram-reels-reklam-verme-rehberi-2026",
+  "instagram-reklam-ucretleri-2026",
+  "kobi-dijital-donusum-rehberi",
+  "kobi-dijital-donusum-rehberi-2026",
+  "komisyonsuz-e-ticaret-2025",
+  "kurumsal-web-sitesi-neden-gerekli",
+  "kurumsal-web-sitesi-tasarim-seo-rehberi-2026",
+  "landing-page-optimizasyonu-rehberi-2026",
+  "linkedin-b2b-satis-stratejileri",
+  "local-seo-rehberi-2026",
+  "looker-studio-reklam-raporlama-panelleri-2026",
+  "meta-ads-library-ile-rakip-reklam-analizi-2026",
+  "meta-conversion-api-kurulumu-2026",
+  "meta-lead-form-reklamlari-optimizasyonu-2026",
+  "microsoft-clarity-ile-landing-page-analizi-2026",
+  "mobil-uygulama-vs-web-uygulama",
+  "ordu-google-ads-danismanligi",
+  "ordu-google-isletme-profili-optimizasyonu",
+  "ordu-yazilim-sirketi",
+  "ordu-yazilim-sirketi-ile-calismanin-avantajlari",
+  "ozel-yazilim-gelistirme-2025-rehberi",
+  "performance-max-kampanyalari-2026",
+  "randevu-sistemi-yazilimi-secim-rehberi-2026",
+  "remarketing-kampanyasi-kurulum-rehberi-2026",
+  "seo-trendleri-2025",
+  "site-haritasi-olusturma-ve-search-consolea-gonderme-2026",
+  "sosyal-medya-trendleri-2026",
+  "tik-profil-nedir",
+  "tiktok-reklam-verme-rehberi-2026",
+  "trendyol-vs-kendi-sitem",
+  "video-pazarlama-2026",
+  "web-sitesi-chatbotu-kurulum-rehberi-2026",
+  "whatsapp-business-api-fiyatlandirma-2026",
+  "whatsapp-business-api-otomasyon-rehberi-2026",
+  "whatsapp-business-platformu-cloud-api-secimi",
+  "whatsapp-katalog-ile-satis-artirma-2026",
+  "yerel-seo-ordu-rehberi",
+  "youtube-reklam-verme-rehberi-2026",
+  "youtube-shorts-reklam-verme-rehberi-2026",
+]);
+
 function buildPublicRedirectUrl(request: NextRequest, pathname: string) {
   const destination = new URL(pathname, SITE_URL);
   destination.search = request.nextUrl.search;
   return destination;
+}
+
+function hasPublicFileExtension(pathname: string) {
+  const lastSegment = pathname.split("/").filter(Boolean).at(-1);
+  return Boolean(lastSegment && lastSegment.includes("."));
+}
+
+function getInvalidRouteRedirect(pathname: string) {
+  if (hasPublicFileExtension(pathname)) {
+    return null;
+  }
+
+  const segments = pathname.split("/").filter(Boolean);
+  if (segments.length === 0) {
+    return null;
+  }
+
+  const [firstSegment, secondSegment, thirdSegment, ...remainingSegments] = segments;
+
+  if (!isLocale(firstSegment)) {
+    return NON_LOCALIZED_ALLOWED_PREFIXES.has(firstSegment) ? null : "/tr";
+  }
+
+  const locale = firstSegment as Locale;
+
+  if (!secondSegment) {
+    return null;
+  }
+
+  const staticRedirectTarget = STATIC_PAGE_REDIRECTS[secondSegment];
+  if (staticRedirectTarget) {
+    return remainingSegments.length === 0
+      ? `/${locale}/${staticRedirectTarget}`
+      : `/${locale}`;
+  }
+
+  if (secondSegment === "blog") {
+    if (!thirdSegment) {
+      return null;
+    }
+
+    if (remainingSegments.length > 0) {
+      return `/${locale}`;
+    }
+
+    const blogRedirectTarget = BLOG_PAGE_REDIRECTS[thirdSegment];
+    if (blogRedirectTarget) {
+      return `/${locale}/blog/${blogRedirectTarget}`;
+    }
+
+    return BLOG_POST_SLUGS.has(thirdSegment) ? null : `/${locale}`;
+  }
+
+  if (secondSegment === "portfoy") {
+    if (!thirdSegment) {
+      return null;
+    }
+
+    return `/${locale}`;
+  }
+
+  if (remainingSegments.length > 0) {
+    return `/${locale}`;
+  }
+
+  return STATIC_LOCALIZED_SEGMENTS.has(secondSegment) ? null : `/${locale}`;
 }
 
 export function middleware(request: NextRequest) {
@@ -39,6 +207,12 @@ export function middleware(request: NextRequest) {
   }
   if (pathname === "/en/") {
     targetPathname = "/en";
+    shouldRedirect = true;
+  }
+
+  const invalidRouteRedirect = getInvalidRouteRedirect(pathname);
+  if (invalidRouteRedirect) {
+    targetPathname = invalidRouteRedirect;
     shouldRedirect = true;
   }
 
