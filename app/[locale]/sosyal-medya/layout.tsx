@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       languages: {
         tr: "/tr/sosyal-medya",
         en: "/en/sosyal-medya",
+        "x-default": "/tr/sosyal-medya",
       },
     },
     openGraph: {

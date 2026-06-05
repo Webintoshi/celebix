@@ -63,6 +63,7 @@ const projectsData = {
 export default function Portfolio({ locale }: { locale: string }) {
   const isTr = locale === "tr";
   const projects = isTr ? projectsData.tr : projectsData.en;
+  const buildLocalizedHref = (href: string) => `/${locale}${href}`;
 
   return (
     <section className="py-16 bg-light-100">
@@ -99,7 +100,7 @@ export default function Portfolio({ locale }: { locale: string }) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Link href={project.link} className="group block">
+                <Link href={buildLocalizedHref(project.link)} className="group block">
                   <div className="glass-card rounded-3xl overflow-hidden hover-lift bg-white h-full">
                     {/* Visual Area */}
                     <div className="relative aspect-[16/10] overflow-hidden bg-dark-900">

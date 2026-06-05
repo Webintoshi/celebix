@@ -17,6 +17,20 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         "x-default": "https://celebix.net/tr/kullanim-kosullari",
       },
     },
+    openGraph: {
+      title: "Kullanım Koşulları | Celebix",
+      description: "Celebix web sitesi kullanım koşulları ve hükümleri.",
+      url: `https://celebix.net/${locale}/kullanim-kosullari`,
+      type: "website",
+      images: [
+        {
+          url: "https://celebix.net/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: "Celebix Kullanım Koşulları",
+        },
+      ],
+    },
   };
 }
 

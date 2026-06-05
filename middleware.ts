@@ -7,6 +7,23 @@ const LEGACY_PATH_REDIRECTS: Record<string, string> = {
   "/tr/blog/google-ads-2024-rehberi": "/tr/blog/google-ads-butce-optimizasyonu-2026",
 };
 
+const CANONICAL_PATH_REDIRECTS: Record<string, string> = {
+  "/e-ticaret-paketleri": "/tr/e-ticaret-paketleri",
+  "/celebix-saas-platformu": "/tr/celebix-saas-platformu",
+  "/kurumsal-yazilim": "/tr/kurumsal-yazilim",
+  "/dijital-pazarlama": "/tr/dijital-pazarlama",
+  "/sosyal-medya": "/tr/sosyal-medya",
+  "/hakkimizda": "/tr/hakkimizda",
+  "/iletisim": "/tr/iletisim",
+  "/portfoy": "/tr/portfoy",
+  "/blog": "/tr/blog",
+  "/gizlilik": "/tr/gizlilik",
+  "/kullanim-kosullari": "/tr/kullanim-kosullari",
+  "/ordu-yazilim-sirketi": "/tr/ordu-yazilim-sirketi",
+  "/video-pazarlama-2026": "/tr/video-pazarlama-2026",
+  "/eposta-pazarlama-kobi": "/tr/eposta-pazarlama-kobi",
+};
+
 const NON_LOCALIZED_ALLOWED_PREFIXES = new Set(["checkout"]);
 
 const STATIC_PAGE_REDIRECTS: Record<string, string> = {
@@ -195,6 +212,12 @@ export function middleware(request: NextRequest) {
     shouldRedirect = true;
   }
 
+  const canonicalRedirectTarget = CANONICAL_PATH_REDIRECTS[pathname];
+  if (canonicalRedirectTarget) {
+    targetPathname = canonicalRedirectTarget;
+    shouldRedirect = true;
+  }
+
   if (isRedirectHost(host)) {
     shouldRedirect = true;
   }
@@ -213,10 +236,12 @@ export function middleware(request: NextRequest) {
     shouldRedirect = true;
   }
 
-  const invalidRouteRedirect = getInvalidRouteRedirect(pathname);
-  if (invalidRouteRedirect) {
-    targetPathname = invalidRouteRedirect;
-    shouldRedirect = true;
+  if (!shouldRedirect) {
+    const invalidRouteRedirect = getInvalidRouteRedirect(pathname);
+    if (invalidRouteRedirect) {
+      targetPathname = invalidRouteRedirect;
+      shouldRedirect = true;
+    }
   }
 
   if (shouldRedirect) {

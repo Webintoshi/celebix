@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       languages: {
         tr: "/tr/kurumsal-yazilim",
         en: "/en/kurumsal-yazilim",
+        "x-default": "/tr/kurumsal-yazilim",
       },
     },
     openGraph: {

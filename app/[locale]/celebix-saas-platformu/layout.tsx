@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       languages: {
         tr: "/tr/celebix-saas-platformu",
         en: "/en/celebix-saas-platformu",
+        "x-default": "/tr/celebix-saas-platformu",
       },
     },
     openGraph: {

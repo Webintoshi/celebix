@@ -214,6 +214,7 @@ const clientProjects = [
 export default function Portfolio({ params }: { params: { locale: string } }) {
   const { locale } = params;
   const isTr = locale === "tr";
+  const buildLocalizedHref = (href: string) => `/${locale}${href}`;
 
   const products = portfolioItems.filter(item => item.type === "product");
   const services = portfolioItems.filter(item => item.type === "service");
@@ -275,7 +276,7 @@ export default function Portfolio({ params }: { params: { locale: string } }) {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Link href={item.link} className="group block">
+                    <Link href={buildLocalizedHref(item.link)} className="group block">
                       <div className="glass-card rounded-3xl overflow-hidden bg-white hover-lift h-full">
                         {/* Visual */}
                         <div className="relative aspect-[16/10] overflow-hidden bg-dark-900">
@@ -382,7 +383,7 @@ export default function Portfolio({ params }: { params: { locale: string } }) {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Link href={item.link} className="group block">
+                    <Link href={buildLocalizedHref(item.link)} className="group block">
                       <div className="glass-card rounded-2xl p-6 bg-white/5 border-white/10 hover:bg-white/10 transition-all h-full">
                         <div className="flex items-start justify-between mb-4">
                           <div className="w-14 h-14 rounded-xl bg-aurora-indigo/20 flex items-center justify-center">

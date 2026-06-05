@@ -17,6 +17,20 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         "x-default": "https://celebix.net/tr/gizlilik",
       },
     },
+    openGraph: {
+      title: "Gizlilik Politikası | Celebix",
+      description: "Celebix gizlilik politikası ve KVKK aydınlatma metni. Kişisel verilerinizin korunması hakkında bilgiler.",
+      url: `https://celebix.net/${locale}/gizlilik`,
+      type: "website",
+      images: [
+        {
+          url: "https://celebix.net/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: "Celebix Gizlilik Politikası",
+        },
+      ],
+    },
   };
 }
 

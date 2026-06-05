@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       languages: {
         tr: "/tr/iletisim",
         en: "/en/iletisim",
+        "x-default": "/tr/iletisim",
       },
     },
     openGraph: {
