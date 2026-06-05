@@ -44,6 +44,8 @@ const BLOG_PAGE_REDIRECTS: Record<string, string> = {
 
 const BLOG_POST_SLUGS = new Set([
   "ai-overviews-seo-rehberi-2026",
+  "call-tracking-rehberi-2026",
+  "core-web-vitals-optimizasyonu-rehberi-2026",
   "crm-programi-nedir-kobi-secim-rehberi",
   "dijital-ajans-secimi",
   "dijital-pazarlama-stratejileri-2026",
@@ -84,6 +86,7 @@ const BLOG_POST_SLUGS = new Set([
   "meta-lead-form-reklamlari-optimizasyonu-2026",
   "microsoft-clarity-ile-landing-page-analizi-2026",
   "mobil-uygulama-vs-web-uygulama",
+  "n8n-ile-isletme-otomasyonu-rehberi-2026",
   "ordu-google-ads-danismanligi",
   "ordu-google-isletme-profili-optimizasyonu",
   "ordu-yazilim-sirketi",
