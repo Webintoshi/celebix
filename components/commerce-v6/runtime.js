@@ -566,7 +566,7 @@ export function mountCommerce(root) {
             var workspace = camera.querySelector('.workspace'), storeScene = $('#storeScene'), panelDialog = $('#panelDialog'), storeDialog = $('#storeDialog'), actionDialog = $('#actionDialog');
             var api = workspaceApi, copies = Array.from(document.querySelectorAll('[data-copy]'));
             var positions = [0, .17, .335, .50, .665, .835, 1], bounds = [.085, .2525, .4175, .5825, .75, .9175];
-            var names = ['Genel bakış', 'Ürün yönetimi', 'Mağaza görünümü', 'Sipariş detayları', 'Gönderim durumu', 'Müşteri bilgileri', 'Mağazanızı açın'];
+            var names = ['İlk adım', 'İlk ürününüz', 'Kendi mağazanız', 'İlk siparişiniz', 'Gönderim', 'İlk müşteriniz', 'Sıra sizde'];
             var hints = ['Celebix E-Ticaret', 'Fiyat ve stok bilgileri tek ekranda', 'Ürünleriniz kendi mağazanızda', 'Ürün, tutar ve müşteri bilgileri', 'Hazırlıktan gönderime durum takibi', 'Müşteri ve sipariş bilgileri bir arada', 'Kendi mağazanızı oluşturmaya başlayın'];
             var progress = 0, target = 0, raf = 0, lastTime = 0, playing = false, playProgress = 0, activeScene = -1, activePhase = '', keys = [], returnFocus = null, pendingScene = null, toastTimer;
             var productImages = {}, manualScene = null, manualOrderLabel = '', handoffClosures = new WeakSet();
@@ -1089,6 +1089,9 @@ export function mountCommerce(root) {
             }
             function updateMotion() {
                 root.dataset.reduced = String(reduced());
+                $('[data-story-label]').textContent = reduced() ? 'Hikâyeyi keşfet' : 'Hikâyeyi izle';
+                $('[data-story-time]').textContent = reduced() ? '7 sahne' : '21 sn';
+                $('[data-begin-story]').setAttribute('aria-label', reduced() ? 'Hikâyeyi keşfet — sahneleri elle ilerlet' : 'Hikâyeyi izle — 21 saniyelik sunum');
                 ['#motionToggle', '#motionToggleMobile'].forEach(function (id) { $(id).setAttribute('aria-checked', String(reduced())); $(id).disabled = reduce.matches; $(id).title = reduce.matches ? 'Cihazınızda azaltılmış hareket etkin.' : ''; });
                 document.querySelectorAll('[data-motion-note]').forEach(function (el) { el.textContent = reduce.matches ? 'Cihazınızda hareket azaltma açık.' : 'Hareketi azaltın.'; });
                 stop();
