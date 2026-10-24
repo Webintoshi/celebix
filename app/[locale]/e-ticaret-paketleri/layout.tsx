@@ -1,10 +1,44 @@
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import { OrganizationSchema, BreadcrumbSchema, EcommerceProductSchema, FAQSchema } from "@/components/SchemaScript";
+
+export function generateViewport({ params }: { params: { locale: string } }): Viewport {
+  return { themeColor: params.locale === 'tr' ? '#f8f8f8' : '#4F46E5' };
+}
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   const isTr = locale === "tr";
   
+  if (isTr) {
+    const title = 'E-Ticaret Sitenizi Kurun, Mağazanızı Yönetin | Celebix';
+    const description = 'Celebix ile kendi e-ticaret sitenizi kurun. Ürünlerinizi, stoklarınızı ve siparişlerinizi tek panelden yönetin. Mağaza yönetimini etkileşimli demoda keşfedin.';
+    const imageUrl = 'https://celebix.net/og-image.webp';
+
+    return {
+      title: { absolute: title },
+      description,
+      alternates: {
+        canonical: '/tr/e-ticaret-paketleri',
+        languages: { tr: '/tr/e-ticaret-paketleri', en: '/en/e-ticaret-paketleri' },
+      },
+      openGraph: {
+        title,
+        description,
+        url: 'https://celebix.net/tr/e-ticaret-paketleri',
+        type: 'website',
+        images: [{ url: imageUrl, width: 1200, height: 630, alt: 'Celebix E-Ticaret' }],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        site: '@celebix',
+        creator: '@celebix',
+        title,
+        description,
+        images: [imageUrl],
+      },
+    };
+  }
+
   return {
     title: isTr
       ? "Premium E-Ticaret Platformu"
@@ -51,6 +85,16 @@ export default function ETicaretLayout({
   params: { locale: string };
 }) {
   const isTr = locale === "tr";
+  if (isTr) {
+    const software = { '@context': 'https://schema.org', '@type': 'SoftwareApplication', name: 'Celebix E-Ticaret', applicationCategory: 'BusinessApplication', operatingSystem: 'Web', url: 'https://celebix.net/tr/e-ticaret-paketleri', description: 'Ürün, mağaza, sipariş ve müşteri yönetimi.' };
+    return <>
+      <OrganizationSchema />
+      <BreadcrumbSchema items={[{ name: 'Ana Sayfa', url: '/tr' }, { name: 'Celebix E-Ticaret', url: '/tr/e-ticaret-paketleri' }]} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(software).replace(/</g, '\u003c') }} />
+      {children}
+    </>;
+  }
+
   
   const breadcrumbItems = [
     { name: isTr ? "Ana Sayfa" : "Home", url: `/${locale}` },
