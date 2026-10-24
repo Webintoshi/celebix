@@ -1,3 +1,4 @@
+@import "../components/commerce-v6/commerce.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

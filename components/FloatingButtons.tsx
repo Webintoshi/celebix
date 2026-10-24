@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { Instagram } from "lucide-react";
 
 // WhatsApp phone number
@@ -8,6 +9,9 @@ const WHATSAPP_MESSAGE = "Merhaba, Celebix hakkında bilgi almak istiyorum.";
 const INSTAGRAM_USERNAME = "celebix.net";
 
 export default function FloatingButtons() {
+  const pathname = usePathname();
+  if (pathname === "/tr/e-ticaret-paketleri" || pathname === "/tr/e-ticaret-paketleri/") return null;
+
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     WHATSAPP_MESSAGE
   )}`;
