@@ -491,4 +491,11 @@
 .celebix-commerce{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;box-sizing:border-box;isolation:isolate;min-height:100svh;line-height:normal}
 .celebix-commerce h1,.celebix-commerce h2,.celebix-commerce p{text-wrap:wrap;overflow-wrap:normal}
 html:has(.celebix-commerce){scroll-behavior:auto!important;scrollbar-gutter:stable;overflow-anchor:none;scrollbar-width:thin;scrollbar-color:#bdbdbd #f8f8f8}
+
+.celebix-commerce #beginStory{gap:14px;min-height:54px;padding:0 20px;font-size:14px;font-weight:600;letter-spacing:-.2px}
+.celebix-commerce #beginStory .story-play{width:30px;height:30px;display:grid;place-items:center;border:1px solid #f8f8f86b;border-radius:50%;flex:none;transition:background .2s,transform .2s}
+.celebix-commerce #beginStory .story-play svg{width:12px;height:12px;fill:currentColor;stroke:none;transform:translateX(1px)}
+.celebix-commerce #beginStory .story-time{font-size:11px;font-weight:500;line-height:20px;letter-spacing:.1px;border-left:1px solid #f8f8f85c;padding-left:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.celebix-commerce #beginStory:hover .story-play{background:#f8f8f81a;transform:scale(1.04)}
+@media(max-width:700px){.celebix-commerce .intro h1{font-size:clamp(29px,8.7vw,40px);line-height:1.1;letter-spacing:-1.7px}.celebix-commerce #beginStory{gap:12px;min-height:52px;padding:0 16px;font-size:13px}.celebix-commerce #beginStory .story-time{padding-left:12px}}
 }
