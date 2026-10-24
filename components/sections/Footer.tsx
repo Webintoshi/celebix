@@ -219,14 +219,7 @@ export default function Footer({ locale }: { locale: string }) {
           <p className="text-micro text-light-100/40">
             © {currentYear} Celebix. {isTr ? "Tüm hakları saklıdır." : "All rights reserved."}
           </p>
-          <div className="flex items-center gap-6">
-            <Link href={`/${locale}/gizlilik`} className="text-micro text-light-100/40 hover:text-light-100/60 transition-colors">
-              {isTr ? "Gizlilik Politikası" : "Privacy Policy"}
-            </Link>
-            <Link href={`/${locale}/kullanim-kosullari`} className="text-micro text-light-100/40 hover:text-light-100/60 transition-colors">
-              {isTr ? "Kullanım Koşulları" : "Terms of Use"}
-            </Link>
-          </div>
+          {/* Legal navigation is shared by ServicePolicyFooter in the locale layout. */}
         </div>
       </div>
     </footer>

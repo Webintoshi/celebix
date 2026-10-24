@@ -10,7 +10,7 @@ const INSTAGRAM_USERNAME = "celebix.net";
 
 export default function FloatingButtons() {
   const pathname = usePathname();
-  if (pathname === "/tr/e-ticaret-paketleri" || pathname === "/tr/e-ticaret-paketleri/") return null;
+  if (pathname === "/tr/e-ticaret-paketleri" || pathname === "/tr/e-ticaret-paketleri/" || /^\/(?:tr|en)\/teslimat-ve-iade\/?$/.test(pathname || "")) return null;
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     WHATSAPP_MESSAGE

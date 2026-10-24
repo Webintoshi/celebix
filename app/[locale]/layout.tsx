@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import FloatingButtons from "@/components/FloatingButtons";
+import ServicePolicyFooter from "@/components/ServicePolicyFooter";
 import { isLocale } from "@/lib/i18n";
 
 // Font optimization for Core Web Vitals
@@ -53,6 +54,7 @@ export default function LocaleLayout({
           }}
         />
         {children}
+        <ServicePolicyFooter locale={locale} />
         <FloatingButtons />
       </body>
     </html>

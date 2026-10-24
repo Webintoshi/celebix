@@ -23,6 +23,8 @@ const STATIC_ROUTE_DEFINITIONS = [
   { pathname: "/en/portfoy", priority: 0.8, changeFrequency: "weekly" as const },
   { pathname: "/tr/blog", priority: 0.7, changeFrequency: "daily" as const },
   { pathname: "/en/blog", priority: 0.7, changeFrequency: "daily" as const },
+  { pathname: "/tr/teslimat-ve-iade", priority: 0.3, changeFrequency: "monthly" as const },
+  { pathname: "/en/teslimat-ve-iade", priority: 0.3, changeFrequency: "monthly" as const },
   { pathname: "/tr/gizlilik", priority: 0.3, changeFrequency: "monthly" as const },
   { pathname: "/en/gizlilik", priority: 0.3, changeFrequency: "monthly" as const },
   { pathname: "/tr/kullanim-kosullari", priority: 0.3, changeFrequency: "monthly" as const },

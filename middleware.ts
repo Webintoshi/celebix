@@ -26,6 +26,7 @@ const STATIC_LOCALIZED_SEGMENTS = new Set([
   "hakkimizda",
   "iletisim",
   "kullanim-kosullari",
+  "teslimat-ve-iade",
   "kurumsal-yazilim",
   "ordu-yazilim-sirketi",
   "portfoy",
