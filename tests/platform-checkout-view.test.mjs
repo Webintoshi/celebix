@@ -25,6 +25,23 @@ test('billing form shows frozen totals and store with scoped action and one rend
  assert.match(html,/<input(?=[^>]*type="checkbox")(?=[^>]*name="terms")(?=[^>]*required="")[^>]*>/);
  assert.ok(!html.includes('checked=""'));assert.ok(html.includes('/tr/gizlilik'));assert.ok(html.includes('/tr/kullanim-kosullari'));
 });
+test('checkout explicitly identifies the receiving store and uses local product art without accepting store authority',()=>{
+ const packageHtml=render({order,attemptId});
+ assert.ok(packageHtml.includes('Satın alan mağaza'));
+ assert.ok(packageHtml.includes('Paket ve araçlar bu mağazaya tanımlanır.'));
+ assert.match(packageHtml,/<img(?=[^>]*src="\/payments\/celebix-package.jpg")(?=[^>]*alt="Başlangıç")/);
+ const toolHtml=render({order:{...order,kind:'tool',offerId:'all_tools',term:'once',title:'Tüm mağaza araçları'},attemptId});
+ assert.match(toolHtml,/<img(?=[^>]*src="\/payments\/celebix-tools.jpg")(?=[^>]*alt="Tüm mağaza araçları")/);
+ assert.ok(toolHtml.includes('Örnek mağaza mağazası için'));
+ assert.ok(!toolHtml.includes('name="storeId"'));
+});
+test('only an approved result confirms automatic activation for the named store',()=>{
+ const approved=render({order:{...order,state:'approved'},result:true});
+ assert.ok(approved.includes('Örnek mağaza mağazanızda kullanıma hazır.'));
+ for(const state of ['created','pending','failed','review']){
+  assert.ok(!render({order:{...order,state},result:true}).includes('mağazanızda kullanıma hazır.'));
+ }
+});
 test('results expose explicit approved/pending/failed/review states without starting or polling a payment',()=>{
  const messages={approved:'Ödeme doğrulandı',pending:'Ödeme doğrulaması bekleniyor',failed:'Ödeme tamamlanamadı',review:'Ödemeniz inceleniyor'};
  for(const [state,message] of Object.entries(messages)){
