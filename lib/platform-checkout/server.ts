@@ -3,6 +3,8 @@ import { createHash, createHmac } from 'node:crypto';
 import { isIP } from 'node:net';
 
 const SITE_ORIGIN = 'https://celebix.net';
+// Next may expose its bind address (or its adapter's fallback host) in Request.url.
+const NEXT_INTERNAL_HOSTS = new Set(['0.0.0.0', 'localhost', '127.0.0.1', '[::]', '[::1]', 'n']);
 const COOKIE_NAME = '__Secure-celebix_platform_checkout';
 const OWNER_ORIGINS = new Set(['https://owner.saas-staging.celebix.net', 'https://owner.saas-staging.celebix.site']);
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/;
@@ -77,16 +79,23 @@ export function parsePublicOrder(value: unknown, expectedOrderId: string): Publi
 export function bridgeKeyFromEnvironment(env: Record<string, string | undefined>): Buffer {
   return Buffer.from(secret(env.CELEBIX_PLATFORM_COMMERCE_BRIDGE_KEY_B64URL), 'base64url');
 }
-async function boundedText(stream: ReadableStream<Uint8Array> | null, limit: number): Promise<string> {
+async function boundedText(stream: ReadableStream<Uint8Array> | null, limit: number, timeoutMs = 0): Promise<string> {
   if (!stream) invalid();
   const reader = stream.getReader(); let length = 0; const chunks: Uint8Array[] = [];
-  try {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const consume = async () => {
     for (;;) {
       const item = await reader.read(); if (item.done) break;
-      length += item.value.byteLength; if (length > limit) { await reader.cancel(); invalid(); }
+      length += item.value.byteLength; if (length > limit) { void reader.cancel().catch(() => {}); invalid(); }
       chunks.push(item.value);
     }
-  } finally { reader.releaseLock(); }
+  };
+  try {
+    if (timeoutMs) await Promise.race([consume(), new Promise<never>((_, reject) => {
+      timer = setTimeout(() => { reject(Error('checkout_input_invalid')); void reader.cancel().catch(() => {}); }, timeoutMs);
+    })]);
+    else await consume();
+  } finally { if (timer !== undefined) clearTimeout(timer); reader.releaseLock(); }
   if (!length) invalid();
   const bytes = new Uint8Array(length); let offset = 0;
   for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
@@ -177,10 +186,12 @@ export function parseBuyerForm(fields: Record<string, string>, orderId: string):
   return { attemptId: uuid(row.attemptId), buyer: { id: uuid(orderId), name: text(row.name, 64), surname: text(row.surname, 64), identityNumber, email, gsmNumber, registrationAddress: text(row.registrationAddress, 500), city: text(row.city, 100), country: text(row.country, 100), ...(zipCode ? { zipCode } : {}) } };
 }
 async function formFields(request: Request, maxBytes: number): Promise<Record<string, string>> {
-  if (!/^application\/x-www-form-urlencoded(?:\s*;\s*charset=utf-8)?$/i.test(request.headers.get('content-type') ?? '') || request.headers.has('transfer-encoding')) invalid();
   const declared = request.headers.get('content-length');
+  const transfer = request.headers.get('transfer-encoding');
+  if (!/^application\/x-www-form-urlencoded(?:\s*;\s*charset=utf-8)?$/i.test(request.headers.get('content-type') ?? '') || request.headers.has('content-encoding')
+    || transfer !== null && (!/^chunked$/i.test(transfer) || declared !== null)) invalid();
   if (declared !== null && (!/^(0|[1-9]\d*)$/.test(declared) || Number(declared) > maxBytes)) invalid();
-  const body = await boundedText(request.body, maxBytes);
+  const body = await boundedText(request.body, maxBytes, 2000);
   if (declared !== null && Buffer.byteLength(body) !== Number(declared)) invalid();
   const result: Record<string, string> = Object.create(null);
   for (const part of body.split('&')) {
@@ -192,7 +203,11 @@ async function formFields(request: Request, maxBytes: number): Promise<Record<st
 }
 function validRequest(request: Request, pathname: string): void {
   const url = new URL(request.url);
-  if (request.method !== 'POST' || url.origin !== SITE_ORIGIN || url.pathname !== pathname || url.search || url.hash || url.username || url.password) invalid();
+  if (request.method !== 'POST' || url.pathname !== pathname || url.search || url.hash || url.username || url.password) invalid();
+  const host = request.headers.get('host'), forwardedHost = request.headers.get('x-forwarded-host'), forwardedProto = request.headers.get('x-forwarded-proto');
+  if (host !== null && host !== 'celebix.net' || forwardedHost !== null && forwardedHost !== 'celebix.net' || forwardedProto !== null && forwardedProto !== 'https') invalid();
+  // These headers establish routing only. Handoff/session/bridge checks still authorize the action.
+  if (url.origin !== SITE_ORIGIN && (!['http:', 'https:'].includes(url.protocol) || !NEXT_INTERNAL_HOSTS.has(url.hostname) || host !== 'celebix.net' || forwardedProto !== 'https')) invalid();
   for (const name of Array.from(request.headers.keys())) if (['authorization', 'x-store-id', 'x-tenant-id', 'x-principal-id', 'x-membership-id', 'x-plan-id', 'x-panel-session-credential'].includes(name) || name.startsWith('x-celebix')) invalid();
 }
 function redirectTo(path: string): Response { return new Response(null, { status: 303, headers: { ...PRIVATE_HEADERS, location: `${SITE_ORIGIN}${path}` } }); }

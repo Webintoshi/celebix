@@ -71,6 +71,29 @@ test('handoff denies URL tokens, unknown/duplicate fields, oversized input and H
  const inputs=[request('/api/platform-checkout/handoff?handoff=x',{orderId:id,handoff}),request('/api/platform-checkout/handoff',{orderId:id,handoff,storeId:otherId}),request('/api/platform-checkout/handoff',`${form({orderId:id,handoff})}&orderId=${otherId}`),request('/api/platform-checkout/handoff','x'.repeat(2049)),request('/api/platform-checkout/handoff',{orderId:id,handoff},{headers:{origin:'null'}}),request('/api/platform-checkout/handoff',{orderId:id,handoff},{headers:{origin:'http://admin.example.test'}})];
  for(const input of inputs)assert.ok((await handle(input)).status>=400);assert.equal(calls,0);
 });
+test('proxy ingress requires the exact public Host and HTTPS forwarding metadata before any bridge call',async()=>{
+ let calls=0;const handle=handlers({redeem:async()=>{calls++;return{order};}}).handoff;
+ const acceptedHeaders={host:'celebix.net','x-forwarded-host':'celebix.net','x-forwarded-proto':'https',origin:'https://admin.example.test','content-type':'application/x-www-form-urlencoded'};
+ for(const origin of ['https://0.0.0.0:3000','http://localhost:3000','http://n']){
+  const response=await handle(new Request(origin+'/api/platform-checkout/handoff',{method:'POST',headers:acceptedHeaders,body:form({orderId:id,handoff})}));
+  assert.equal(response.status,303);assert.equal(response.headers.get('location'),`https://celebix.net/checkout/saas/${id}`);
+ }
+ assert.equal(calls,3);
+ const invalid=[{host:'evil.test'},{host:'celebix.net:443'},{host:'celebix.net, evil.test'},{host:''},{'x-forwarded-host':'evil.test'},{'x-forwarded-host':'celebix.net, evil.test'},{'x-forwarded-proto':'http'},{'x-forwarded-proto':'https, http'},{'x-forwarded-proto':''},{authorization:'Bearer forged'},{'x-celebix-commerce-signature':'a'.repeat(64)}];
+ for(const extra of invalid){
+  const response=await handle(new Request('https://0.0.0.0:3000/api/platform-checkout/handoff',{method:'POST',headers:{...acceptedHeaders,...extra},body:form({orderId:id,handoff})}));assert.equal(response.status,400);
+ }
+ for(const origin of ['http://celebix.net','https://evil.test','https://celebix.net.evil.test'])assert.equal((await handle(new Request(origin+'/api/platform-checkout/handoff',{method:'POST',headers:acceptedHeaders,body:form({orderId:id,handoff})}))).status,400);
+ assert.equal(calls,3);
+});
+test('chunked form bodies keep size, framing and deadline checks before any bridge call',async()=>{
+ let calls=0;const handle=handlers({redeem:async()=>{calls++;return{order};}}).handoff;
+ const badHeaders=[{'transfer-encoding':'gzip, chunked'},{'transfer-encoding':'chunked, chunked'},{'transfer-encoding':'chunked','content-length':'1'},{'content-encoding':'gzip'}];
+ for(const headers of badHeaders)assert.equal((await handle(request('/api/platform-checkout/handoff',{orderId:id,handoff},{headers}))).status,400);
+ assert.equal((await handle(request('/api/platform-checkout/handoff','x'.repeat(2049),{headers:{'transfer-encoding':'chunked'}}))).status,400);
+ const stalled=new Request('https://celebix.net/api/platform-checkout/handoff',{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded',origin:'https://admin.example.test','transfer-encoding':'chunked'},body:new ReadableStream({start(){}}),duplex:'half'});
+ assert.equal((await handle(stalled)).status,400);assert.equal(calls,0);
+});
 test('pay derives buyer identity and trusted IP and redirects only to the verified provider',async()=>{
  let payload;
  const session=server.deriveCheckoutSession(key,id,handoff);
