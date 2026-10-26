@@ -7,6 +7,16 @@ const nextConfig = {
   
   async headers() {
     return [
+      ...['/checkout/saas/:path*', '/api/platform-checkout/:path*', '/api/platform-payments/:path*'].map(source => ({
+        source,
+        headers: [
+          { key: 'Cache-Control', value: 'private, no-store, max-age=0' },
+          { key: 'Referrer-Policy', value: 'no-referrer' },
+          { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'Content-Security-Policy', value: "frame-ancestors 'none'; form-action 'self' https://cpp.iyzipay.com https://sandbox-cpp.iyzipay.com; base-uri 'none'; object-src 'none'" },
+        ],
+      })),
       {
         source: '/sitemap.xml',
         headers: [
