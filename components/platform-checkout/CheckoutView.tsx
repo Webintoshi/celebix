@@ -1,5 +1,6 @@
 import { Check, Clock3, CreditCard, LockKeyhole, Store } from 'lucide-react';
 import type { PublicCheckoutOrder } from '@/lib/platform-checkout/server';
+import { getToshiCreditOffer } from '../../lib/platform-checkout/toshi-credit.mjs';
 
 interface CheckoutViewProps { order: PublicCheckoutOrder; attemptId?: string; result?: boolean; expired?: boolean }
 const money = (cents: number) => new Intl.NumberFormat('tr-TR', { style: 'currency', currency: 'TRY' }).format(cents / 100);
@@ -24,20 +25,22 @@ function CheckoutHeader() {
   </header>;
 }
 
-function StoreIdentity({ name }: { name: string }) {
+function StoreIdentity({ name, isCredit }: { name: string; isCredit: boolean }) {
   return <div className="mt-6 flex items-center gap-4 rounded-lg border border-[#dedede] p-4">
     <Store size={30} strokeWidth={1.7} className="shrink-0" aria-hidden="true" />
-    <div className="min-w-0"><p className="text-xs font-medium text-[#666]">Satın alan mağaza</p><p className="mt-0.5 break-words text-lg font-semibold leading-snug text-[#242424]">{name}</p><p className="mt-1 text-xs leading-5 text-[#666]">Paket ve araçlar bu mağazaya tanımlanır.</p></div>
+    <div className="min-w-0"><p className="text-xs font-medium text-[#666]">Satın alan mağaza</p><p className="mt-0.5 break-words text-lg font-semibold leading-snug text-[#242424]">{name}</p><p className="mt-1 text-xs leading-5 text-[#666]">{isCredit ? 'Toshi kredileri bu mağazanın bakiyesine eklenir.' : 'Paket ve araçlar bu mağazaya tanımlanır.'}</p></div>
   </div>;
 }
 
 function OrderSummary({ order, term, afterStatus }: { order: PublicCheckoutOrder; term: string; afterStatus: boolean }) {
+  const credits = order.kind === 'toshi_credit' ? getToshiCreditOffer(order.offerId)?.credits : undefined;
+  const image = order.kind === 'toshi_credit' ? '/payments/toshi-credit.svg' : order.kind === 'package' ? '/payments/celebix-package.jpg' : '/payments/celebix-tools.jpg';
   return <aside className={`${afterStatus ? 'order-2' : 'order-1'} relative min-w-0 border-b border-[#e0e0e0] bg-[#f7f7f7] px-5 py-7 sm:px-8 lg:order-2 lg:border-b-0 lg:border-l lg:px-10 lg:py-10 lg:before:absolute lg:before:inset-y-0 lg:before:left-0 lg:before:-z-10 lg:before:w-screen lg:before:bg-[#f7f7f7]`} aria-labelledby="summary-heading">
     <div className="lg:sticky lg:top-8">
       <h2 id="summary-heading" className="text-xl font-semibold tracking-tight text-[#242424]">Sipariş özeti</h2>
       <div className="mt-6 flex items-center gap-4">
-        <div className="relative shrink-0"><img src={order.kind === 'package' ? '/payments/celebix-package.jpg' : '/payments/celebix-tools.jpg'} alt={order.title} width={88} height={88} className="h-[88px] w-[88px] rounded-xl border border-[#e1dedb] object-cover" /><span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#696969] px-1 text-[11px] font-medium text-white" aria-label="Adet: 1">1</span></div>
-        <div className="min-w-0 flex-1"><h3 className="[overflow-wrap:anywhere] text-base font-semibold leading-snug text-[#242424]">{order.title}</h3><p className="mt-1 text-xs leading-5 text-[#666]">{term}</p></div>
+        <div className="relative shrink-0"><img src={image} alt={order.title} width={88} height={88} className="h-[88px] w-[88px] rounded-xl border border-[#e1dedb] object-cover" /><span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#696969] px-1 text-[11px] font-medium text-white" aria-label="Adet: 1">1</span></div>
+        <div className="min-w-0 flex-1"><h3 className="[overflow-wrap:anywhere] text-base font-semibold leading-snug text-[#242424]">{order.title}</h3>{credits ? <p className="mt-1 text-sm font-medium text-[#242424]">{credits.toLocaleString('tr-TR')} Toshi kredisi</p> : null}<p className="mt-1 text-xs leading-5 text-[#666]">{term}</p></div>
         <p className="shrink-0 text-sm font-semibold tabular-nums text-[#242424]">{money(order.netCents)}</p>
       </div>
       <p className="mt-5 [overflow-wrap:anywhere] text-sm text-[#666]">{order.storeName} mağazası için</p>
@@ -48,7 +51,7 @@ function OrderSummary({ order, term, afterStatus }: { order: PublicCheckoutOrder
       </dl>
       <div className="mt-7 flex items-start gap-3 rounded-lg border border-[#c9ddcd] bg-[#f1f6f1] p-4">
         <Check size={20} strokeWidth={2} className="mt-0.5 shrink-0 text-[#287b36]" aria-hidden="true" />
-        <div><p className="text-sm font-semibold text-[#273d2b]">Ödeme sonrası otomatik etkinleştirme</p><p className="mt-1 text-xs leading-5 text-[#5b665d]">{order.kind === 'package' ? 'Seçtiğiniz dönem için peşin ödeme yapılır. Otomatik yenileme veya düzenli kart tahsilatı yoktur.' : 'Tek sefer ödeyin. Yıllık yenileme ücreti yoktur.'}</p></div>
+        <div><p className="text-sm font-semibold text-[#273d2b]">{credits ? 'Ödeme sonrası kredi yükleme' : 'Ödeme sonrası otomatik etkinleştirme'}</p><p className="mt-1 text-xs leading-5 text-[#5b665d]">{credits ? 'Ödeme doğrulandığında krediler mağazanızın bakiyesine otomatik eklenir. Tek seferlik satın alımdır.' : order.kind === 'package' ? 'Seçtiğiniz dönem için peşin ödeme yapılır. Otomatik yenileme veya düzenli kart tahsilatı yoktur.' : 'Tek sefer ödeyin. Yıllık yenileme ücreti yoktur.'}</p></div>
       </div>
       <p className="mt-6 flex items-center gap-2 text-xs leading-5 text-[#666]"><LockKeyhole size={14} className="shrink-0" aria-hidden="true" />Ödeme iyzico güvencesiyle alınır.</p>
       {order.returnUrl ? <a href={order.returnUrl} className={`${linkClass} mt-6 inline-block`}>Mağaza paneline dön</a> : null}
@@ -98,6 +101,8 @@ function CheckoutFooter() {
 }
 
 export function CheckoutView({ order, attemptId, result = false, expired = false }: CheckoutViewProps) {
+  const isCredit = order.kind === 'toshi_credit';
+  const credits = isCredit ? getToshiCreditOffer(order.offerId)?.credits : undefined;
   const canStart = order.state === 'created' || order.state === 'failed';
   const showForm = !result && canStart && !expired && Boolean(attemptId);
   const term = order.term === 'annual' ? 'Yıllık peşin ödeme' : order.term === 'monthly' ? 'Aylık peşin ödeme' : 'Tek seferlik ödeme';
@@ -107,16 +112,16 @@ export function CheckoutView({ order, attemptId, result = false, expired = false
       <section className={`${showForm ? 'order-2' : 'order-1'} min-w-0 px-5 py-8 sm:px-8 lg:order-1 lg:py-10 lg:pr-12`} aria-labelledby={showForm ? 'billing-heading' : 'payment-status'}>
         {showForm ? <>
           <h1 id="billing-heading" className="text-[26px] font-semibold leading-tight tracking-[-0.035em] sm:text-[28px]">Satın almayı tamamla</h1>
-          <p className="mt-2 text-sm leading-6 text-[#666]">Paket ve araçlarınız ödeme onaylandığında mağazanıza otomatik tanımlanır.</p>
-          <StoreIdentity name={order.storeName} />
+          <p className="mt-2 text-sm leading-6 text-[#666]">{isCredit ? 'Toshi kredileriniz ödeme doğrulandığında mağazanızın bakiyesine otomatik eklenir.' : 'Paket ve araçlarınız ödeme onaylandığında mağazanıza otomatik tanımlanır.'}</p>
+          <StoreIdentity name={order.storeName} isCredit={isCredit} />
           {order.state === 'failed' ? <p className="mt-4 text-sm leading-6 text-[#88461c]" role="status">Önceki ödeme tamamlanamadı. Bilgilerinizi kontrol ederek yeniden deneyebilirsiniz.</p> : null}
           <BillingForm order={order} attemptId={attemptId!} />
         </> : <div role="status">
           <span className={`mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full ${order.state === 'approved' ? 'bg-[#edf5ee] text-[#287b36]' : 'bg-[#f3f3f3] text-[#666]'}`}>{order.state === 'approved' ? <Check size={24} aria-hidden="true" /> : <Clock3 size={24} aria-hidden="true" />}</span>
           <h1 id="payment-status" className="text-[28px] font-semibold leading-tight tracking-tight">{status.title}</h1>
-          <p className="mt-4 text-sm leading-6 text-[#666]">{status.body}</p>
-          {order.state === 'approved' ? <p className="mt-3 break-words text-sm font-semibold text-[#287b36]">{order.storeName} mağazanızda kullanıma hazır.</p> : null}
-          <StoreIdentity name={order.storeName} />
+          <p className="mt-4 text-sm leading-6 text-[#666]">{isCredit && order.state === 'approved' ? 'Satın aldığınız Toshi kredileri mağazanıza uygulandı. Güncel bakiyenizi mağaza panelinizde görebilirsiniz.' : status.body}</p>
+          {order.state === 'approved' ? <p className="mt-3 break-words text-sm font-semibold text-[#287b36]">{credits ? `${credits.toLocaleString('tr-TR')} Toshi kredisi ${order.storeName} mağazanızın bakiyesine eklendi.` : `${order.storeName} mağazanızda kullanıma hazır.`}</p> : null}
+          <StoreIdentity name={order.storeName} isCredit={isCredit} />
           <div className="mt-7 flex flex-wrap items-center gap-5">
             <a href={`/checkout/saas/${order.id}/result`} className={buttonClass}>Durumu yenile</a>
             {canStart && !expired ? <a href={`/checkout/saas/${order.id}`} className={linkClass}>{order.state === 'failed' ? 'Ödemeyi yeniden dene' : 'Ödeme bilgilerine dön'}</a> : null}

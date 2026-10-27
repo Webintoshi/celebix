@@ -1,6 +1,7 @@
 // Server runtime only. Buyer details and bridge credentials never enter client components.
 import { createHash, createHmac } from 'node:crypto';
 import { isIP } from 'node:net';
+import { getToshiCreditOffer } from './toshi-credit.mjs';
 
 const SITE_ORIGIN = 'https://celebix.net';
 // Next may expose its bind address (or its adapter's fallback host) in Request.url.
@@ -12,7 +13,7 @@ const STATES = ['created', 'pending', 'approved', 'failed', 'review'] as const;
 const PRIVATE_HEADERS = { 'cache-control': 'private, no-store, max-age=0', 'referrer-policy': 'no-referrer', 'x-robots-tag': 'noindex, nofollow, noarchive', 'x-content-type-options': 'nosniff' };
 
 export interface PublicCheckoutOrder {
-  id: string; storeId: string; storeName: string; title: string; kind: 'package' | 'tool'; offerId: string;
+  id: string; storeId: string; storeName: string; title: string; kind: 'package' | 'tool' | 'toshi_credit'; offerId: string;
   term: 'monthly' | 'annual' | 'once'; netCents: number; vatCents: number; totalCents: number; currency: 'TRY';
   state: typeof STATES[number]; expiresAt: string; returnUrl?: string; paymentUrl?: string;
 }
@@ -67,14 +68,16 @@ export function verifiedIyzicoUrl(value: unknown): string {
 export function parsePublicOrder(value: unknown, expectedOrderId: string): PublicCheckoutOrder {
   uuid(expectedOrderId);
   const row = record(value, ['id', 'storeId', 'storeName', 'title', 'kind', 'offerId', 'term', 'netCents', 'vatCents', 'totalCents', 'currency', 'state', 'expiresAt'], ['returnUrl', 'paymentUrl']);
-  if (uuid(row.id) !== expectedOrderId || !['package', 'tool'].includes(row.kind as string) || !['monthly', 'annual', 'once'].includes(row.term as string) || (row.kind === 'tool') !== (row.term === 'once') || row.currency !== 'TRY' || !STATES.includes(row.state as never)) invalid();
+  if (uuid(row.id) !== expectedOrderId || !['package', 'tool', 'toshi_credit'].includes(row.kind as string) || !['monthly', 'annual', 'once'].includes(row.term as string) || (row.kind !== 'package') !== (row.term === 'once') || row.currency !== 'TRY' || !STATES.includes(row.state as never)) invalid();
   const netCents = integer(row.netCents), vatCents = integer(row.vatCents), totalCents = integer(row.totalCents);
   if (netCents < 1 || totalCents < 1 || !Number.isSafeInteger(netCents + vatCents) || totalCents !== netCents + vatCents || vatCents !== Math.round(netCents / 5)) invalid();
+  const offerId = text(row.offerId, 80);
+  if (row.kind === 'toshi_credit' && getToshiCreditOffer(offerId)?.netCents !== netCents) invalid();
   const expiresAt = text(row.expiresAt, 40);
   if (!/^\d{4}-\d{2}-\d{2}T/.test(expiresAt) || !Number.isFinite(Date.parse(expiresAt))) invalid();
   if (row.returnUrl !== undefined) httpsUrl(row.returnUrl);
   if (row.paymentUrl !== undefined) verifiedIyzicoUrl(row.paymentUrl);
-  return { id: expectedOrderId, storeId: uuid(row.storeId), storeName: text(row.storeName, 200), title: text(row.title, 200), kind: row.kind as PublicCheckoutOrder['kind'], offerId: text(row.offerId, 80), term: row.term as PublicCheckoutOrder['term'], netCents, vatCents, totalCents, currency: 'TRY', state: row.state as PublicCheckoutOrder['state'], expiresAt, ...(row.returnUrl !== undefined ? { returnUrl: row.returnUrl as string } : {}), ...(row.paymentUrl !== undefined ? { paymentUrl: row.paymentUrl as string } : {}) };
+  return { id: expectedOrderId, storeId: uuid(row.storeId), storeName: text(row.storeName, 200), title: text(row.title, 200), kind: row.kind as PublicCheckoutOrder['kind'], offerId, term: row.term as PublicCheckoutOrder['term'], netCents, vatCents, totalCents, currency: 'TRY', state: row.state as PublicCheckoutOrder['state'], expiresAt, ...(row.returnUrl !== undefined ? { returnUrl: row.returnUrl as string } : {}), ...(row.paymentUrl !== undefined ? { paymentUrl: row.paymentUrl as string } : {}) };
 }
 export function bridgeKeyFromEnvironment(env: Record<string, string | undefined>): Buffer {
   return Buffer.from(secret(env.CELEBIX_PLATFORM_COMMERCE_BRIDGE_KEY_B64URL), 'base64url');

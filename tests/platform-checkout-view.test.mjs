@@ -13,7 +13,7 @@ function render(props){
  const ts=require('typescript'),React=require('react'),{renderToStaticMarkup}=require('react-dom/server');
  const path=new URL('../components/platform-checkout/CheckoutView.tsx',import.meta.url);
  const output=ts.transpileModule(readFileSync(path,'utf8'),{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
- const compiled={exports:{}};new Function('require','module','exports',output)(require,compiled,compiled.exports);
+ const compiled={exports:{}};new Function('require','module','exports',output)(createRequire(path),compiled,compiled.exports);
  return renderToStaticMarkup(React.createElement(compiled.exports.CheckoutView,props));
 }
 test('billing form shows frozen totals and store with scoped action and one render-generated operation',()=>{
@@ -34,6 +34,35 @@ test('checkout explicitly identifies the receiving store and uses local product 
  assert.match(toolHtml,/<img(?=[^>]*src="\/payments\/celebix-tools.jpg")(?=[^>]*alt="Tüm mağaza araçları")/);
  assert.ok(toolHtml.includes('Örnek mağaza mağazası için'));
  assert.ok(!toolHtml.includes('name="storeId"'));
+});
+test('credit checkout shows purchased credits, frozen totals and the receiving store without new authority inputs',()=>{
+ const offers=[
+  {offerId:'toshi-500',count:'500',netCents:24900,vatCents:4980,totalCents:29880,total:'298,80'},
+  {offerId:'toshi-2500',count:'2.500',netCents:99900,vatCents:19980,totalCents:119880,total:'1.198,80'},
+  {offerId:'toshi-10000',count:'10.000',netCents:299900,vatCents:59980,totalCents:359880,total:'3.598,80'},
+  {offerId:'toshi-50000',count:'50.000',netCents:1249900,vatCents:249980,totalCents:1499880,total:'14.998,80'},
+ ];
+ for(const {count,total,...offer} of offers){
+  const html=render({order:{...order,...offer,kind:'toshi_credit',term:'once',title:'Toshi kredi paketi'},attemptId});
+  assert.ok(html.includes(`${count} Toshi kredisi`));assert.ok(html.includes('Örnek mağaza mağazası için'));
+  assert.ok(html.includes('Toshi kredileri bu mağazanın bakiyesine eklenir.'));
+  assert.ok(html.includes('Tek seferlik ödeme'));assert.ok(html.includes('KDV (%20)'));assert.ok(html.includes(total));
+  assert.match(html,/<img(?=[^>]*src="\/payments\/toshi-credit.svg")/);
+  assert.ok(html.includes(`action="/checkout/saas/${id}/pay"`));
+  for(const name of ['credits','creditCount','storeId','amountCents','offerId'])assert.ok(!html.includes(`name="${name}"`));
+  assert.match(html,/<input(?=[^>]*type="checkbox")(?=[^>]*name="terms")(?=[^>]*required="")[^>]*>/);
+  assert.ok(!html.includes('bakiyesine eklendi.'));assert.ok(!html.includes('checked=""'));
+ }
+});
+test('only a verified approved credit result confirms the purchased credit balance was granted',()=>{
+ const creditOrder={...order,kind:'toshi_credit',offerId:'toshi-2500',term:'once',title:'Toshi kredi paketi',netCents:99900,vatCents:19980,totalCents:119880};
+ const approved=render({order:{...creditOrder,state:'approved'},result:true});
+ assert.ok(approved.includes('2.500 Toshi kredisi Örnek mağaza mağazanızın bakiyesine eklendi.'));
+ assert.ok(!approved.includes('paket veya araçlar'));assert.ok(!approved.includes('<form'));
+ for(const state of ['created','pending','failed','review']){
+  const html=render({order:{...creditOrder,state},result:true});
+  assert.ok(!html.includes('bakiyesine eklendi.'));assert.ok(!html.includes('<form'));
+ }
 });
 test('only an approved result confirms automatic activation for the named store',()=>{
  const approved=render({order:{...order,state:'approved'},result:true});

@@ -11,11 +11,37 @@ const handoff = Buffer.alloc(32, 7).toString('base64url');
 const key = Buffer.alloc(32, 9);
 const env = {CELEBIX_PLATFORM_COMMERCE_OWNER_ORIGIN:'https://owner.saas-staging.celebix.net',CELEBIX_PLATFORM_COMMERCE_BRIDGE_KEY_B64URL:key.toString('base64url')};
 const order = {id,storeId:otherId,storeName:'Örnek mağaza',title:'Başlangıç',kind:'package',offerId:'00000000-0000-4000-8000-000000000008',term:'annual',netCents:2587000,vatCents:517400,totalCents:3104400,currency:'TRY',state:'created',expiresAt:'2026-10-27T08:00:00.000Z'};
+const creditOffers = [
+ {offerId:'toshi-500',netCents:24900,vatCents:4980,totalCents:29880},
+ {offerId:'toshi-2500',netCents:99900,vatCents:19980,totalCents:119880},
+ {offerId:'toshi-10000',netCents:299900,vatCents:59980,totalCents:359880},
+ {offerId:'toshi-50000',netCents:1249900,vatCents:249980,totalCents:1499880},
+];
 const hash = value => createHash('sha256').update(value).digest('hex');
 const form = fields => new URLSearchParams(fields).toString();
 const buyerFields = {attemptId,name:'Ayşe',surname:'Yılmaz',identityNumber:'10000000146',email:'ayse@example.test',gsmNumber:'+905321234567',registrationAddress:'Örnek Mahallesi No: 10',city:'Ordu',country:'Türkiye',zipCode:'52000',terms:'accepted'};
 function request(path, fields, options = {}) {return new Request(`https://celebix.net${path}`,{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded',origin:'https://celebix.net',...options.headers},body:typeof fields==='string'?fields:form(fields)});}
 function handlers(bridge) {return server.createCheckoutHttpHandlers({bridge,bridgeKey:key});}
+
+test('public order parser accepts each frozen one-time Toshi credit offer through the existing bridge',async()=>{
+ for(const offer of creditOffers){
+  const creditOrder={...order,...offer,kind:'toshi_credit',term:'once',title:'Toshi kredisi'};
+  const bridge=server.createCommerceBridge(env,{fetch:async()=>Response.json({order:creditOrder})});
+  assert.deepEqual(await bridge.read({orderId:id,sessionDigest:'a'.repeat(64)}),{order:creditOrder});
+ }
+});
+test('credit orders reject unknown offers, changed prices, recurring terms and extra authority fields',()=>{
+ const creditOrder={...order,...creditOffers[0],kind:'toshi_credit',term:'once',title:'Toshi kredisi'};
+ for(const changed of [
+  {offerId:'toshi-501'}, {offerId:'toshi-2500'}, {term:'monthly'}, {term:'annual'},
+  {netCents:100,vatCents:20,totalCents:120}, {credits:500}, {kind:'credit'},
+ ])assert.throws(()=>server.parsePublicOrder({...creditOrder,...changed},id));
+ assert.deepEqual(server.parsePublicOrder(order,id),order);
+ const tool={...order,kind:'tool',offerId:'all_tools',term:'once'};
+ assert.deepEqual(server.parsePublicOrder(tool,id),tool);
+ assert.throws(()=>server.parsePublicOrder({...order,term:'once'},id));
+ assert.throws(()=>server.parsePublicOrder({...tool,term:'annual'},id));
+});
 
 test('bridge signs the exact bounded body and calls only the approved internal endpoint',async()=>{
  let observed;
