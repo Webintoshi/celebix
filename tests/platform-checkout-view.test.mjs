@@ -29,11 +29,16 @@ test('checkout explicitly identifies the receiving store and uses local product 
  const packageHtml=render({order,attemptId});
  assert.ok(packageHtml.includes('Satın alan mağaza'));
  assert.ok(packageHtml.includes('Paket ve araçlar bu mağazaya tanımlanır.'));
- assert.match(packageHtml,/<img(?=[^>]*src="\/payments\/celebix-package.jpg")(?=[^>]*alt="Başlangıç")/);
+ assert.match(packageHtml,/<img(?=[^>]*src="\/payments\/plans\/celebix-starter-v1.webp")(?=[^>]*alt="Başlangıç")/);
+ assert.match(packageHtml,/<img(?=[^>]*src="\/payments\/plans\/celebix-starter-v1.webp")(?=[^>]*class="[^"]*object-contain)/, 'package artwork remains uncropped in checkout');
  const toolHtml=render({order:{...order,kind:'tool',offerId:'all_tools',term:'once',title:'Tüm mağaza araçları'},attemptId});
  assert.match(toolHtml,/<img(?=[^>]*src="\/payments\/celebix-tools.jpg")(?=[^>]*alt="Tüm mağaza araçları")/);
  assert.ok(toolHtml.includes('Örnek mağaza mağazası için'));
  assert.ok(!toolHtml.includes('name="storeId"'));
+});
+test('package artwork follows immutable offer identity while unknown historic offers keep the generic image',()=>{
+ for(const [offerId,code]of [['00000000-0000-4000-8000-000000000009','growth'],['00000000-0000-4000-8000-000000000010','professional'],['00000000-0000-4000-8000-000000000004','starter'],['00000000-0000-4000-8000-000000000005','growth'],['00000000-0000-4000-8000-000000000006','professional']])assert.ok(render({order:{...order,offerId},attemptId}).includes(`src="/payments/plans/celebix-${code}-v1.webp"`));
+ const unknown=render({order:{...order,offerId:'00000000-0000-4000-8000-000000000099'},attemptId});assert.ok(unknown.includes('src="/payments/celebix-package.jpg"'));
 });
 test('credit checkout shows purchased credits, frozen totals and the receiving store without new authority inputs',()=>{
  const offers=[
