@@ -64,7 +64,8 @@ test('catalog purchase links use the verified store entry and leave legal naviga
     assert.ok(!html.includes(`href="/tr/${slug}"`));
     assert.equal(combined.split(`href="/tr/${slug}"`).length - 1, 1);
   }
-  assert.ok(html.includes('Panelden satın al')); assert.ok(html.includes('1 TL ile satın al')); assert.equal((html.match(/href="https:\/\/panel\.saas-staging\.celebix\.net\/login\?purchase=toshi-test-1"/g) ?? []).length, 1); assert.ok(html.includes('iyzico'));
+  assert.ok(html.includes('Panelden satın al')); assert.ok(html.includes('1 TL ile satın al')); assert.equal((html.match(/href="\/checkout\/saas\/toshi-test"/g) ?? []).length, 1); assert.ok(html.includes('Satın alımlar iyzico ile tamamlanır.'));
+  assert.ok(!html.includes('/login?purchase='));
   assert.ok(!html.includes('<form')); assert.ok(!html.includes('offerId='));
 });
 test('existing English and historic success-return composition remains intact', () => {

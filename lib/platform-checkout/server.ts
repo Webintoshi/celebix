@@ -24,7 +24,10 @@ export interface CheckoutBuyer {
 interface OrderSession { orderId: string; sessionDigest: string }
 interface StartInput extends OrderSession { attemptId: string; buyer: CheckoutBuyer; ip: string }
 export type CheckoutStartResult = { status: 'ready'; paymentUrl: string } | { status: 'pending' | 'failed' | 'unknown'; code?: string };
+export type PublicTestInput = { operationId: string; storeSelector: string; sessionDigest: string; ipDigest: string };
+export type PublicTestResult = { status: 'created'; order: PublicCheckoutOrder } | { status: 'rejected'; code: 'store_unavailable' | 'rate_limited' | 'operation_mismatch' };
 export interface CommerceBridge {
+  publicTest(input: PublicTestInput): Promise<PublicTestResult>;
   redeem(input: OrderSession & { ticketDigest: string }): Promise<{ order: PublicCheckoutOrder }>;
   read(input: OrderSession): Promise<{ order: PublicCheckoutOrder }>;
   start(input: StartInput): Promise<CheckoutStartResult>;
@@ -109,7 +112,7 @@ export function createCommerceBridge(env: Record<string, string | undefined>, op
   if (!OWNER_ORIGINS.has(owner.origin) || owner.pathname !== '/' || owner.search) invalid();
   const bridgeKey = bridgeKeyFromEnvironment(env), fetcher = options.fetch ?? fetch, now = options.now ?? (() => new Date()), timeoutMs = options.timeoutMs ?? 12000;
   if (!Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 20000) invalid();
-  async function execute(action: 'redeem' | 'read' | 'start' | 'callback' | 'webhook', payload: object): Promise<unknown> {
+  async function execute(action: 'public_test' | 'redeem' | 'read' | 'start' | 'callback' | 'webhook', payload: object): Promise<unknown> {
     const body = JSON.stringify({ action, payload }); if (Buffer.byteLength(body) > 65536) invalid();
     const instant = now(); if (!(instant instanceof Date) || !Number.isFinite(instant.getTime())) invalid();
     const timestamp = String(Math.floor(instant.getTime() / 1000));
@@ -131,6 +134,18 @@ export function createCommerceBridge(env: Record<string, string | undefined>, op
   }
   function orderResult(value: unknown, orderId: string): { order: PublicCheckoutOrder } { const row = record(value, ['order']); return { order: parsePublicOrder(row.order, orderId) }; }
   const bridge: CommerceBridge = {
+    async publicTest(input) {
+      const row = record(await execute('public_test', input), ['status'], ['order', 'code']);
+      if (row.status === 'created') {
+        if (row.code !== undefined) invalid();
+        const selected = record(row.order, ['id', 'storeId', 'storeName', 'title', 'kind', 'offerId', 'term', 'netCents', 'vatCents', 'totalCents', 'currency', 'state', 'expiresAt']);
+        const order = parsePublicOrder(selected, uuid(selected.id));
+        if (order.kind !== 'toshi_credit' || order.offerId !== 'toshi-test-1' || order.totalCents !== 100) invalid();
+        return { status: 'created', order };
+      }
+      if (row.status !== 'rejected' || row.order !== undefined || !['store_unavailable', 'rate_limited', 'operation_mismatch'].includes(String(row.code))) invalid();
+      return { status: 'rejected', code: row.code as 'store_unavailable' | 'rate_limited' | 'operation_mismatch' };
+    },
     async redeem(input) { return orderResult(await execute('redeem', input), input.orderId); },
     async read(input) { return orderResult(await execute('read', input), input.orderId); },
     async start(input) {
@@ -188,7 +203,7 @@ export function parseBuyerForm(fields: Record<string, string>, orderId: string):
   const zipCode = row.zipCode ? text(row.zipCode, 20) : undefined;
   return { attemptId: uuid(row.attemptId), buyer: { id: uuid(orderId), name: text(row.name, 64), surname: text(row.surname, 64), identityNumber, email, gsmNumber, registrationAddress: text(row.registrationAddress, 500), city: text(row.city, 100), country: text(row.country, 100), ...(zipCode ? { zipCode } : {}) } };
 }
-async function formFields(request: Request, maxBytes: number): Promise<Record<string, string>> {
+export async function formFields(request: Request, maxBytes: number): Promise<Record<string, string>> {
   const declared = request.headers.get('content-length');
   const transfer = request.headers.get('transfer-encoding');
   if (!/^application\/x-www-form-urlencoded(?:\s*;\s*charset=utf-8)?$/i.test(request.headers.get('content-type') ?? '') || request.headers.has('content-encoding')
@@ -204,7 +219,7 @@ async function formFields(request: Request, maxBytes: number): Promise<Record<st
   }
   return result;
 }
-function validRequest(request: Request, pathname: string): void {
+export function validRequest(request: Request, pathname: string): void {
   const url = new URL(request.url);
   if (request.method !== 'POST' || url.pathname !== pathname || url.search || url.hash || url.username || url.password) invalid();
   const host = request.headers.get('host'), forwardedHost = request.headers.get('x-forwarded-host'), forwardedProto = request.headers.get('x-forwarded-proto');

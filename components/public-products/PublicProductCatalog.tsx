@@ -30,7 +30,7 @@ function PriceBlock({ price, term, priceTop = false }: { price: Price; term?: st
   return <div className={priceTop ? 'pt-2' : 'mt-auto pt-2'}><div className="flex flex-wrap items-baseline gap-x-2"><strong className="text-[28px] font-semibold leading-tight tracking-tight">{money(price.totalCents)}</strong>{term && !free ? <span className="text-sm text-[#666]">/ {term}</span> : null}</div><p className="mt-1 text-xs font-medium text-[#555]">{free ? 'Süresiz ücretsiz' : 'KDV dahil'}</p></div>;
 }
 function PurchaseLink({ name, free = false, test = false }: { name: string; free?: boolean; test?: boolean }) {
-  return <a href={free ? REGISTER : test ? `${PANEL_LOGIN}?purchase=toshi-test-1` : PANEL_LOGIN} className={LINK}>{free ? 'Ücretsiz mağaza aç' : test ? '1 TL ile satın al' : 'Panelden satın al'}<span className="sr-only"> · {name}</span><ArrowUpRight size={16} aria-hidden="true" /></a>;
+  return <a href={free ? REGISTER : test ? '/checkout/saas/toshi-test' : PANEL_LOGIN} className={LINK}>{free ? 'Ücretsiz mağaza aç' : test ? '1 TL ile satın al' : 'Panelden satın al'}<span className="sr-only"> · {name}</span><ArrowUpRight size={16} aria-hidden="true" /></a>;
 }
 
 export default function PublicProductCatalog() {
@@ -41,7 +41,7 @@ export default function PublicProductCatalog() {
       <header className="max-w-3xl"><h2 id="catalog-title" className="text-3xl font-medium leading-tight tracking-tight sm:text-4xl">Paketler ve fiyatlar</h2><p className="mt-4 text-sm leading-7 text-[#666]">Mağaza paketleri ve Toshi kredileri. Fiyatlara KDV dahildir.</p></header>
       <div className="flex flex-col gap-5 border-y border-[#e5e5e5] py-4 md:flex-row md:items-center md:justify-between">
         <nav aria-label="Ürün grupları" className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium"><a className="rounded-sm underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4" href="#magaza-paketleri">Mağaza paketleri</a><a className="rounded-sm underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4" href="#toshi-kredileri">Toshi kredileri</a></nav>
-        <p className="max-w-xl text-xs leading-6 text-[#666]">Satın alımlar mağaza panelinizden iyzico ile tamamlanır.</p>
+        <p className="max-w-xl text-xs leading-6 text-[#666]">Satın alımlar iyzico ile tamamlanır.</p>
       </div>
 
       <section id="magaza-paketleri" aria-labelledby="plans-title" className="scroll-mt-24">
