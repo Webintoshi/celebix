@@ -25,6 +25,23 @@ test('billing form shows frozen totals and store with scoped action and one rend
  assert.match(html,/<input(?=[^>]*type="checkbox")(?=[^>]*name="terms")(?=[^>]*required="")[^>]*>/);
  assert.ok(!html.includes('checked=""'));assert.ok(html.includes('/tr/gizlilik'));assert.ok(html.includes('/tr/kullanim-kosullari'));
 });
+test('VAT-inclusive product prices lead checkout while the frozen net and VAT breakdown stays explicit',()=>{
+ for(const fixture of [
+  {kind:'package',offerId:order.offerId,term:'annual',title:'Başlangıç',netCents:2587000,vatCents:517400,totalCents:3104400,net:'25.870,00',vat:'5.174,00',total:'31.044,00'},
+  {kind:'tool',offerId:'all_tools',term:'once',title:'Tüm mağaza araçları',netCents:1399000,vatCents:279800,totalCents:1678800,net:'13.990,00',vat:'2.798,00',total:'16.788,00'},
+  {kind:'toshi_credit',offerId:'toshi-500',term:'once',title:'500 Toshi kredisi',netCents:24900,vatCents:4980,totalCents:29880,net:'249,00',vat:'49,80',total:'298,80'},
+ ]){
+  const {net,vat,total,...purchase}=fixture,html=render({order:{...order,...purchase},attemptId});
+  const summary=html.match(/<aside[\s\S]*?<\/aside>/)?.[0];assert.ok(summary);
+  const text=summary.replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim();
+  const lead=text.split('Hizmet bedeli')[0];
+  assert.ok(lead.includes(total),`${fixture.kind} must lead with the existing payable total`);
+  assert.ok(lead.includes('KDV dahil'));assert.ok(!lead.includes(net));
+  assert.ok(text.includes('Hizmet bedeli (KDV hariç)'));assert.ok(text.includes('KDV (%20)'));
+  assert.ok(text.includes(net));assert.ok(text.includes(vat));assert.ok(text.includes('KDV dahil toplam'));
+  assert.ok(html.includes(`iyzico ile ₺${total} öde`));
+ }
+});
 test('checkout explicitly identifies the receiving store and uses local product art without accepting store authority',()=>{
  const packageHtml=render({order,attemptId});
  assert.ok(packageHtml.includes('Satın alan mağaza'));
