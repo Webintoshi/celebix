@@ -11,12 +11,14 @@
     "test:commerce": "node --test tests/commerce-lifecycle.test.mjs"
   },
   "dependencies": {
+    "@gsap/react": "2.1.2",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
     "clsx": "^2.1.1",
     "framer-motion": "^11",
+    "gsap": "3.15.0",
     "lucide-react": "^0.400",
     "mapbox-gl": "^3.19.1",
     "next": "^14",

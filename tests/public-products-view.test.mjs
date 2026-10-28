@@ -27,13 +27,13 @@ function render(locale = 'tr', checkout) {
   const Layout = load('app/[locale]/e-ticaret-paketleri/layout.tsx').default;
   return renderToStaticMarkup(React.createElement(Layout, { params: { locale } }, React.createElement(Page, { params: { locale }, searchParams: checkout ? { checkout } : {} })));
 }
-test('the Turkish page server-renders all fourteen real products after its isolated demo', () => {
+test('the Turkish page server-renders plans and credits without store tools after its isolated demo', () => {
   const html = render();
-  assert.equal((html.match(/data-public-product=/g) ?? []).length, 14);
+  assert.equal((html.match(/data-public-product=/g) ?? []).length, 8);
   assert.ok(html.indexOf('data-testid="commerce-landing"') < html.indexOf('id="paketler"'));
-  assert.ok(html.includes('id="magaza-araclari"')); assert.ok(html.includes('id="toshi-kredileri"'));
+  assert.ok(!html.includes('id="magaza-araclari"')); assert.ok(!html.includes('Mağaza araçları')); assert.ok(html.includes('id="toshi-kredileri"'));
   assert.equal((html.match(/data-public-kind="package"/g) ?? []).length, 4);
-  assert.equal((html.match(/data-public-kind="tool"/g) ?? []).length, 6);
+  assert.equal((html.match(/data-public-kind="tool"/g) ?? []).length, 0);
   assert.equal((html.match(/data-public-kind="toshi_credit"/g) ?? []).length, 4);
   for (const seats of ['1 kullanıcı', '2 kullanıcı', '5 kullanıcı', '15 kullanıcı']) assert.ok(html.includes(seats));
   assert.equal((html.match(/Özel alan adı bağlama/g) ?? []).length, 3);
@@ -45,7 +45,7 @@ test('the Turkish page server-renders all fourteen real products after its isola
 });
 test('catalog prices disclose actual VAT-inclusive monthly, annual and one-time totals', () => {
   const html = render();
-  for (const total of ['3.104,40', '31.044,00', '5.444,40', '54.444,00', '9.344,40', '93.444,00', '1.188,00', '2.988,00', '4.188,00', '5.388,00', '7.188,00', '16.788,00', '298,80', '1.198,80', '3.598,80', '14.998,80']) assert.ok(html.includes(total), total);
+  for (const total of ['3.104,40', '31.044,00', '5.444,40', '54.444,00', '9.344,40', '93.444,00', '298,80', '1.198,80', '3.598,80', '14.998,80']) assert.ok(html.includes(total), total);
   assert.ok(html.includes('KDV dahil')); assert.ok(!html.includes('KDV hariç'));
   const starter = html.match(/<article(?=[^>]*id="urun-paket-starter")[\s\S]*?<\/article>/)?.[0];
   assert.ok(starter.indexOf('3.104,40') < starter.indexOf('Kataloğunuzu'));
@@ -56,7 +56,7 @@ test('catalog prices disclose actual VAT-inclusive monthly, annual and one-time 
 });
 test('catalog purchase links use the verified store entry and leave legal navigation to the global footer', () => {
   const html = render();
-  assert.equal((html.match(/href="https:\/\/panel\.saas-staging\.celebix\.net\/login"/g) ?? []).length, 13);
+  assert.equal((html.match(/href="https:\/\/panel\.saas-staging\.celebix\.net\/login"/g) ?? []).length, 7);
   assert.equal((html.match(/href="https:\/\/kayit\.celebix\.net\/"/g) ?? []).length, 1);
   const Footer = load('components/ServicePolicyFooter.tsx').default;
   const combined = html + renderToStaticMarkup(React.createElement(Footer, { locale: 'tr' }));
@@ -66,7 +66,6 @@ test('catalog purchase links use the verified store entry and leave legal naviga
   }
   assert.ok(html.includes('Panelden satın al')); assert.ok(html.includes('iyzico'));
   assert.ok(!html.includes('<form')); assert.ok(!html.includes('offerId='));
-  assert.match(html, /<img(?=[^>]*src="\/payments\/tools\/celebix-all-tools-v1.webp")(?=[^>]*class="[^"]*object-contain)/);
 });
 test('existing English and historic success-return composition remains intact', () => {
   for (const html of [render('en'), render('tr', 'success')]) {

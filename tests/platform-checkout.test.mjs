@@ -12,6 +12,7 @@ const key = Buffer.alloc(32, 9);
 const env = {CELEBIX_PLATFORM_COMMERCE_OWNER_ORIGIN:'https://owner.saas-staging.celebix.net',CELEBIX_PLATFORM_COMMERCE_BRIDGE_KEY_B64URL:key.toString('base64url')};
 const order = {id,storeId:otherId,storeName:'Örnek mağaza',title:'Başlangıç',kind:'package',offerId:'00000000-0000-4000-8000-000000000008',term:'annual',netCents:2587000,vatCents:517400,totalCents:3104400,currency:'TRY',state:'created',expiresAt:'2026-10-27T08:00:00.000Z'};
 const creditOffers = [
+ {offerId:'toshi-test-1',netCents:83,vatCents:17,totalCents:100},
  {offerId:'toshi-500',netCents:24900,vatCents:4980,totalCents:29880},
  {offerId:'toshi-2500',netCents:99900,vatCents:19980,totalCents:119880},
  {offerId:'toshi-10000',netCents:299900,vatCents:59980,totalCents:359880},

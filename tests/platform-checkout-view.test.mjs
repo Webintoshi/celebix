@@ -11,11 +11,24 @@ const attemptId='b77a7eb5-bd97-4d2f-879b-7b9131163396';
 const order={id,storeId:'e264235b-5c30-4b30-8c0d-2b229f336466',storeName:'Örnek mağaza',title:'Başlangıç',kind:'package',offerId:'00000000-0000-4000-8000-000000000008',term:'annual',netCents:2587000,vatCents:517400,totalCents:3104400,currency:'TRY',state:'created',expiresAt:'2026-10-27T08:00:00Z'};
 function render(props,exportName='CheckoutView'){
  const ts=require('typescript'),React=require('react'),{renderToStaticMarkup}=require('react-dom/server');
- const path=new URL('../components/platform-checkout/CheckoutView.tsx',import.meta.url);
- const output=ts.transpileModule(readFileSync(path,'utf8'),{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
- const compiled={exports:{}};new Function('require','module','exports',output)(createRequire(path),compiled,compiled.exports);
- return renderToStaticMarkup(React.createElement(compiled.exports[exportName],props));
+ const load=path=>{
+  const output=ts.transpileModule(readFileSync(path,'utf8'),{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
+  const localRequire=createRequire(path),compiled={exports:{}};
+  new Function('require','module','exports',output)(name=>name==='./CheckoutProductVisual'?load(new URL('./CheckoutProductVisual.tsx',path)):localRequire(name),compiled,compiled.exports);
+  return compiled.exports;
+ };
+ return renderToStaticMarkup(React.createElement(load(new URL('../components/platform-checkout/CheckoutView.tsx',import.meta.url))[exportName],props));
 }
+test('premium checkout keeps one split shell with product summary before the compact billing form',()=>{
+ const html=render({order,attemptId});
+ assert.match(html,/<main(?=[^>]*data-checkout-shell="")[^>]*>/);
+ assert.ok(html.indexOf('<aside')<html.indexOf('id="billing-heading"'));
+ assert.ok(html.indexOf('data-checkout-product-visual')<html.indexOf('Hizmet bedeli'));
+ assert.match(html,/<img(?=[^>]*src="\/payments\/plans\/celebix-starter-v1.webp")(?=[^>]*width="960")(?=[^>]*height="640")(?=[^>]*class="[^"]*object-contain)/);
+ assert.ok(!html.includes('>01</span>'));assert.ok(!html.includes('>02</span>'));assert.ok(!html.includes('>03</span>'));
+ for(const name of ['cardNumber','cardHolder','expiry','cvv','saveCard'])assert.ok(!html.includes(`name="${name}"`));
+ assert.ok(html.includes('Kart bilgilerinizi iyzico’nun güvenli ödeme sayfasında girersiniz.'));
+});
 test('checkout uses the official navigation logo on billing, result and unavailable screens',()=>{
  const navigation=readFileSync(new URL('../components/sections/Navigation.tsx',import.meta.url),'utf8');
  const asset='/Logo/koyu logo.svg';assert.ok(navigation.includes(`src="${asset}"`));
@@ -72,7 +85,7 @@ test('checkout explicitly identifies the receiving store and uses local product 
  assert.match(packageHtml,/<img(?=[^>]*src="\/payments\/plans\/celebix-starter-v1.webp")(?=[^>]*class="[^"]*object-contain)/, 'package artwork remains uncropped in checkout');
  const toolHtml=render({order:{...order,kind:'tool',offerId:'all_tools',term:'once',title:'Tüm mağaza araçları'},attemptId});
  assert.match(toolHtml,/<img(?=[^>]*src="\/payments\/tools\/celebix-all-tools-v1.webp")(?=[^>]*alt="Tüm mağaza araçları")(?=[^>]*class="[^"]*object-contain)/);
- assert.ok(toolHtml.includes('Örnek mağaza mağazası için'));
+ assert.ok(toolHtml.includes('Satın alan mağaza'));assert.ok(toolHtml.includes('Örnek mağaza'));
  assert.ok(!toolHtml.includes('name="storeId"'));
 });
 test('individual tool checkout shows the selected product artwork without cropping its lettering',()=>{
@@ -92,6 +105,7 @@ test('package artwork follows immutable offer identity while unknown historic of
 });
 test('credit checkout shows purchased credits, frozen totals and the receiving store without new authority inputs',()=>{
  const offers=[
+  {offerId:'toshi-test-1',count:'1',netCents:83,vatCents:17,totalCents:100,total:'1,00'},
   {offerId:'toshi-500',count:'500',netCents:24900,vatCents:4980,totalCents:29880,total:'298,80'},
   {offerId:'toshi-2500',count:'2.500',netCents:99900,vatCents:19980,totalCents:119880,total:'1.198,80'},
   {offerId:'toshi-10000',count:'10.000',netCents:299900,vatCents:59980,totalCents:359880,total:'3.598,80'},
@@ -99,7 +113,7 @@ test('credit checkout shows purchased credits, frozen totals and the receiving s
  ];
  for(const {count,total,...offer} of offers){
   const html=render({order:{...order,...offer,kind:'toshi_credit',term:'once',title:'Toshi kredi paketi'},attemptId});
-  assert.ok(html.includes(`${count} Toshi kredisi`));assert.ok(html.includes('Örnek mağaza mağazası için'));
+  assert.ok(html.includes(`${count} Toshi kredisi`));assert.ok(html.includes('Satın alan mağaza'));assert.ok(html.includes('Örnek mağaza'));
   assert.ok(html.includes('Toshi kredileri bu mağazanın bakiyesine eklenir.'));
   assert.ok(html.includes('Tek seferlik ödeme'));assert.ok(html.includes('KDV (%20)'));assert.ok(html.includes(total));
   const image=html.match(/<aside[\s\S]*?<\/aside>/)?.[0].match(/<img[^>]*>/)?.[0];

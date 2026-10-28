@@ -18,14 +18,6 @@ const PLAN_COPY: Record<string, string> = {
   growth: 'Büyüyen ürün, sipariş ve ekip ihtiyaçlarınıza daha fazla alan açın.',
   professional: 'Yüksek satış kapasitesini kasa ve muhasebe araçlarıyla birleştirin.',
 };
-const TOOL_COPY: Record<string, { benefit: string; features: string[] }> = {
-  contact_widget: { benefit: 'Müşterileriniz tercih ettikleri iletişim kanalından size ulaşsın.', features: ['WhatsApp, telefon ve diğer kanallar', 'Cihaz, sayfa ve çalışma saati seçimi', 'Mağazanıza uygun görünüm ve mesaj'] },
-  whatsapp_ordering: { benefit: 'Ürün ve seçenek bilgileriyle WhatsApp üzerinden sipariş talebi alın.', features: ['Ürün, seçenek ve adet içeren mesaj', 'WhatsApp numarası ve mesaj ayarları', 'Fiyat ve sepete ekleme görünürlüğü'] },
-  cart_capture: { benefit: 'Sepet aşamasında ziyaretçilerinizin iletişim bilgisini alın.', features: ['E-posta, telefon veya ikisini toplama', 'Görünüm ve gösterim ayarları', 'Yetkiniz varsa isteğe bağlı kupon'] },
-  restock: { benefit: 'Ürün yeniden stoğa geldiğinde bekleyen müşterilere haber verin.', features: ['Ürün seçeneğine göre bildirim kaydı', 'Onaylı talebe tek seferlik e-posta', 'Bekleyen ve gönderilen bildirim durumu'] },
-  order_bump: { benefit: 'Sepette ve ödemede tamamlayıcı ürünler önerin.', features: ['Yan sepet ve ödeme sayfası', 'Ürün, kategori ve tutar koşulları', 'Sıralı kurallar, en fazla 3 öneri'] },
-  all_tools: { benefit: 'Beş mağaza aracını tek seferlik satın alımla edinin.', features: ['İletişim balonu ve WhatsApp sipariş', 'Sepet yakalama ve stok bildirimi', 'Sepet ve ödeme önerileri'] },
-};
 
 function Artwork({ src }: { src: string }) {
   return <img src={src} alt="" width={960} height={640} loading="lazy" decoding="async" className="aspect-[3/2] h-auto w-full rounded-lg bg-[#fafafa] object-contain" />;
@@ -45,9 +37,9 @@ export default function PublicProductCatalog() {
   const [term, setTerm] = useState<'monthly' | 'annual'>('monthly');
   return <section id="paketler" aria-labelledby="catalog-title" className="scroll-mt-24 border-t border-[#e5e5e5] bg-[#fafafa] px-5 py-10 text-[#2b2b2b] sm:px-8 sm:py-16 lg:py-24">
     <div className="mx-auto grid max-w-[1400px] gap-8 lg:gap-16">
-      <header className="max-w-3xl"><h2 id="catalog-title" className="text-3xl font-medium leading-tight tracking-tight sm:text-4xl">Paketler ve fiyatlar</h2><p className="mt-4 text-sm leading-7 text-[#666]">Paketler, mağaza araçları ve Toshi kredileri. Fiyatlara KDV dahildir.</p></header>
+      <header className="max-w-3xl"><h2 id="catalog-title" className="text-3xl font-medium leading-tight tracking-tight sm:text-4xl">Paketler ve fiyatlar</h2><p className="mt-4 text-sm leading-7 text-[#666]">Mağaza paketleri ve Toshi kredileri. Fiyatlara KDV dahildir.</p></header>
       <div className="flex flex-col gap-5 border-y border-[#e5e5e5] py-4 md:flex-row md:items-center md:justify-between">
-        <nav aria-label="Ürün grupları" className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium"><a className="rounded-sm underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4" href="#magaza-paketleri">Mağaza paketleri</a><a className="rounded-sm underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4" href="#magaza-araclari">Mağaza araçları</a><a className="rounded-sm underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4" href="#toshi-kredileri">Toshi kredileri</a></nav>
+        <nav aria-label="Ürün grupları" className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium"><a className="rounded-sm underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4" href="#magaza-paketleri">Mağaza paketleri</a><a className="rounded-sm underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4" href="#toshi-kredileri">Toshi kredileri</a></nav>
         <p className="max-w-xl text-xs leading-6 text-[#666]">Satın alımlar mağaza panelinizden iyzico ile tamamlanır.</p>
       </div>
 
@@ -60,18 +52,6 @@ export default function PublicProductCatalog() {
             <p className="text-[13px] leading-6 text-[#666]">{PLAN_COPY[plan.code]}</p>
             <Features>{[`${count(plan.limits.products)} ürün`, `Ayda ${count(plan.limits.monthlyOrders)} sipariş`, `${count(plan.limits.staff)} kullanıcı`, `${plan.limits.storageBytes / 1_000_000_000} GB depolama`, `${count(plan.variantLimit)} varyant`, plan.limits.customDomains ? 'Özel alan adı bağlama' : 'Celebix mağaza adresi']}</Features>
             <PurchaseLink name={plan.name} free={plan.monthly.totalCents === 0} />
-          </div>
-        </article>)}</div>
-      </section>
-
-      <section id="magaza-araclari" aria-labelledby="tools-title" className="scroll-mt-24"><div className="mb-6 max-w-3xl"><h2 id="tools-title" className="text-2xl font-medium tracking-tight">Mağaza araçları</h2><p className="mt-2 text-sm leading-7 text-[#666]">Araçlar ayrı satılır ve tek seferlik ödemeyle mağazanıza tanımlanır. Mevcut araç haklarınız korunur; satın alma uygunluğu panelinizde gösterilir.</p></div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">{catalog.tools.map(tool => <article id={`urun-arac-${tool.id}`} key={tool.id} data-public-product={tool.id} data-public-kind="tool" className={CARD}>
-          <Artwork src={tool.image} /><div className={BODY}><div className="flex flex-wrap items-center gap-2"><h3 className="text-lg font-semibold">{tool.name}</h3>{tool.id === 'all_tools' ? <span className="rounded-md border border-[#ddd] px-2 py-1 text-[11px] text-[#666]">5 araç</span> : null}</div><p className="text-[13px] leading-6 text-[#666]">{TOOL_COPY[tool.id].benefit}</p>
-            <Features>{TOOL_COPY[tool.id].features}</Features><PriceBlock price={tool} />
-            <p className="text-xs leading-5 text-[#666]">Tek seferlik · Yıllık yenileme yok</p>
-            {tool.id === 'all_tools' ? <p className="text-xs leading-5 text-[#777]">Henüz hiçbir araca sahip olmayan mağazalar için.</p> : null}
-            {tool.toolKeys.includes('restock') ? <p className="text-xs leading-5 text-[#777]">E-posta gönderimi hizmetin gönderim koşullarına tabidir; sınırsız gönderim içermez.</p> : null}
-            <PurchaseLink name={tool.name} />
           </div>
         </article>)}</div>
       </section>
