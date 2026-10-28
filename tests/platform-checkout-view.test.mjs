@@ -32,9 +32,20 @@ test('checkout explicitly identifies the receiving store and uses local product 
  assert.match(packageHtml,/<img(?=[^>]*src="\/payments\/plans\/celebix-starter-v1.webp")(?=[^>]*alt="Başlangıç")/);
  assert.match(packageHtml,/<img(?=[^>]*src="\/payments\/plans\/celebix-starter-v1.webp")(?=[^>]*class="[^"]*object-contain)/, 'package artwork remains uncropped in checkout');
  const toolHtml=render({order:{...order,kind:'tool',offerId:'all_tools',term:'once',title:'Tüm mağaza araçları'},attemptId});
- assert.match(toolHtml,/<img(?=[^>]*src="\/payments\/celebix-tools.jpg")(?=[^>]*alt="Tüm mağaza araçları")/);
+ assert.match(toolHtml,/<img(?=[^>]*src="\/payments\/tools\/celebix-all-tools-v1.webp")(?=[^>]*alt="Tüm mağaza araçları")(?=[^>]*class="[^"]*object-contain)/);
  assert.ok(toolHtml.includes('Örnek mağaza mağazası için'));
  assert.ok(!toolHtml.includes('name="storeId"'));
+});
+test('individual tool checkout shows the selected product artwork without cropping its lettering',()=>{
+ for(const [offerId,slug]of [['contact_widget','contact-widget'],['whatsapp_ordering','whatsapp-ordering'],['cart_capture','cart-capture'],['restock','restock'],['order_bump','order-bump']]){
+  const html=render({order:{...order,kind:'tool',offerId,term:'once',title:'Mağaza aracı'},attemptId});
+  const image=html.match(/<img[^>]*>/)?.[0];
+  assert.ok(image?.includes(`src="/payments/tools/celebix-${slug}-v1.webp"`));
+  assert.ok(image.includes('object-contain'));assert.ok(!image.includes('object-cover'));
+  assert.ok(html.includes(`action="/checkout/saas/${id}/pay"`));
+ }
+ const unknown=render({order:{...order,kind:'tool',offerId:'unknown',term:'once'},attemptId});
+ assert.match(unknown,/<img(?=[^>]*src="\/payments\/celebix-tools.jpg")/);
 });
 test('package artwork follows immutable offer identity while unknown historic offers keep the generic image',()=>{
  for(const [offerId,code]of [['00000000-0000-4000-8000-000000000009','growth'],['00000000-0000-4000-8000-000000000010','professional'],['00000000-0000-4000-8000-000000000004','starter'],['00000000-0000-4000-8000-000000000005','growth'],['00000000-0000-4000-8000-000000000006','professional']])assert.ok(render({order:{...order,offerId},attemptId}).includes(`src="/payments/plans/celebix-${code}-v1.webp"`));
@@ -52,7 +63,9 @@ test('credit checkout shows purchased credits, frozen totals and the receiving s
   assert.ok(html.includes(`${count} Toshi kredisi`));assert.ok(html.includes('Örnek mağaza mağazası için'));
   assert.ok(html.includes('Toshi kredileri bu mağazanın bakiyesine eklenir.'));
   assert.ok(html.includes('Tek seferlik ödeme'));assert.ok(html.includes('KDV (%20)'));assert.ok(html.includes(total));
-  assert.match(html,/<img(?=[^>]*src="\/payments\/toshi-credit.svg")/);
+  const image=html.match(/<img[^>]*>/)?.[0];
+  assert.ok(image?.includes(`src="/payments/toshi/${offer.offerId}-v1.webp"`));
+  assert.ok(image.includes('object-contain'));assert.ok(!image.includes('object-cover'));
   assert.ok(html.includes(`action="/checkout/saas/${id}/pay"`));
   for(const name of ['credits','creditCount','storeId','amountCents','offerId'])assert.ok(!html.includes(`name="${name}"`));
   assert.match(html,/<input(?=[^>]*type="checkbox")(?=[^>]*name="terms")(?=[^>]*required="")[^>]*>/);

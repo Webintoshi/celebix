@@ -40,7 +40,7 @@ function OrderSummary({ order, term, afterStatus }: { order: PublicCheckoutOrder
     <div className="lg:sticky lg:top-8">
       <h2 id="summary-heading" className="text-xl font-semibold tracking-tight text-[#242424]">Sipariş özeti</h2>
       <div className="mt-6 flex items-center gap-4">
-        <div className="relative shrink-0"><img src={image} alt={order.title} width={88} height={88} className={`h-[88px] w-[88px] rounded-xl border border-[#e1dedb] ${order.kind === 'package' ? 'object-contain' : 'object-cover'}`} /><span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#696969] px-1 text-[11px] font-medium text-white" aria-label="Adet: 1">1</span></div>
+        <div className="relative shrink-0"><img src={image} alt={order.title} width={88} height={88} className={`h-[88px] w-[88px] rounded-xl border border-[#e1dedb] ${order.kind === 'package' || image.endsWith('-v1.webp') ? 'object-contain' : 'object-cover'}`} /><span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#696969] px-1 text-[11px] font-medium text-white" aria-label="Adet: 1">1</span></div>
         <div className="min-w-0 flex-1"><h3 className="[overflow-wrap:anywhere] text-base font-semibold leading-snug text-[#242424]">{order.title}</h3>{credits ? <p className="mt-1 text-sm font-medium text-[#242424]">{credits.toLocaleString('tr-TR')} Toshi kredisi</p> : null}<p className="mt-1 text-xs leading-5 text-[#666]">{term}</p></div>
         <p className="shrink-0 text-sm font-semibold tabular-nums text-[#242424]">{money(order.netCents)}</p>
       </div>

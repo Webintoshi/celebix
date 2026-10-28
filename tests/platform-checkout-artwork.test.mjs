@@ -15,3 +15,31 @@ test('tool and credit artwork cannot be overridden by a package offer ID',()=>{
  assert.equal(checkoutArtwork('tool',planId),'/payments/celebix-tools.jpg');
  assert.equal(checkoutArtwork('toshi_credit',planId),'/payments/toshi-credit.svg');
 });
+test('each individual tool and the bundle use their own versioned product artwork',()=>{
+ for(const [offerId,want]of [
+  ['contact_widget','/payments/tools/celebix-contact-widget-v1.webp'],
+  ['whatsapp_ordering','/payments/tools/celebix-whatsapp-ordering-v1.webp'],
+  ['cart_capture','/payments/tools/celebix-cart-capture-v1.webp'],
+  ['restock','/payments/tools/celebix-restock-v1.webp'],
+  ['order_bump','/payments/tools/celebix-order-bump-v1.webp'],
+  ['all_tools','/payments/tools/celebix-all-tools-v1.webp'],
+ ])assert.equal(checkoutArtwork('tool',offerId),want);
+});
+test('each Toshi credit pack uses its matching versioned product artwork',()=>{
+ for(const [offerId,want]of [
+  ['toshi-500','/payments/toshi/toshi-500-v1.webp'],
+  ['toshi-2500','/payments/toshi/toshi-2500-v1.webp'],
+  ['toshi-10000','/payments/toshi/toshi-10000-v1.webp'],
+  ['toshi-50000','/payments/toshi/toshi-50000-v1.webp'],
+ ])assert.equal(checkoutArtwork('toshi_credit',offerId),want);
+});
+test('unknown and prototype-shaped tool or credit IDs retain safe kind-specific fallbacks',()=>{
+ for(const offerId of ['unknown','__proto__','constructor','toString','https://evil.example/image.webp','../../image.webp']){
+  assert.equal(checkoutArtwork('tool',offerId),'/payments/celebix-tools.jpg');
+  assert.equal(checkoutArtwork('toshi_credit',offerId),'/payments/toshi-credit.svg');
+ }
+ assert.equal(checkoutArtwork('tool','toshi-500'),'/payments/celebix-tools.jpg');
+ assert.equal(checkoutArtwork('toshi_credit','all_tools'),'/payments/toshi-credit.svg');
+ assert.equal(checkoutArtwork('package','contact_widget'),'/payments/celebix-package.jpg');
+ assert.equal(checkoutArtwork('unknown','toshi-500'),'/payments/celebix-package.jpg');
+});
