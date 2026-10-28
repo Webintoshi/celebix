@@ -6,12 +6,12 @@ import {mkdirSync,readFileSync,realpathSync,statSync,writeFileSync} from 'node:f
 import path from 'node:path';
 import {fileURLToPath,pathToFileURL} from 'node:url';
 
-const FILES=['packages/saas-contracts/src/commercial-packages/catalog.ts','packages/saas-contracts/src/store-tools/index.ts','packages/saas-contracts/src/toshi/credits.ts'];
+const FILES=['packages/saas-contracts/src/commercial-packages/catalog.ts','packages/saas-contracts/src/toshi/credits.ts'];
 const OUTPUT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../components/public-products/catalog.snapshot.json');
 const PLAN_IMAGES={free_starter:'free',starter:'starter',growth:'growth',professional:'professional'};
 const PLAN_IDS={free_starter:'00000000-0000-4000-8000-000000000007',starter:'00000000-0000-4000-8000-000000000008',growth:'00000000-0000-4000-8000-000000000009',professional:'00000000-0000-4000-8000-000000000010'};
-const TOOL_IMAGES={contact_widget:'contact-widget',whatsapp_ordering:'whatsapp-ordering',cart_capture:'cart-capture',restock:'restock',order_bump:'order-bump',all_tools:'all-tools'};
-const CREDIT_IDS=['toshi-500','toshi-2500','toshi-10000','toshi-50000'];
+
+const CREDIT_IDS=['toshi-test-1','toshi-500','toshi-2500','toshi-10000','toshi-50000'];
 const hash=value=>createHash('sha256').update(value).digest('hex');
 function fail(message){throw new Error(message);}
 function integer(value){if(!Number.isSafeInteger(value)||value<0)fail('PUBLIC_CATALOG_SOURCE_INVALID');return value;}
@@ -38,20 +38,16 @@ try{
  const clean=()=>{try{git('diff','--quiet','HEAD','--',...FILES);}catch{fail('Canonical source files changed; use a clean source commit.');}};
  clean();
  const sources=FILES.map(file=>{const input=path.join(root,file);if(!statSync(input).isFile())fail('PUBLIC_CATALOG_SOURCE_INVALID');return{path:file,sha256:hash(readFileSync(input))};});
- const [{COMMERCIAL_PACKAGES},{STORE_TOOL_OFFERS},{TOSHI_CREDIT_OFFERS}]=await Promise.all(FILES.map(file=>import(pathToFileURL(path.join(root,file)).href)));
- expectedIds(COMMERCIAL_PACKAGES,Object.values(PLAN_IDS));expectedIds(STORE_TOOL_OFFERS,Object.keys(TOOL_IMAGES));expectedIds(TOSHI_CREDIT_OFFERS,CREDIT_IDS);
+ const [{COMMERCIAL_PACKAGES},{TOSHI_CREDIT_OFFERS}]=await Promise.all(FILES.map(file=>import(pathToFileURL(path.join(root,file)).href)));
+ expectedIds(COMMERCIAL_PACKAGES,Object.values(PLAN_IDS));expectedIds(TOSHI_CREDIT_OFFERS,CREDIT_IDS);
  const plans=COMMERCIAL_PACKAGES.map(plan=>{
   if(!Object.hasOwn(PLAN_IDS,plan.code)||PLAN_IDS[plan.code]!==plan.id||plan.currency!=='TRY'||plan.vatIncluded!==false)fail('PUBLIC_CATALOG_SOURCE_INVALID');
   return{id:plan.id,code:plan.code,name:text(plan.name),version:integer(plan.version),monthly:amounts(plan.monthlyPriceCents),annual:amounts(plan.annualPriceCents),limits:limits(plan.limits),variantLimit:integer(plan.variantLimit),capabilities:strings(plan.capabilities),features:strings(plan.features),image:`/payments/plans/celebix-${PLAN_IMAGES[plan.code]}-v1.webp`};
  });
- const tools=STORE_TOOL_OFFERS.map(offer=>{
-  const price=amounts(offer.netCents);if(offer.currency!=='TRY'||offer.vatBps!==2000||offer.vatCents!==price.vatCents||offer.totalCents!==price.totalCents)fail('PUBLIC_CATALOG_SOURCE_INVALID');
-  return{id:offer.id,name:text(offer.name),toolKeys:strings(offer.toolKeys),...price,vatBps:2000,image:`/payments/tools/celebix-${TOOL_IMAGES[offer.id]}-v1.webp`};
- });
  const credits=TOSHI_CREDIT_OFFERS.map(offer=>({id:offer.id,credits:integer(offer.credits),...amounts(offer.netCents),vatBps:2000,image:`/payments/toshi/${offer.id}-v1.webp`}));
  clean();if(git('rev-parse','HEAD')!==commit||sources.some(file=>hash(readFileSync(path.join(root,file.path)))!==file.sha256))fail('Canonical source changed during generation.');
- const value=JSON.stringify({schemaVersion:1,source:{commit,files:sources},vatBps:2000,plans,tools,credits},null,2)+'\n';
+ const value=JSON.stringify({schemaVersion:1,source:{commit,files:sources},vatBps:2000,plans,credits},null,2)+'\n';
  if(check){let existing;try{existing=readFileSync(OUTPUT,'utf8');}catch{fail('Public catalog snapshot is stale or missing.');}if(existing!==value)fail('Public catalog snapshot is stale.');}
  else{mkdirSync(path.dirname(OUTPUT),{recursive:true});writeFileSync(OUTPUT,value);}
- console.log(JSON.stringify({status:check?'current':'generated',sourceCommit:commit,products:plans.length+tools.length+credits.length}));
+ console.log(JSON.stringify({status:check?'current':'generated',sourceCommit:commit,products:plans.length+credits.length}));
 }catch(error){console.error(error instanceof Error?error.message:'PUBLIC_CATALOG_GENERATION_FAILED');process.exitCode=1;}

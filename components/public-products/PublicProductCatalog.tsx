@@ -29,12 +29,13 @@ function PriceBlock({ price, term, priceTop = false }: { price: Price; term?: st
   const free = price.totalCents === 0;
   return <div className={priceTop ? 'pt-2' : 'mt-auto pt-2'}><div className="flex flex-wrap items-baseline gap-x-2"><strong className="text-[28px] font-semibold leading-tight tracking-tight">{money(price.totalCents)}</strong>{term && !free ? <span className="text-sm text-[#666]">/ {term}</span> : null}</div><p className="mt-1 text-xs font-medium text-[#555]">{free ? 'Süresiz ücretsiz' : 'KDV dahil'}</p></div>;
 }
-function PurchaseLink({ name, free = false }: { name: string; free?: boolean }) {
-  return <a href={free ? REGISTER : PANEL_LOGIN} className={LINK}>{free ? 'Ücretsiz mağaza aç' : 'Panelden satın al'}<span className="sr-only"> · {name}</span><ArrowUpRight size={16} aria-hidden="true" /></a>;
+function PurchaseLink({ name, free = false, test = false }: { name: string; free?: boolean; test?: boolean }) {
+  return <a href={free ? REGISTER : test ? `${PANEL_LOGIN}?purchase=toshi-test-1` : PANEL_LOGIN} className={LINK}>{free ? 'Ücretsiz mağaza aç' : test ? '1 TL ile satın al' : 'Panelden satın al'}<span className="sr-only"> · {name}</span><ArrowUpRight size={16} aria-hidden="true" /></a>;
 }
 
 export default function PublicProductCatalog() {
   const [term, setTerm] = useState<'monthly' | 'annual'>('monthly');
+  const testOffer = catalog.credits.find(offer => offer.id === 'toshi-test-1');
   return <section id="paketler" aria-labelledby="catalog-title" className="scroll-mt-24 border-t border-[#e5e5e5] bg-[#fafafa] px-5 py-10 text-[#2b2b2b] sm:px-8 sm:py-16 lg:py-24">
     <div className="mx-auto grid max-w-[1400px] gap-8 lg:gap-16">
       <header className="max-w-3xl"><h2 id="catalog-title" className="text-3xl font-medium leading-tight tracking-tight sm:text-4xl">Paketler ve fiyatlar</h2><p className="mt-4 text-sm leading-7 text-[#666]">Mağaza paketleri ve Toshi kredileri. Fiyatlara KDV dahildir.</p></header>
@@ -57,8 +58,11 @@ export default function PublicProductCatalog() {
       </section>
 
       <section id="toshi-kredileri" aria-labelledby="credits-title" className="scroll-mt-24"><div className="mb-6 max-w-3xl"><h2 id="credits-title" className="text-2xl font-medium tracking-tight">Toshi kredi paketleri</h2><p className="mt-2 text-sm leading-7 text-[#666]">Ürün metinleri, SEO ve görsel alt metinleri için kredi yükleyin. Krediler ayrıca satın alınır ve Toshi kullanımını destekleyen mağaza planlarında kullanılır.</p></div>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">{catalog.credits.map(offer => <article id={`urun-kredi-${offer.id}`} key={offer.id} data-public-product={offer.id} data-public-kind="toshi_credit" className={CARD}>
-          <Artwork src={offer.image} /><div className={BODY}><h3 className="text-lg font-semibold">{count(offer.credits)} Toshi kredisi</h3><p className="text-[13px] leading-6 text-[#666]">Mağazanızın Toshi bakiyesine eklenir.</p><PriceBlock price={offer} /><p className="text-xs leading-5 text-[#666]">Tek seferlik satın alma</p><PurchaseLink name={`${count(offer.credits)} Toshi kredisi`} /></div>
+        {testOffer ? <article id="urun-kredi-toshi-test-1" data-public-product="toshi-test-1" data-public-kind="toshi_credit" className="mb-5 grid items-center gap-5 rounded-xl border border-[#e7d4c4] bg-white p-4 sm:grid-cols-[160px_minmax(0,1fr)_220px] sm:p-5">
+          <Artwork src={testOffer.image} /><div><h3 className="text-xl font-semibold">Toshi test paketi</h3><p className="mt-2 text-sm leading-6 text-[#666]">1 Toshi kredisi · Tek seferlik satın alma</p><p className="mt-1 text-sm leading-6 text-[#666]">Ödeme akışını 1 TL ile deneyin.</p></div><div className="grid gap-4"><PriceBlock price={testOffer} priceTop /><PurchaseLink name="Toshi test paketi" test /></div>
+        </article> : null}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">{catalog.credits.filter(offer => offer.id !== 'toshi-test-1').map(offer => <article id={`urun-kredi-${offer.id}`} key={offer.id} data-public-product={offer.id} data-public-kind="toshi_credit" className={CARD}>
+          <Artwork src={offer.image} /><div className={BODY}><h3 className="text-lg font-semibold">{offer.id === 'toshi-test-1' ? 'Toshi test paketi' : `${count(offer.credits)} Toshi kredisi`}</h3><p className="text-[13px] leading-6 text-[#666]">{offer.id === 'toshi-test-1' ? '1 Toshi kredisi · Ödeme akışını deneyin.' : 'Mağazanızın Toshi bakiyesine eklenir.'}</p><PriceBlock price={offer} /><p className="text-xs leading-5 text-[#666]">Tek seferlik satın alma</p><PurchaseLink name={offer.id === 'toshi-test-1' ? 'Toshi test paketi' : `${count(offer.credits)} Toshi kredisi`} test={offer.id === 'toshi-test-1'} /></div>
         </article>)}</div>
       </section>
     </div>

@@ -1,19 +1,15 @@
 {
   "schemaVersion": 1,
   "source": {
-    "commit": "ea67ebcb49a0669892117bf64ce495a4ae02e52d",
+    "commit": "9745a82d958f9ffe72d25c27ea1a7e83bee53b7f",
     "files": [
       {
         "path": "packages/saas-contracts/src/commercial-packages/catalog.ts",
         "sha256": "257c6e13281c1d31ef071aafbe3c83e175e3a96d57a5da3f490b2f5142507446"
       },
       {
-        "path": "packages/saas-contracts/src/store-tools/index.ts",
-        "sha256": "bcf29c2c6abd8f1975a4ef97e27fdea0def05efff5055d29ad8305c5b1173bad"
-      },
-      {
         "path": "packages/saas-contracts/src/toshi/credits.ts",
-        "sha256": "7b10a7417801ee068450fef26942e4b92f6862a2404f2a868a4c60359fd3c59d"
+        "sha256": "58d8d167155e7aa18da85c3011cf637f176a6800a45ca6e4f653265df6191335"
       }
     ]
   },
@@ -211,85 +207,16 @@
       "image": "/payments/plans/celebix-professional-v1.webp"
     }
   ],
-  "tools": [
-    {
-      "id": "contact_widget",
-      "name": "İletişim balonu",
-      "toolKeys": [
-        "contact_widget"
-      ],
-      "netCents": 99000,
-      "vatCents": 19800,
-      "totalCents": 118800,
-      "vatBps": 2000,
-      "image": "/payments/tools/celebix-contact-widget-v1.webp"
-    },
-    {
-      "id": "whatsapp_ordering",
-      "name": "WhatsApp ile sipariş ver",
-      "toolKeys": [
-        "whatsapp_ordering"
-      ],
-      "netCents": 249000,
-      "vatCents": 49800,
-      "totalCents": 298800,
-      "vatBps": 2000,
-      "image": "/payments/tools/celebix-whatsapp-ordering-v1.webp"
-    },
-    {
-      "id": "cart_capture",
-      "name": "Sepet yakalama",
-      "toolKeys": [
-        "cart_capture"
-      ],
-      "netCents": 349000,
-      "vatCents": 69800,
-      "totalCents": 418800,
-      "vatBps": 2000,
-      "image": "/payments/tools/celebix-cart-capture-v1.webp"
-    },
-    {
-      "id": "restock",
-      "name": "Stok gelince haber ver",
-      "toolKeys": [
-        "restock"
-      ],
-      "netCents": 449000,
-      "vatCents": 89800,
-      "totalCents": 538800,
-      "vatBps": 2000,
-      "image": "/payments/tools/celebix-restock-v1.webp"
-    },
-    {
-      "id": "order_bump",
-      "name": "Sepet ve ödeme önerileri",
-      "toolKeys": [
-        "order_bump"
-      ],
-      "netCents": 599000,
-      "vatCents": 119800,
-      "totalCents": 718800,
-      "vatBps": 2000,
-      "image": "/payments/tools/celebix-order-bump-v1.webp"
-    },
-    {
-      "id": "all_tools",
-      "name": "Tüm mağaza araçları",
-      "toolKeys": [
-        "contact_widget",
-        "whatsapp_ordering",
-        "cart_capture",
-        "restock",
-        "order_bump"
-      ],
-      "netCents": 1399000,
-      "vatCents": 279800,
-      "totalCents": 1678800,
-      "vatBps": 2000,
-      "image": "/payments/tools/celebix-all-tools-v1.webp"
-    }
-  ],
   "credits": [
+    {
+      "id": "toshi-test-1",
+      "credits": 1,
+      "netCents": 83,
+      "vatCents": 17,
+      "totalCents": 100,
+      "vatBps": 2000,
+      "image": "/payments/toshi/toshi-test-1-v1.webp"
+    },
     {
       "id": "toshi-500",
       "credits": 500,
