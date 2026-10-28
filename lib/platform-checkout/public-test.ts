@@ -31,23 +31,30 @@ export function normalizeStoreSelector(value:string):string {
 }
 function redirect(path:string):Response {return new Response(null,{status:303,headers:{...HEADERS,location:ORIGIN+path}});}
 function failure(code:'invalid_form'|'invalid_store'|'rate_limited'|'unavailable'):Response {return redirect(`${ENTRY}?error=${code}`);}
-export function createPublicTestHttpHandler(deps:{key:Buffer;now():Date;bridge:Pick<CommerceBridge,'publicTest'>}) {
+export function createPublicTestHttpHandler(deps:{key:Buffer;now():Date;bridge:Pick<CommerceBridge,'publicTest'>;onReject?:(stage:string)=>void}) {
   validKey(deps.key);const key=Buffer.from(deps.key);
   return async(request:Request):Promise<Response>=>{
-    let operationId:string,storeSelector:string,session:string,ipDigest:string;
+    let operationId:string,storeSelector:string,session:string,ipDigest:string,stage='request';
     try{
       validRequest(request,'/api/platform-checkout/public-test');
+      stage='origin';
       if(request.headers.get('origin')!==ORIGIN)reject();
+      stage='body';
       const fields=await formFields(request,2048);
+      stage='fields';
       if(Object.keys(fields).length!==4||!['operationId','expires','proof','store'].every(name=>Object.hasOwn(fields,name)))reject();
       operationId=fields.operationId;
       const instant=seconds(deps.now());
-      if(!UUID.test(operationId)||!/^\d{10}$/.test(fields.expires)||Number(fields.expires)<=instant||Number(fields.expires)>instant+3600||! /^[a-f0-9]{64}$/.test(fields.proof))reject();
+      stage='operation';if(!UUID.test(operationId))reject();
+      stage='expiry';if(!/^\d{10}$/.test(fields.expires)||Number(fields.expires)<=instant||Number(fields.expires)>instant+3600)reject();
+      stage='proof_shape';if(!/^[a-f0-9]{64}$/.test(fields.proof))reject();
+      stage='proof_match';
       if(!timingSafeEqual(Buffer.from(fields.proof,'hex'),Buffer.from(proof(key,operationId,fields.expires),'hex')))reject();
       session=createHmac('sha256',key).update(`public-test-session:v1:${operationId}`).digest('base64url');
+      stage='ip';
       ipDigest=mac(key,`public-test-ip:v1:${trustedClientIp(request.headers)}`);
       try{storeSelector=normalizeStoreSelector(fields.store);}catch{return failure('invalid_store');}
-    }catch{return failure('invalid_form');}
+    }catch{deps.onReject?.(stage);return failure('invalid_form');}
     try{
       const result=await deps.bridge.publicTest({operationId,storeSelector,sessionDigest:createHash('sha256').update(session).digest('hex'),ipDigest});
       if(result.status==='rejected')return failure(result.code==='store_unavailable'?'invalid_store':result.code==='rate_limited'?'rate_limited':'invalid_form');

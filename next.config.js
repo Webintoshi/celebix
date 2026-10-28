@@ -11,7 +11,9 @@ const nextConfig = {
         source,
         headers: [
           { key: 'Cache-Control', value: 'private, no-store, max-age=0' },
-          { key: 'Referrer-Policy', value: 'no-referrer' },
+          // Native POST navigation needs its same-site Origin for CSRF checks.
+          // Cross-site navigation still sends no checkout referrer.
+          { key: 'Referrer-Policy', value: source.startsWith('/checkout/') ? 'same-origin' : 'no-referrer' },
           { key: 'X-Robots-Tag', value: 'noindex, nofollow, noarchive' },
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'Content-Security-Policy', value: "frame-ancestors 'none'; form-action 'self' https://cpp.iyzipay.com https://sandbox-cpp.iyzipay.com; base-uri 'none'; object-src 'none'" },

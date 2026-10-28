@@ -22,3 +22,9 @@ purchase between visitors; requiring a post-payment login does not meet the
 requested direct experience. Public purchases of all other products are outside
 this change. User has explicitly requested implementation without another
 design approval cycle.
+
+Native POST documents use `Referrer-Policy: same-origin` in both the response
+and metadata so browsers retain their same-origin `Origin` header. API responses
+keep `no-referrer`; cross-origin navigation never exposes the checkout URL.
+The strict origin check is unchanged. Fixed validation-stage diagnostics are
+throttled to one event per 30 seconds and never record request data.

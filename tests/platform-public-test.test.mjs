@@ -53,6 +53,12 @@ test('an uncertain quote response is not retried and cannot start payment or iss
  assert.equal(calls,1);assert.equal(res.status,303);assert.equal(res.headers.get('set-cookie'),null);
  assert.equal(res.headers.get('location'),'https://celebix.net/checkout/saas/toshi-test?error=unavailable');
 });
+test('diagnostics report only a fixed validation stage and never the form, recipient, IP or capability',async()=>{
+ const stages=[];
+ const handler=publicTest.createPublicTestHttpHandler({key,now:()=>now,onReject:stage=>stages.push(stage),bridge:{publicTest:async()=>{throw Error('must not call');}}});
+ await handler(request({...form(),operationId:'private-invalid-operation',store:'ezmeo'}));
+ assert.deepEqual(stages,['operation']);
+});
 test('signed server bridge exposes only the additive public_test action and validates its complete response',async()=>{
  let sent;const env={CELEBIX_PLATFORM_COMMERCE_OWNER_ORIGIN:'https://owner.saas-staging.celebix.net',CELEBIX_PLATFORM_COMMERCE_BRIDGE_KEY_B64URL:key.toString('base64url')};
  const bridge=server.createCommerceBridge(env,{fetch:async(url,init)=>{sent=JSON.parse(init.body);return Response.json({status:'created',order});}});

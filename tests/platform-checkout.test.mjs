@@ -161,12 +161,14 @@ test('order read rejects mismatched context and forwards only a scoped session d
  assert.deepEqual(payload,{orderId:id,sessionDigest:hash(session)});
  await assert.rejects(()=>server.loadCheckoutOrder(id,session,{read:async()=>({order:{...order,id:otherId}})}));
 });
-test('checkout responses carry private no-store, no-referrer and noindex headers',async()=>{
+test('native checkout forms preserve same-origin POST provenance while APIs keep no-referrer privacy',async()=>{
  const require=createRequire(import.meta.url),config=require('../next.config.js');
  const entries=await config.headers();
  for(const source of ['/checkout/saas/:path*','/api/platform-checkout/:path*','/api/platform-payments/:path*']){
   const values=Object.fromEntries(entries.find(entry=>entry.source===source)?.headers.map(item=>[item.key.toLowerCase(),item.value])??[]);
-  assert.match(values['cache-control']??'',/no-store/);assert.equal(values['referrer-policy'],'no-referrer');assert.match(values['x-robots-tag']??'',/noindex/);
+  assert.match(values['cache-control']??'',/no-store/);assert.equal(values['referrer-policy'],source.startsWith('/checkout/')?'same-origin':'no-referrer');assert.match(values['x-robots-tag']??'',/noindex/);
   assert.match(values['content-security-policy']??'',/form-action 'self' https:\/\/cpp\.iyzipay\.com https:\/\/sandbox-cpp\.iyzipay\.com;/);
  }
+ const {readFileSync}=await import('node:fs');
+ assert.match(readFileSync(new URL('../app/checkout/saas/layout.tsx',import.meta.url),'utf8'),/referrer: 'same-origin'/);
 });

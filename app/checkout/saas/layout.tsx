@@ -6,7 +6,7 @@ const outfit = Outfit({ subsets: ['latin', 'latin-ext'], weight: ['400', '500', 
 export const metadata: Metadata = {
   title: 'Güvenli ödeme',
   robots: { index: false, follow: false, nocache: true, googleBot: { index: false, follow: false, noimageindex: true } },
-  referrer: 'no-referrer',
+  referrer: 'same-origin',
 };
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
