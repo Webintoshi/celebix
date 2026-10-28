@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 
 const source = await readFile(new URL('../components/commerce-v6/lifecycle.js', import.meta.url), 'utf8');
-const { createLifecycle } = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
+const { createLifecycle, canSynchronizeStoryScroll } = await import('data:text/javascript;base64,' + Buffer.from(source).toString('base64'));
 
 function fixture() {
   const win = new EventTarget();
@@ -48,4 +48,16 @@ test('offscreen page does not consume global keyboard events', () => {
   const { root, win } = fixture(); root.getBoundingClientRect = () => ({ top: 900, bottom: 1400 });
   const scope = createLifecycle(root); let count = 0; scope.listen(win, 'keydown', () => count++);
   win.dispatchEvent(new Event('keydown')); assert.equal(count, 0); scope.dispose();
+});
+
+test('story resize reconciliation cannot pull readers back from an offscreen catalog', () => {
+  for (const bounds of [{ top: -5200, bottom: 0 }, { top: -5500, bottom: -200 }, { top: -5104, bottom: 96 }, { top: 800, bottom: 6000 }]) {
+    assert.equal(canSynchronizeStoryScroll?.({ getBoundingClientRect: () => bounds }, 800), false);
+  }
+  assert.equal(canSynchronizeStoryScroll?.({ getBoundingClientRect: () => ({ top: -200, bottom: 5000 }) }, 800), true);
+});
+test('initial location anchors survive opening reset while an ordinary visit retains the existing opening', () => {
+  const film = { getBoundingClientRect: () => ({ top: 0, bottom: 5200 }) };
+  for (const hash of ['#paketler', '#magaza-araclari', '#toshi-kredileri']) assert.equal(canSynchronizeStoryScroll?.(film, 800, hash), false);
+  assert.equal(canSynchronizeStoryScroll?.(film, 800, ''), true);
 });

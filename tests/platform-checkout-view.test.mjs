@@ -9,13 +9,23 @@ const analytics=await import('../lib/platform-checkout/analytics.ts').catch(()=>
 const id='8fa9f2b4-3bd4-4ed2-84c5-311747e922d7';
 const attemptId='b77a7eb5-bd97-4d2f-879b-7b9131163396';
 const order={id,storeId:'e264235b-5c30-4b30-8c0d-2b229f336466',storeName:'Örnek mağaza',title:'Başlangıç',kind:'package',offerId:'00000000-0000-4000-8000-000000000008',term:'annual',netCents:2587000,vatCents:517400,totalCents:3104400,currency:'TRY',state:'created',expiresAt:'2026-10-27T08:00:00Z'};
-function render(props){
+function render(props,exportName='CheckoutView'){
  const ts=require('typescript'),React=require('react'),{renderToStaticMarkup}=require('react-dom/server');
  const path=new URL('../components/platform-checkout/CheckoutView.tsx',import.meta.url);
  const output=ts.transpileModule(readFileSync(path,'utf8'),{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
  const compiled={exports:{}};new Function('require','module','exports',output)(createRequire(path),compiled,compiled.exports);
- return renderToStaticMarkup(React.createElement(compiled.exports.CheckoutView,props));
+ return renderToStaticMarkup(React.createElement(compiled.exports[exportName],props));
 }
+test('checkout uses the official navigation logo on billing, result and unavailable screens',()=>{
+ const navigation=readFileSync(new URL('../components/sections/Navigation.tsx',import.meta.url),'utf8');
+ const asset='/Logo/koyu logo.svg';assert.ok(navigation.includes(`src="${asset}"`));
+ assert.match(readFileSync(new URL(`../public${asset}`,import.meta.url),'utf8'),/<svg\b/);
+ for(const html of [render({order,attemptId}),render({order:{...order,state:'pending'},result:true}),render({orderId:id},'CheckoutUnavailable')]){
+  const header=html.match(/<header[\s\S]*?<\/header>/)?.[0];assert.ok(header);
+  assert.match(header,/<a(?=[^>]*href="\/tr")(?=[^>]*aria-label="Celebix ana sayfa")[^>]*><img(?=[^>]*src="\/Logo\/koyu logo.svg")(?=[^>]*alt="Celebix")(?=[^>]*width="\d+")(?=[^>]*height="\d+")[^>]*\/><\/a>/);
+  assert.ok(header.includes('Güvenli ödeme'));assert.ok(!header.includes('celebix<span'));
+ }
+});
 test('billing form shows frozen totals and store with scoped action and one render-generated operation',()=>{
  const html=render({order,attemptId});
  assert.ok(html.includes('Örnek mağaza'));assert.ok(html.includes('Başlangıç'));assert.ok(html.includes('Yıllık peşin ödeme'));
@@ -24,6 +34,18 @@ test('billing form shows frozen totals and store with scoped action and one rend
  for(const forbidden of ['name="cardNumber"','name="cvv"','name="amountCents"','name="storeId"','name="sessionDigest"','name="identity"'])assert.ok(!html.includes(forbidden));
  assert.match(html,/<input(?=[^>]*type="checkbox")(?=[^>]*name="terms")(?=[^>]*required="")[^>]*>/);
  assert.ok(!html.includes('checked=""'));assert.ok(html.includes('/tr/gizlilik'));assert.ok(html.includes('/tr/kullanim-kosullari'));
+});
+test('billing restyling preserves native validation and all required identity fields without client submission',()=>{
+ const html=render({order,attemptId}),form=html.match(/<form[\s\S]*?<\/form>/)?.[0];assert.ok(form);
+ assert.match(form,new RegExp(`<form(?=[^>]*action="/checkout/saas/${id}/pay")(?=[^>]*method="post")[^>]*>`));
+ const input=(name)=>{const tag=form.match(new RegExp(`<input(?=[^>]*name="${name}")[^>]*>`))?.[0];assert.ok(tag,`${name} is present`);return tag;};
+ for(const name of ['email','gsmNumber','name','surname','identityNumber','registrationAddress','city','country','terms'])assert.ok(input(name).includes('required=""'),`${name} remains required`);
+ assert.ok(!input('zipCode').includes('required='));assert.ok(!input('terms').includes('checked='));
+ assert.ok(input('email').includes('type="email"'));assert.ok(input('gsmNumber').includes('type="tel"'));assert.ok(input('gsmNumber').includes('pattern="\\+[1-9][0-9]{7,14}"'));
+ assert.ok(input('identityNumber').includes('pattern="[1-9][0-9]{10}"'));assert.ok(input('identityNumber').includes('minLength="11"'));assert.ok(input('identityNumber').includes('maxLength="11"'));assert.ok(input('identityNumber').includes('aria-describedby="identity-help"'));
+ assert.ok(form.includes('id="identity-help"'));assert.ok(input('country').includes('value="Türkiye"'));
+ assert.equal((form.match(/type="hidden"/g)||[]).length,1);assert.equal((form.match(/type="submit"/g)||[]).length,1);
+ assert.ok(!/novalidate|formnovalidate|onsubmit|onclick/i.test(form));assert.ok(!html.includes('<script'));
 });
 test('VAT-inclusive product prices lead checkout while the frozen net and VAT breakdown stays explicit',()=>{
  for(const fixture of [
@@ -56,7 +78,7 @@ test('checkout explicitly identifies the receiving store and uses local product 
 test('individual tool checkout shows the selected product artwork without cropping its lettering',()=>{
  for(const [offerId,slug]of [['contact_widget','contact-widget'],['whatsapp_ordering','whatsapp-ordering'],['cart_capture','cart-capture'],['restock','restock'],['order_bump','order-bump']]){
   const html=render({order:{...order,kind:'tool',offerId,term:'once',title:'Mağaza aracı'},attemptId});
-  const image=html.match(/<img[^>]*>/)?.[0];
+  const image=html.match(/<aside[\s\S]*?<\/aside>/)?.[0].match(/<img[^>]*>/)?.[0];
   assert.ok(image?.includes(`src="/payments/tools/celebix-${slug}-v1.webp"`));
   assert.ok(image.includes('object-contain'));assert.ok(!image.includes('object-cover'));
   assert.ok(html.includes(`action="/checkout/saas/${id}/pay"`));
@@ -80,7 +102,7 @@ test('credit checkout shows purchased credits, frozen totals and the receiving s
   assert.ok(html.includes(`${count} Toshi kredisi`));assert.ok(html.includes('Örnek mağaza mağazası için'));
   assert.ok(html.includes('Toshi kredileri bu mağazanın bakiyesine eklenir.'));
   assert.ok(html.includes('Tek seferlik ödeme'));assert.ok(html.includes('KDV (%20)'));assert.ok(html.includes(total));
-  const image=html.match(/<img[^>]*>/)?.[0];
+  const image=html.match(/<aside[\s\S]*?<\/aside>/)?.[0].match(/<img[^>]*>/)?.[0];
   assert.ok(image?.includes(`src="/payments/toshi/${offer.offerId}-v1.webp"`));
   assert.ok(image.includes('object-contain'));assert.ok(!image.includes('object-cover'));
   assert.ok(html.includes(`action="/checkout/saas/${id}/pay"`));

@@ -1,4 +1,4 @@
-import { createLifecycle } from './lifecycle';
+import { createLifecycle, canSynchronizeStoryScroll } from './lifecycle';
 const instances = new WeakMap();
 /** Mount a trusted, imperative DOM island; React owns only its outer host. */
 export function mountCommerce(root) {
@@ -754,7 +754,7 @@ export function mountCommerce(root) {
             function schedule() { if (!raf)
                 raf = requestAnimationFrame(tick); }
             function storyControls(visible) { var controls = $('#filmControls'); controls.inert = !visible; controls.setAttribute('aria-hidden', String(!visible)); var skip = $('.skip'); skip.setAttribute('href', visible ? '#filmControls' : '#beginStory'); skip.textContent = visible ? 'Film kontrollerine geç' : 'Sunumu başlat'; }
-            function resetOpening(focus) {
+            function resetOpening(focus, preserveLocation) {
                 clearTimeout(openingTimer);
                 openingTimer = 0;
                 beginning = false;
@@ -766,7 +766,8 @@ export function mountCommerce(root) {
                 progress = target = playProgress = 0;
                 activePhase = '';
                 frames();
-                scrollToProgress(0);
+                if (!preserveLocation || canSynchronizeStoryScroll(film, innerHeight, window.location.hash))
+                    scrollToProgress(0);
                 draw(0);
                 if (focus)
                     document.querySelector('[data-begin-story]').focus({ preventScroll: true });
@@ -1015,7 +1016,7 @@ export function mountCommerce(root) {
                 stop(); }, { passive: true });
             lifecycle.listen(window, 'pointerdown', function (e) { if (!e.target.closest('#playButton'))
                 stop(); }, { passive: true });
-            lifecycle.listen(window, 'resize', function () { frames(); target = progress; scrollToProgress(target); schedule(); });
+            lifecycle.listen(window, 'resize', function () { frames(); target = progress; if (canSynchronizeStoryScroll(film, innerHeight)) scrollToProgress(target); schedule(); });
             lifecycle.listen(reduce, 'change', function () { stop(); schedule(); });
             lifecycle.listen(document, 'visibilitychange', function () { if (document.hidden)
                 stop(); });
@@ -1200,7 +1201,7 @@ export function mountCommerce(root) {
             if ('scrollRestoration' in history)
                 history.scrollRestoration = 'manual';
             restoreProducts();
-            resetOpening(false);
+            resetOpening(false, true);
             syncProduct();
         })();
     }

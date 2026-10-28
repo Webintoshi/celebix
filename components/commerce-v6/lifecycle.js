@@ -1,3 +1,10 @@
+/** Reconcile while the story covers the viewport center; preserve an initial anchor. */
+export function canSynchronizeStoryScroll(element, viewportHeight, locationHash = '') {
+  const bounds = element.getBoundingClientRect();
+  const center = viewportHeight / 2;
+  return !locationHash && bounds.bottom > center && bounds.top < center;
+}
+
 /** Own all browser effects for one commerce page instance. */
 export function createLifecycle(root) {
   const doc = root.ownerDocument;

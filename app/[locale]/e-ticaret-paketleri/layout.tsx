@@ -10,8 +10,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const isTr = locale === "tr";
   
   if (isTr) {
-    const title = 'E-Ticaret Sitenizi Kurun, Mağazanızı Yönetin | Celebix';
-    const description = 'Celebix ile kendi e-ticaret sitenizi kurun. Ürünlerinizi, stoklarınızı ve siparişlerinizi tek panelden yönetin. Mağaza yönetimini etkileşimli demoda keşfedin.';
+    const title = 'E-Ticaret Paketleri, Araçlar ve Toshi Kredileri | Celebix';
+    const description = 'Celebix mağaza paketlerini, tek seferlik araçları ve Toshi kredi paketlerini inceleyin. KDV dahil fiyatları karşılaştırın, mağaza panelinizden satın alın.';
     const imageUrl = 'https://celebix.net/og-image.webp';
 
     return {

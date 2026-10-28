@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "commit": "ea67ebcb49a0669892117bf64ce495a4ae02e52d",
+    "files": [
+      {
+        "path": "packages/saas-contracts/src/commercial-packages/catalog.ts",
+        "sha256": "257c6e13281c1d31ef071aafbe3c83e175e3a96d57a5da3f490b2f5142507446"
+      },
+      {
+        "path": "packages/saas-contracts/src/store-tools/index.ts",
+        "sha256": "bcf29c2c6abd8f1975a4ef97e27fdea0def05efff5055d29ad8305c5b1173bad"
+      },
+      {
+        "path": "packages/saas-contracts/src/toshi/credits.ts",
+        "sha256": "7b10a7417801ee068450fef26942e4b92f6862a2404f2a868a4c60359fd3c59d"
+      }
+    ]
+  },
+  "vatBps": 2000,
+  "plans": [
+    {
+      "id": "00000000-0000-4000-8000-000000000007",
+      "code": "free_starter",
+      "name": "Ücretsiz",
+      "version": 3,
+      "monthly": {
+        "netCents": 0,
+        "vatCents": 0,
+        "totalCents": 0
+      },
+      "annual": {
+        "netCents": 0,
+        "vatCents": 0,
+        "totalCents": 0
+      },
+      "limits": {
+        "products": 25,
+        "staff": 1,
+        "storageBytes": 1000000000,
+        "monthlyOrders": 50,
+        "customDomains": 0
+      },
+      "variantLimit": 500,
+      "capabilities": [],
+      "features": [
+        "catalog",
+        "orders",
+        "customers",
+        "content",
+        "media",
+        "analytics",
+        "checkout",
+        "integrations"
+      ],
+      "image": "/payments/plans/celebix-free-v1.webp"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000008",
+      "code": "starter",
+      "name": "Başlangıç",
+      "version": 2,
+      "monthly": {
+        "netCents": 258700,
+        "vatCents": 51740,
+        "totalCents": 310440
+      },
+      "annual": {
+        "netCents": 2587000,
+        "vatCents": 517400,
+        "totalCents": 3104400
+      },
+      "limits": {
+        "products": 1000,
+        "staff": 2,
+        "storageBytes": 5000000000,
+        "monthlyOrders": 1000,
+        "customDomains": 4
+      },
+      "variantLimit": 5000,
+      "capabilities": [
+        "coupons",
+        "google_connections",
+        "google_merchant",
+        "seo_tools",
+        "ai",
+        "custom_domains",
+        "staff_management"
+      ],
+      "features": [
+        "catalog",
+        "orders",
+        "customers",
+        "content",
+        "media",
+        "analytics",
+        "checkout",
+        "custom_domains",
+        "staff_management",
+        "promotions",
+        "integrations",
+        "marketplaces"
+      ],
+      "image": "/payments/plans/celebix-starter-v1.webp"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000009",
+      "code": "growth",
+      "name": "Büyüme",
+      "version": 2,
+      "monthly": {
+        "netCents": 453700,
+        "vatCents": 90740,
+        "totalCents": 544440
+      },
+      "annual": {
+        "netCents": 4537000,
+        "vatCents": 907400,
+        "totalCents": 5444400
+      },
+      "limits": {
+        "products": 5000,
+        "staff": 5,
+        "storageBytes": 20000000000,
+        "monthlyOrders": 5000,
+        "customDomains": 4
+      },
+      "variantLimit": 25000,
+      "capabilities": [
+        "coupons",
+        "google_connections",
+        "google_merchant",
+        "seo_tools",
+        "ai",
+        "custom_domains",
+        "staff_management",
+        "growth_tools",
+        "email_marketing",
+        "advanced_analytics"
+      ],
+      "features": [
+        "catalog",
+        "orders",
+        "customers",
+        "content",
+        "media",
+        "analytics",
+        "checkout",
+        "custom_domains",
+        "staff_management",
+        "promotions",
+        "integrations",
+        "marketplaces"
+      ],
+      "image": "/payments/plans/celebix-growth-v1.webp"
+    },
+    {
+      "id": "00000000-0000-4000-8000-000000000010",
+      "code": "professional",
+      "name": "Profesyonel",
+      "version": 2,
+      "monthly": {
+        "netCents": 778700,
+        "vatCents": 155740,
+        "totalCents": 934440
+      },
+      "annual": {
+        "netCents": 7787000,
+        "vatCents": 1557400,
+        "totalCents": 9344400
+      },
+      "limits": {
+        "products": 10000,
+        "staff": 15,
+        "storageBytes": 50000000000,
+        "monthlyOrders": 20000,
+        "customDomains": 4
+      },
+      "variantLimit": 50000,
+      "capabilities": [
+        "coupons",
+        "google_connections",
+        "google_merchant",
+        "seo_tools",
+        "ai",
+        "custom_domains",
+        "staff_management",
+        "growth_tools",
+        "email_marketing",
+        "advanced_analytics",
+        "manual_orders",
+        "cashier",
+        "accounting",
+        "reference_pricing"
+      ],
+      "features": [
+        "catalog",
+        "orders",
+        "customers",
+        "content",
+        "media",
+        "analytics",
+        "checkout",
+        "custom_domains",
+        "staff_management",
+        "promotions",
+        "integrations",
+        "accounting",
+        "marketplaces"
+      ],
+      "image": "/payments/plans/celebix-professional-v1.webp"
+    }
+  ],
+  "tools": [
+    {
+      "id": "contact_widget",
+      "name": "İletişim balonu",
+      "toolKeys": [
+        "contact_widget"
+      ],
+      "netCents": 99000,
+      "vatCents": 19800,
+      "totalCents": 118800,
+      "vatBps": 2000,
+      "image": "/payments/tools/celebix-contact-widget-v1.webp"
+    },
+    {
+      "id": "whatsapp_ordering",
+      "name": "WhatsApp ile sipariş ver",
+      "toolKeys": [
+        "whatsapp_ordering"
+      ],
+      "netCents": 249000,
+      "vatCents": 49800,
+      "totalCents": 298800,
+      "vatBps": 2000,
+      "image": "/payments/tools/celebix-whatsapp-ordering-v1.webp"
+    },
+    {
+      "id": "cart_capture",
+      "name": "Sepet yakalama",
+      "toolKeys": [
+        "cart_capture"
+      ],
+      "netCents": 349000,
+      "vatCents": 69800,
+      "totalCents": 418800,
+      "vatBps": 2000,
+      "image": "/payments/tools/celebix-cart-capture-v1.webp"
+    },
+    {
+      "id": "restock",
+      "name": "Stok gelince haber ver",
+      "toolKeys": [
+        "restock"
+      ],
+      "netCents": 449000,
+      "vatCents": 89800,
+      "totalCents": 538800,
+      "vatBps": 2000,
+      "image": "/payments/tools/celebix-restock-v1.webp"
+    },
+    {
+      "id": "order_bump",
+      "name": "Sepet ve ödeme önerileri",
+      "toolKeys": [
+        "order_bump"
+      ],
+      "netCents": 599000,
+      "vatCents": 119800,
+      "totalCents": 718800,
+      "vatBps": 2000,
+      "image": "/payments/tools/celebix-order-bump-v1.webp"
+    },
+    {
+      "id": "all_tools",
+      "name": "Tüm mağaza araçları",
+      "toolKeys": [
+        "contact_widget",
+        "whatsapp_ordering",
+        "cart_capture",
+        "restock",
+        "order_bump"
+      ],
+      "netCents": 1399000,
+      "vatCents": 279800,
+      "totalCents": 1678800,
+      "vatBps": 2000,
+      "image": "/payments/tools/celebix-all-tools-v1.webp"
+    }
+  ],
+  "credits": [
+    {
+      "id": "toshi-500",
+      "credits": 500,
+      "netCents": 24900,
+      "vatCents": 4980,
+      "totalCents": 29880,
+      "vatBps": 2000,
+      "image": "/payments/toshi/toshi-500-v1.webp"
+    },
+    {
+      "id": "toshi-2500",
+      "credits": 2500,
+      "netCents": 99900,
+      "vatCents": 19980,
+      "totalCents": 119880,
+      "vatBps": 2000,
+      "image": "/payments/toshi/toshi-2500-v1.webp"
+    },
+    {
+      "id": "toshi-10000",
+      "credits": 10000,
+      "netCents": 299900,
+      "vatCents": 59980,
+      "totalCents": 359880,
+      "vatBps": 2000,
+      "image": "/payments/toshi/toshi-10000-v1.webp"
+    },
+    {
+      "id": "toshi-50000",
+      "credits": 50000,
+      "netCents": 1249900,
+      "vatCents": 249980,
+      "totalCents": 1499880,
+      "vatBps": 2000,
+      "image": "/payments/toshi/toshi-50000-v1.webp"
+    }
+  ]
+}
