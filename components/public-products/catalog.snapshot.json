@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": {
-    "commit": "9745a82d958f9ffe72d25c27ea1a7e83bee53b7f",
+    "commit": "50f2439d65362b2c7d6e3abf6248ece29fc30fe0",
     "files": [
       {
         "path": "packages/saas-contracts/src/commercial-packages/catalog.ts",
@@ -208,15 +208,6 @@
     }
   ],
   "credits": [
-    {
-      "id": "toshi-test-1",
-      "credits": 1,
-      "netCents": 83,
-      "vatCents": 17,
-      "totalCents": 100,
-      "vatBps": 2000,
-      "image": "/payments/toshi/toshi-test-1-v1.webp"
-    },
     {
       "id": "toshi-500",
       "credits": 500,

@@ -29,12 +29,13 @@ function render(locale = 'tr', checkout) {
 }
 test('the Turkish page server-renders plans and credits without store tools after its isolated demo', () => {
   const html = render();
-  assert.equal((html.match(/data-public-product=/g) ?? []).length, 9);
+  assert.equal((html.match(/data-public-product=/g) ?? []).length, 8);
   assert.ok(html.indexOf('data-testid="commerce-landing"') < html.indexOf('id="paketler"'));
   assert.ok(!html.includes('id="magaza-araclari"')); assert.ok(!html.includes('Mağaza araçları')); assert.ok(html.includes('id="toshi-kredileri"'));
   assert.equal((html.match(/data-public-kind="package"/g) ?? []).length, 4);
   assert.equal((html.match(/data-public-kind="tool"/g) ?? []).length, 0);
-  assert.equal((html.match(/data-public-kind="toshi_credit"/g) ?? []).length, 5);
+  assert.equal((html.match(/data-public-kind="toshi_credit"/g) ?? []).length, 4);
+  assert.ok(!html.includes('toshi-test-1')); assert.ok(!html.includes('Toshi test paketi'));
   for (const seats of ['1 kullanıcı', '2 kullanıcı', '5 kullanıcı', '15 kullanıcı']) assert.ok(html.includes(seats));
   assert.equal((html.match(/Özel alan adı bağlama/g) ?? []).length, 3);
   assert.ok(html.includes('Celebix mağaza adresi'));
@@ -45,7 +46,7 @@ test('the Turkish page server-renders plans and credits without store tools afte
 });
 test('catalog prices disclose actual VAT-inclusive monthly, annual and one-time totals', () => {
   const html = render();
-  for (const total of ['3.104,40', '31.044,00', '5.444,40', '54.444,00', '9.344,40', '93.444,00', '1,00', '298,80', '1.198,80', '3.598,80', '14.998,80']) assert.ok(html.includes(total), total);
+  for (const total of ['3.104,40', '31.044,00', '5.444,40', '54.444,00', '9.344,40', '93.444,00', '298,80', '1.198,80', '3.598,80', '14.998,80']) assert.ok(html.includes(total), total);
   assert.ok(html.includes('KDV dahil')); assert.ok(!html.includes('KDV hariç'));
   const starter = html.match(/<article(?=[^>]*id="urun-paket-starter")[\s\S]*?<\/article>/)?.[0];
   assert.ok(starter.indexOf('3.104,40') < starter.indexOf('Kataloğunuzu'));
@@ -64,7 +65,7 @@ test('catalog purchase links use the verified store entry and leave legal naviga
     assert.ok(!html.includes(`href="/tr/${slug}"`));
     assert.equal(combined.split(`href="/tr/${slug}"`).length - 1, 1);
   }
-  assert.ok(html.includes('Panelden satın al')); assert.ok(html.includes('1 TL ile satın al')); assert.equal((html.match(/href="\/checkout\/saas\/toshi-test"/g) ?? []).length, 1); assert.ok(html.includes('Satın alımlar iyzico ile tamamlanır.'));
+  assert.ok(html.includes('Panelden satın al')); assert.ok(!html.includes('1 TL ile satın al')); assert.ok(!html.includes('/checkout/saas/toshi-test')); assert.ok(html.includes('Satın alımlar iyzico ile tamamlanır.'));
   assert.ok(!html.includes('/login?purchase='));
   assert.ok(!html.includes('<form')); assert.ok(!html.includes('offerId='));
 });

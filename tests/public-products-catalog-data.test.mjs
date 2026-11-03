@@ -51,8 +51,9 @@ test('generator preserves canonical amounts, current identities, limits and sour
   assert.deepEqual(value.plans.map(plan=>plan.limits),plans.map(plan=>plan.limits));
   assert.deepEqual(value.plans.map(plan=>plan.variantLimit),[500,5000,25000,50000]);
   assert.deepEqual(value.plans.map(plan=>plan.capabilities),plans.map(plan=>plan.capabilities));
-  assert.deepEqual(value.credits.map(credit=>credit.totalCents),[100,29880,119880,359880,1499880]);
-  assert.deepEqual(value.credits.map(credit=>credit.credits),[1,500,2500,10000,50000]);
+  assert.deepEqual(value.credits.map(credit=>credit.totalCents),[29880,119880,359880,1499880]);
+  assert.deepEqual(value.credits.map(credit=>credit.credits),[500,2500,10000,50000]);
+  assert.ok(!value.credits.some(credit=>credit.id==='toshi-test-1'));
   assert.equal(f.run('--source-root',f.source).status,0);assert.equal(readFileSync(f.snapshot,'utf8'),bytes);
   assert.equal(f.run('--source-root',f.source,'--check').status,0);
   writeFileSync(f.snapshot,bytes.replace('310440','310441'));
@@ -67,10 +68,10 @@ test('generator rejects uncommitted canonical source changes instead of attribut
  }finally{f.close();}
 });
 
-test('the published nine public products all point to existing local WebP artwork',()=>{
+test('the eight active public products all point to existing local WebP artwork',()=>{
  const value=JSON.parse(readFileSync(path.join(ROOT,'components/public-products/catalog.snapshot.json'),'utf8'));
- const products=[...value.plans,...value.credits];assert.equal(products.length,9);
- assert.equal(new Set(products.map(product=>product.image)).size,9);
+ const products=[...value.plans,...value.credits];assert.equal(products.length,8);
+ assert.equal(new Set(products.map(product=>product.image)).size,8);
  for(const product of products){
   assert.match(product.image,/^\/payments\/(plans|tools|toshi)\/[a-z0-9-]+-v1\.webp$/);
   const bytes=readFileSync(path.join(ROOT,'public',product.image));

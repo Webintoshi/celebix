@@ -13,7 +13,7 @@ export function publicProductCatalogSchema(catalog) {
       const url = `${PAGE}#urun-paket-${plan.code}`;
       return { name: plan.name, sku: plan.id, image: `https://celebix.net${plan.image}`, url, offers: [offer(`${plan.name} · Aylık peşin ödeme`, plan.monthly, url), offer(`${plan.name} · Yıllık peşin ödeme`, plan.annual, url)] };
     }),
-    ...catalog.credits.map(credit => {
+    ...catalog.credits.filter(credit=>credit.id!=='toshi-test-1').map(credit => {
       const name = `${credit.credits.toLocaleString('tr-TR')} Toshi kredisi`, url = `${PAGE}#urun-kredi-${credit.id}`;
       return { name, sku: credit.id, image: `https://celebix.net${credit.image}`, url, offers: [offer(`${name} · Tek seferlik satın alma`, credit, url)] };
     }),
