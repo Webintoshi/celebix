@@ -1,4 +1,4 @@
-const PAGE = 'https://celebix.net/tr/e-ticaret-paketleri';
+export const englishPlanNames = { free_starter: 'Free', starter: 'Starter', growth: 'Growth', professional: 'Professional' };
 function offer(name, price, url) {
   const amount = (price.totalCents / 100).toFixed(2);
   return {
@@ -7,16 +7,20 @@ function offer(name, price, url) {
   };
 }
 /** Presentation metadata uses the same reviewed snapshot as the visible catalog. */
-export function publicProductCatalogSchema(catalog) {
+export function publicProductCatalogSchema(catalog, locale = 'tr') {
+  const isTr = locale === 'tr';
+  const page = `https://celebix.net/${locale}/e-ticaret-paketleri`;
+  const language = isTr ? 'tr-TR' : 'en-GB';
   const products = [
     ...catalog.plans.map(plan => {
-      const url = `${PAGE}#urun-paket-${plan.code}`;
-      return { name: plan.name, sku: plan.id, image: `https://celebix.net${plan.image}`, url, offers: [offer(`${plan.name} · Aylık peşin ödeme`, plan.monthly, url), offer(`${plan.name} · Yıllık peşin ödeme`, plan.annual, url)] };
+      const url = `${page}#urun-paket-${plan.code}`;
+      const name = isTr ? plan.name : englishPlanNames[plan.code] ?? plan.name;
+      return { name, sku: plan.id, image: `https://celebix.net${plan.image}`, url, offers: [offer(`${name} · ${isTr ? 'Aylık peşin ödeme' : 'Monthly prepayment'}`, plan.monthly, url), offer(`${name} · ${isTr ? 'Yıllık peşin ödeme' : 'Annual prepayment'}`, plan.annual, url)] };
     }),
     ...catalog.credits.filter(credit=>credit.id!=='toshi-test-1').map(credit => {
-      const name = `${credit.credits.toLocaleString('tr-TR')} Toshi kredisi`, url = `${PAGE}#urun-kredi-${credit.id}`;
-      return { name, sku: credit.id, image: `https://celebix.net${credit.image}`, url, offers: [offer(`${name} · Tek seferlik satın alma`, credit, url)] };
+      const name = `${credit.credits.toLocaleString(language)} ${isTr ? 'Toshi kredisi' : 'Toshi credits'}`, url = `${page}#urun-kredi-${credit.id}`;
+      return { name, sku: credit.id, image: `https://celebix.net${credit.image}`, url, offers: [offer(`${name} · ${isTr ? 'Tek seferlik satın alma' : 'One-time purchase'}`, credit, url)] };
     }),
   ];
-  return { '@context': 'https://schema.org', '@type': 'ItemList', name: 'Celebix ürünleri', numberOfItems: products.length, itemListElement: products.map((product, index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Product', ...product } })) };
+  return { '@context': 'https://schema.org', '@type': 'ItemList', name: isTr ? 'Celebix ürünleri' : 'Celebix products', numberOfItems: products.length, itemListElement: products.map((product, index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Product', ...product } })) };
 }
