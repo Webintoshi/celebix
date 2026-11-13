@@ -286,12 +286,6 @@ export default function CelebixPortfolioVisual({
         <text x="16" y="44" fontFamily="system-ui" fontSize="14" fontWeight="600" fill="#FFFFFF">E-Ticaret</text>
       </g>
       
-      <g transform="translate(640, 100)">
-        <rect x="0" y="0" width="100" height="50" rx="8" fill="#FFFFFF" opacity="0.05" stroke="#10B981" strokeWidth="1" strokeOpacity="0.3"/>
-        <text x="16" y="20" fontFamily="system-ui" fontSize="9" fill="#FFFFFF" opacity="0.5">Performans</text>
-        <text x="16" y="38" fontFamily="system-ui" fontSize="12" fontWeight="600" fill="#10B981">99.9% Uptime</text>
-      </g>
-      
       {/* Celebix Logo Mark */}
       <g transform="translate(680, 420)">
         <circle cx="20" cy="20" r="20" fill="url(#accentGrad)" opacity="0.2"/>
