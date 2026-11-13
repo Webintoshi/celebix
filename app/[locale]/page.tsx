@@ -8,32 +8,22 @@ import Process from "@/components/sections/Process";
 import Testimonials from "@/components/sections/Testimonials";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
-import { 
-  OrganizationSchema, 
-  WebSiteSchema, 
-  LocalBusinessSchema,
-  BreadcrumbSchema 
-} from "@/components/SchemaScript";
+import { LocalBusinessSchema, OrganizationSchema, WebSiteSchema } from "@/components/SchemaScript";
+import { absoluteSiteUrl } from "@/lib/site";
 
 // Generate metadata based on locale
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   const isTr = locale === "tr";
-  
+  const title = isTr ? "Kurumsal Yazılım ve E-Ticaret Çözümleri | Celebix" : "Business Software & E-Commerce Solutions | Celebix";
+  const description = isTr
+    ? "Celebix ile e-ticaret mağazanızı kurun, işletmenize özel web ve mobil yazılım geliştirin. Google Ads, Meta reklamları ve SEO hizmetlerimizi inceleyin."
+    : "Launch an online store with Celebix or build custom web and mobile software for your business. Explore our Google Ads, Meta advertising and SEO services.";
+  const imageUrl = absoluteSiteUrl("/og-image.webp");
+
   return {
-    // Ana sayfa için absolute title (template uygulanmaz)
-    title: {
-      absolute: isTr 
-        ? "Premium Yazılım ve Dijital Çözümler | Celebix"
-        : "Premium Software & Digital Solutions | Celebix"
-    },
-    // Description max 155 karakter
-    description: isTr
-      ? "Celebix yazılım şirketi olarak e-ticaret, kurumsal yazılım ve dijital pazarlama hizmetleri sunuyoruz. İşletmenizi dijitalde büyütün."
-      : "Celebix software company offers e-commerce, enterprise software and digital marketing services. Grow your business digitally.",
-    keywords: isTr 
-      ? ["yazılım şirketi", "e-ticaret", "dijital ajans", "web tasarım", "SEO", "sosyal medya", "Tık Profil"]
-      : ["software company", "e-commerce", "digital agency", "web design", "SEO", "social media"],
+    title: { absolute: title },
+    description,
     alternates: {
       canonical: `/${locale}`,
       languages: {
@@ -43,25 +33,26 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       },
     },
     openGraph: {
-      title: isTr 
-        ? "Premium Yazılım ve Dijital Çözümler | Celebix"
-        : "Premium Software & Digital Solutions | Celebix",
-      description: isTr
-        ? "Celebix yazılım şirketi olarak e-ticaret, kurumsal yazılım ve dijital pazarlama hizmetleri sunuyoruz."
-        : "Celebix software company offers e-commerce, enterprise software and digital marketing services.",
-      url: `https://celebix.net/${locale}`,
+      type: "website",
+      siteName: "Celebix",
+      locale: isTr ? "tr_TR" : "en_US",
+      alternateLocale: [isTr ? "en_US" : "tr_TR"],
+      title,
+      description,
+      url: absoluteSiteUrl(`/${locale}`),
+      images: [{ url: imageUrl, width: 984, height: 492, alt: "Celebix" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [imageUrl],
     },
   };
 }
 
 export default function Home({ params }: { params: { locale: string } }) {
   const { locale } = params;
-  const isTr = locale === "tr";
-  
-  // Breadcrumb items
-  const breadcrumbItems = [
-    { name: isTr ? "Ana Sayfa" : "Home", url: `/${locale}` },
-  ];
   
   return (
     <>
@@ -69,7 +60,6 @@ export default function Home({ params }: { params: { locale: string } }) {
       <OrganizationSchema />
       <WebSiteSchema />
       <LocalBusinessSchema />
-      <BreadcrumbSchema items={breadcrumbItems} />
       
       <Navigation locale={locale} />
       <main>
