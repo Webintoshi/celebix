@@ -196,7 +196,8 @@ export default function BlogPostClient({ locale, slug, post }: BlogPostClientPro
                 <span className="hidden sm:block w-px h-8 bg-dark-900/10" />
                 <span className="flex items-center gap-1">
                   <Calendar size={16} />
-                  {formatDate(post.date)}
+                  <time dateTime={post.date}>{formatDate(post.date)}</time>
+                  {post.updatedAt && <span>· {isTr ? "Güncellendi" : "Updated"} <time dateTime={post.updatedAt}>{formatDate(post.updatedAt)}</time></span>}
                 </span>
                 <span className="flex items-center gap-1">
                   <Clock size={16} />

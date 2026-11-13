@@ -1,17 +1,19 @@
 import { Metadata } from "next";
-import { OrganizationSchema, LocalBusinessSchema, BreadcrumbSchema, FAQSchema } from "@/components/SchemaScript";
+import { OrganizationSchema, LocalBusinessSchema, BreadcrumbSchema } from "@/components/SchemaScript";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
   const isTr = locale === "tr";
   
+  const description = isTr
+    ? "Altınordu merkezli Celebix, işletmelere özel web ve mobil uygulamalar, kurumsal yazılım ve e-ticaret çözümleri geliştirir. Projeniz için görüşme planlayın."
+    : "Celebix develops custom web and mobile apps, business software and e-commerce solutions from Altınordu, Ordu. Get in touch to discuss your project.";
+
   return {
     title: isTr 
       ? "Ordu Yazılım Şirketi ve Özel Yazılım"
       : "Ordu Software Company & Custom Development",
-    description: isTr
-      ? "Altınordu merkezli Celebix, işletmelere özel web ve mobil uygulamalar, kurumsal yazılım ve e-ticaret çözümleri geliştirir. Projeniz için görüşme planlayın."
-      : "Celebix develops custom web and mobile apps, business software and e-commerce solutions from Altınordu, Ordu. Get in touch to discuss your project.",
+    description,
     keywords: isTr
       ? ["ordu yazılım şirketi", "ordu web tasarım", "karadeniz yazılım", "özel yazılım ordu", "yazılım firması ordu", "mobil uygulama ordu"]
       : ["ordu software company", "ordu web design", "karadeniz software", "custom software ordu", "software company ordu"],
@@ -27,9 +29,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       title: isTr 
         ? "Ordu Yazılım Şirketi | Celebix"
         : "Ordu Software Company | Celebix",
-      description: isTr
-        ? "Ordu'da profesyonel yazılım hizmetleri. Web, mobil, kurumsal yazılım. %30 uygun fiyat, 7/24 destek."
-        : "Professional software services in Ordu. Web, mobile, enterprise software. Affordable prices, 24/7 support.",
+      description,
       url: `https://celebix.net/${locale}/ordu-yazilim-sirketi`,
       type: "website",
       images: [
@@ -44,9 +44,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     twitter: {
       card: "summary_large_image",
       title: isTr ? "Ordu Yazılım Şirketi | Celebix" : "Ordu Software Company | Celebix",
-      description: isTr
-        ? "Ordu'da profesyonel yazılım hizmetleri. %30 uygun fiyat!"
-        : "Professional software services in Ordu. Affordable prices!",
+      description,
       images: ["https://celebix.net/og-ordu-software.webp"],
     },
     robots: {
@@ -77,33 +75,11 @@ export default function OrduSoftwareLayout({
     { name: isTr ? "Ordu Yazılım Şirketi" : "Ordu Software Company", url: `/${locale}/ordu-yazilim-sirketi` },
   ];
 
-  const faqData = [
-    {
-      question: isTr ? "Ordu'da yazılım şirketi fiyatları ne kadar?" : "How much do software companies in Ordu charge?",
-      answer: isTr 
-        ? "Proje kapsamına göre değişir. Basit bir web sitesi 50.000-100.000 TL, kurumsal yazılım projeleri 300.000 TL ve üzeri. İstanbul'a göre %30-40 daha uygun fiyatlar sunuyoruz."
-        : "It varies by project scope. A simple website 50,000-100,000 TL, enterprise software 300,000 TL+. We offer 30-40% more affordable prices than Istanbul.",
-    },
-    {
-      question: isTr ? "Projeler ne kadar sürüyor?" : "How long do projects take?",
-      answer: isTr
-        ? "Kurumsal web sitesi: 4-8 hafta, E-ticaret platformu: 8-12 hafta, Mobil uygulama: 12-16 hafta, Kurumsal yazılım: 16-24 hafta."
-        : "Corporate website: 4-8 weeks, E-commerce: 8-12 weeks, Mobile app: 12-16 weeks, Enterprise software: 16-24 weeks.",
-    },
-    {
-      question: isTr ? "Kod mülkiyeti bize ait olacak mı?" : "Will we own the code?",
-      answer: isTr
-        ? "Kesinlikle evet. Proje tesliminde tüm kaynak kodları ve dokümantasyon size devredilir."
-        : "Absolutely yes. All source code and documentation is transferred to you upon delivery.",
-    },
-  ];
-
   return (
     <>
       <OrganizationSchema />
       <LocalBusinessSchema />
       <BreadcrumbSchema items={breadcrumbItems} />
-      <FAQSchema faqs={faqData} />
       {children}
     </>
   );

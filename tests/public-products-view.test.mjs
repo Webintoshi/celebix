@@ -15,6 +15,7 @@ function load(relative) {
   new Function('require', 'module', 'exports', output)(specifier => {
     if (specifier === '@/components/commerce-v6/CommerceLanding') return { __esModule: true, default: () => React.createElement('div', { 'data-testid': 'commerce-landing' }, 'Existing demo') };
     if (specifier === '@/components/commerce-v6/LegacyEcommercePage') return { __esModule: true, default: () => React.createElement('div', { 'data-testid': 'legacy-ecommerce' }, 'Historic payment return') };
+    if (['@/components/sections/Navigation', '@/components/sections/Footer'].includes(specifier)) return { __esModule: true, default: () => null };
     if (specifier === '@/components/SchemaScript') return Object.fromEntries(['OrganizationSchema', 'BreadcrumbSchema', 'EcommerceProductSchema', 'FAQSchema'].map(name => [name, () => null]));
     if (specifier.startsWith('@/') && /\.(?:json|mjs)$/.test(specifier)) return localRequire(path.join(root, specifier.slice(2)));
     if (specifier.startsWith('@/')) return load(specifier.slice(2) + '.tsx');
@@ -69,10 +70,19 @@ test('catalog purchase links use the verified store entry and leave legal naviga
   assert.ok(!html.includes('/login?purchase='));
   assert.ok(!html.includes('<form')); assert.ok(!html.includes('offerId='));
 });
-test('existing English and historic success-return composition remains intact', () => {
-  for (const html of [render('en'), render('tr', 'success')]) {
-    assert.ok(html.includes('data-testid="legacy-ecommerce"')); assert.ok(!html.includes('data-public-product='));
-    assert.ok(!html.includes('"@type":"ItemList"'), 'historic and English pages must not advertise hidden catalog products');
+test('the English catalogue matches Turkish offer IDs and prices and preserves historic payment returns', () => {
+  const tr = render();
+  const en = render('en');
+  assert.deepEqual([...en.matchAll(/data-public-product="([^"]+)"/g)].map(match => match[1]), [...tr.matchAll(/data-public-product="([^"]+)"/g)].map(match => match[1]));
+  for (const value of ['3,104.40', '31,044.00', '1,000 products', 'Toshi credits', 'VAT included']) assert.ok(en.includes(value), value);
+  assert.equal((en.match(/panel\.saas-staging\.celebix\.net\/login/g) ?? []).length, 7);
+  assert.ok(en.includes('https://celebix.net/en/e-ticaret-paketleri#urun-paket-starter'));
+  assert.ok(!en.includes('19,000')); assert.ok(!en.includes('buy.polar.sh'));
+  for (const locale of ['tr', 'en']) {
+    const html = render(locale, 'success');
+    assert.ok(html.includes('data-testid="legacy-ecommerce"'));
+    assert.ok(!html.includes('data-public-product='));
+    assert.ok(!html.includes('"@type":"ItemList"'));
   }
 });
 test('both the fixed header and introduction expose direct catalog anchors', () => {

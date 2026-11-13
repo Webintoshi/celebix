@@ -67,7 +67,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       seen.add(url);
       entries.push({
         url,
-        lastModified: new Date(post.date),
+        lastModified: new Date(post.updatedAt ?? post.date),
         changeFrequency: "monthly",
         priority: 0.6,
       });

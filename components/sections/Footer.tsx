@@ -2,15 +2,9 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Github, Twitter, Linkedin, Instagram, Mail, MapPin, Phone, Award } from "lucide-react";
-import { generatePlaceholderSVG } from "@/lib/utils";
+import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 
-const socialLinks = [
-  { icon: Twitter, href: "#", label: "Twitter" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Instagram, href: "#", label: "Instagram" },
-  { icon: Github, href: "#", label: "GitHub" },
-];
+const socialLinks = [{ icon: Instagram, href: "https://instagram.com/celebix.net", label: "Instagram" }];
 
 export default function Footer({ locale }: { locale: string }) {
   const isTr = locale === "tr";
@@ -53,7 +47,7 @@ export default function Footer({ locale }: { locale: string }) {
               />
             </Link>
             <p className="text-small text-light-100/60 mb-6 max-w-xs">
-              {isTr ? "Premium yazılım geliştirme ve digital marketing hizmetleri." : "Premium software development and digital marketing services."}
+              {isTr ? "Yazılım, e-ticaret ve dijital pazarlama hizmetleri." : "Software, e-commerce, and digital marketing services."}
             </p>
             {/* Social Links */}
             <div className="flex items-center gap-3">
@@ -141,78 +135,6 @@ export default function Footer({ locale }: { locale: string }) {
             </ul>
           </motion.div>
         </div>
-
-        {/* Partners & Awards */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-          className="py-10 border-t border-light-100/10"
-        >
-          <h4 className="font-display text-body mb-6 flex items-center gap-2">
-            <Award size={18} className="text-aurora-indigo" />
-            {isTr ? "Sertifikalar & Ödüller" : "Certifications & Awards"}
-          </h4>
-          <div className="flex flex-wrap items-center gap-6">
-            {/* Meta Business Partner -->
-            <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-light-100/20">
-              <svg viewBox="0 0 40 24" className="w-8 h-6">
-                <path d="M20 2C10.5 2 4.5 8.5 4.5 12s6 10 15.5 10c9.5 0 15.5-6.5 15.5-10S29.5 2 20 2zm0 17c-4 0-6.5-3-6.5-7s2.5-7 6.5-7 6.5 3 6.5 7-2.5 7-6.5 7z" fill="#0081FB"/>
-              </svg>
-              <div className="flex flex-col">
-                <span className="text-dark-900 font-semibold text-sm leading-tight">Meta</span>
-                <span className="text-dark-900/70 text-xs leading-tight">Business Partner</span>
-              </div>
-            </div>
-            
-            {/* Google Premier Partner */}
-            <div className="flex items-center bg-white rounded-lg overflow-hidden border border-light-100/20">
-              <div className="bg-[#EA4335] px-2 py-2 h-full flex items-center">
-                <span className="text-white text-xs font-bold tracking-wider" style={{writingMode: 'vertical-rl', textOrientation: 'mixed'}}>PREMIER</span>
-              </div>
-              <div className="px-3 py-2 flex flex-col">
-                <span className="text-lg font-medium leading-none">
-                  <span className="text-[#4285F4]">G</span>
-                  <span className="text-[#EA4335]">o</span>
-                  <span className="text-[#FBBC05]">o</span>
-                  <span className="text-[#4285F4]">g</span>
-                  <span className="text-[#34A853]">l</span>
-                  <span className="text-[#EA4335]">e</span>
-                </span>
-                <span className="text-gray-500 text-sm font-medium leading-tight">Partner</span>
-              </div>
-            </div>
-            
-            {/* Cyber Security Excellence Awards */}
-            <div className="flex items-center gap-2 bg-gradient-to-b from-[#1a1a2e] to-[#16213e] px-3 py-2 rounded-lg border border-[#FFD700]/30">
-              <div className="flex flex-col items-center">
-                <div className="bg-[#FFD700] px-2 py-0.5 rounded-t">
-                  <span className="text-[#1a1a2e] text-xs font-bold">2024</span>
-                </div>
-                <span className="text-[#FFD700] text-xs font-bold">WINNER</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-white text-xs font-bold leading-tight">CYBER</span>
-                <span className="text-white text-xs font-bold leading-tight">SECURITY</span>
-                <span className="text-gray-400 text-[10px] leading-tight">EXCELLENCE AWARDS</span>
-              </div>
-            </div>
-            
-            {/* Content Marketing Awards */}
-            <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-lg border border-light-100/20">
-              <div className="flex flex-col items-center">
-                <span className="text-[#F26522] text-2xl font-black leading-none">C</span>
-                <span className="text-[#F7931E] text-2xl font-black leading-none -mt-1">M</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[#F26522] text-xs font-bold leading-tight">CONTENT</span>
-                <span className="text-[#F26522] text-xs font-bold leading-tight">MARKETING</span>
-                <span className="text-gray-500 text-[10px] leading-tight">2021 FINALIST</span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-light-100/10 flex flex-col md:flex-row items-center justify-between gap-4">
