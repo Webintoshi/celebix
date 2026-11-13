@@ -40,6 +40,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       description,
       type: "article",
       publishedTime: post.date,
+      modifiedTime: post.updatedAt ?? post.date,
       authors: [post.author],
       tags: keywords,
       url,
@@ -113,7 +114,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     description: isTr ? post.metaDescription ?? post.excerpt : post.metaDescriptionEn ?? post.excerptEn,
     image: absoluteSiteUrl("/og-image.webp"),
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updatedAt ?? post.date,
     author: {
       "@type": "Organization",
       name: post.author,
