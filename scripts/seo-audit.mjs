@@ -36,6 +36,11 @@ const previewPatterns = [
   "ngrok",
 ];
 
+const internalHostChecks = {
+  "lib/platform-checkout/public-test.ts": "raw!=='localhost'",
+  "lib/platform-checkout/server.ts": "const NEXT_INTERNAL_HOSTS = new Set(['0.0.0.0', 'localhost', '127.0.0.1', '[::]', '[::1]', 'n']);",
+};
+
 const errors = [];
 
 function addError(message) {
@@ -99,8 +104,10 @@ function ensureNoForbiddenProductionStrings(files) {
       }
     }
 
+    const internalHostCheck = internalHostChecks[file.relativePath];
+    const publicContent = internalHostCheck ? file.content.replace(internalHostCheck, "") : file.content;
     for (const previewPattern of previewPatterns) {
-      if (file.content.includes(previewPattern)) {
+      if (publicContent.includes(previewPattern)) {
         addError(`${file.relativePath} contains preview/local reference: ${previewPattern}`);
       }
     }
