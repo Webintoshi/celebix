@@ -5,7 +5,6 @@ import TrustedBy from "@/components/sections/TrustedBy";
 import Products from "@/components/sections/Products";
 import Portfolio from "@/components/sections/Portfolio";
 import Process from "@/components/sections/Process";
-import Testimonials from "@/components/sections/Testimonials";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
 import { LocalBusinessSchema, OrganizationSchema, WebSiteSchema } from "@/components/SchemaScript";
@@ -68,7 +67,6 @@ export default function Home({ params }: { params: { locale: string } }) {
         <Products locale={locale} />
         <Portfolio locale={locale} />
         <Process locale={locale} />
-        <Testimonials locale={locale} />
         <CTA locale={locale} />
       </main>
       <Footer locale={locale} />
