@@ -12,10 +12,6 @@ import {
   Megaphone,
   Share2,
   Zap,
-  Check,
-  TrendingUp,
-  Users,
-  Award,
   Gem,
   Flower2,
   Factory,
@@ -35,19 +31,15 @@ const portfolioItems = [
     titleEn: "Celebix E-Commerce",
     subtitle: "Kendi Ürünümüz",
     subtitleEn: "Our Product",
-    description: "AI destekli, sınırsız ürün kapasiteli premium e-ticaret platformu. Tüm pazar yerleri tek panelden yönetilir.",
-    descriptionEn: "AI-powered premium e-commerce platform with unlimited product capacity. All marketplaces from one panel.",
-    price: "19.000₺ Tek Fiyat",
-    priceEn: "19,000₺ Fixed Price",
+    description: "Kendi markanızla online mağaza açın. Ürünleri, siparişleri ve müşterileri tek panelden yönetin.",
+    descriptionEn: "Open an online store under your own brand. Manage products, orders, and customers from one dashboard.",
+    price: "Paketler ve fiyatlar",
+    priceEn: "Plans and pricing",
     icon: ShoppingCart,
     color: "aurora-indigo",
     link: "/e-ticaret-paketleri",
-    stats: [
-      { label: "Müşteri", value: "50+" },
-      { label: "Satış Artışı", value: "+180%" },
-      { label: "Uptime", value: "99.9%" },
-    ],
-    features: ["AI SEO", "Pazar Yeri Entegrasyonu", "Özelleştirilebilir"],
+    features: ["Ürün Yönetimi", "Sipariş Takibi", "Mağaza Tasarımı"],
+    featuresEn: ["Product Management", "Order Tracking", "Store Design"],
   },
   {
     id: "tik-profil",
@@ -63,12 +55,8 @@ const portfolioItems = [
     icon: Store,
     color: "emerald",
     link: "/celebix-saas-platformu",
-    stats: [
-      { label: "İşletme", value: "500+" },
-      { label: "Komisyon", value: "%0" },
-      { label: "Sektör", value: "68" },
-    ],
     features: ["QR Menü", "Sipariş Yönetimi", "Sadakat Programı"],
+    featuresEn: ["QR Menu", "Order Management", "Loyalty Program"],
   },
   {
     id: "kurumsal-yazilim",
@@ -82,11 +70,6 @@ const portfolioItems = [
     icon: Code,
     color: "aurora-violet",
     link: "/kurumsal-yazilim",
-    stats: [
-      { label: "Proje", value: "200+" },
-      { label: "Müşteri", value: "150+" },
-      { label: "Tecrübe", value: "8+ Yıl" },
-    ],
     features: ["Özel Yazılım", "Web/Mobil", "API Entegrasyonu"],
   },
   {
@@ -96,16 +79,11 @@ const portfolioItems = [
     titleEn: "Digital Marketing",
     subtitle: "Hizmetimiz",
     subtitleEn: "Our Service",
-    description: "Google Ads, Meta Business Partner sertifikalı reklam yönetimi, SEO ve içerik pazarlama.",
-    descriptionEn: "Google Ads, Meta Business Partner certified ad management, SEO and content marketing.",
+    description: "Google Ads, Meta reklam yönetimi, SEO ve içerik pazarlama.",
+    descriptionEn: "Google Ads, Meta ad management, SEO and content marketing.",
     icon: Megaphone,
     color: "amber",
     link: "/dijital-pazarlama",
-    stats: [
-      { label: "Google Partner", value: "✓" },
-      { label: "Meta Partner", value: "✓" },
-      { label: "ROAS", value: "8x" },
-    ],
     features: ["Google Ads", "Meta Ads", "SEO"],
   },
   {
@@ -120,20 +98,8 @@ const portfolioItems = [
     icon: Share2,
     color: "rose",
     link: "/sosyal-medya",
-    stats: [
-      { label: "Hesap Yönetimi", value: "100+" },
-      { label: "İçerik/ay", value: "5K+" },
-      { label: "Etkileşim", value: "+300%" },
-    ],
     features: ["İçerik Üretimi", "Topluluk Yönetimi", "Influencer"],
   },
-];
-
-const achievements = [
-  { icon: Award, value: "Google", label: "Premier Partner" },
-  { icon: Award, value: "Meta", label: "Business Partner" },
-  { icon: Award, value: "2024", label: "Cyber Security Winner" },
-  { icon: TrendingUp, value: "500+", label: "Aktif Proje" },
 ];
 
 const clientProjects = [
@@ -275,7 +241,7 @@ export default function Portfolio({ params }: { params: { locale: string } }) {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Link href={item.link} className="group block">
+                    <Link href={`/${locale}${item.link}`} className="group block">
                       <div className="glass-card rounded-3xl overflow-hidden bg-white hover-lift h-full">
                         {/* Visual */}
                         <div className="relative aspect-[16/10] overflow-hidden bg-dark-900">
@@ -326,19 +292,9 @@ export default function Portfolio({ params }: { params: { locale: string } }) {
                             {isTr ? item.description : item.descriptionEn}
                           </p>
 
-                          {/* Stats */}
-                          <div className="flex gap-4 mb-4 pt-4 border-t border-dark-900/5">
-                            {item.stats.map((stat, i) => (
-                              <div key={i} className="text-center">
-                                <div className="font-display text-lg font-bold text-dark-900">{stat.value}</div>
-                                <div className="text-[10px] text-dark-900/40 uppercase">{stat.label}</div>
-                              </div>
-                            ))}
-                          </div>
-
                           {/* Features */}
                           <div className="flex flex-wrap gap-2">
-                            {item.features.map((feature, i) => (
+                            {(isTr ? item.features : item.featuresEn ?? item.features).map((feature, i) => (
                               <span key={i} className="px-2 py-1 bg-light-200 text-dark-900/70 text-xs rounded-full">
                                 {feature}
                               </span>
@@ -382,7 +338,7 @@ export default function Portfolio({ params }: { params: { locale: string } }) {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
                   >
-                    <Link href={item.link} className="group block">
+                    <Link href={`/${locale}${item.link}`} className="group block">
                       <div className="glass-card rounded-2xl p-6 bg-white/5 border-white/10 hover:bg-white/10 transition-all h-full">
                         <div className="flex items-start justify-between mb-4">
                           <div className="w-14 h-14 rounded-xl bg-aurora-indigo/20 flex items-center justify-center">
@@ -399,16 +355,6 @@ export default function Portfolio({ params }: { params: { locale: string } }) {
                         <p className="text-light-100/50 text-small mb-4">
                           {isTr ? item.description : item.descriptionEn}
                         </p>
-
-                        {/* Stats */}
-                        <div className="flex gap-3 mb-4">
-                          {item.stats.map((stat, i) => (
-                            <div key={i} className="text-center px-2 py-1 bg-white/5 rounded-lg">
-                              <div className="font-display text-sm font-bold text-aurora-indigo">{stat.value}</div>
-                              <div className="text-[10px] text-light-100/40">{stat.label}</div>
-                            </div>
-                          ))}
-                        </div>
 
                         <div className="flex items-center gap-1 text-aurora-indigo text-small font-medium group-hover:gap-2 transition-all">
                           {isTr ? "Detayları Gör" : "View Details"}
@@ -500,40 +446,6 @@ export default function Portfolio({ params }: { params: { locale: string } }) {
                 );
               })}
             </div>
-          </div>
-        </section>
-
-        {/* Achievements */}
-        <section className="py-16">
-          <div className="container-max mx-auto px-6 lg:px-16">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="glass-card rounded-3xl p-8 lg:p-12 bg-white"
-            >
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-                {achievements.map((item, index) => {
-                  const Icon = item.icon;
-                  return (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      className="text-center"
-                    >
-                      <div className="w-12 h-12 rounded-xl bg-aurora-indigo/10 flex items-center justify-center mx-auto mb-3">
-                        <Icon size={24} className="text-aurora-indigo" />
-                      </div>
-                      <div className="font-display text-2xl font-bold text-dark-900 mb-1">{item.value}</div>
-                      <div className="text-small text-dark-900/50">{item.label}</div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </motion.div>
           </div>
         </section>
 
