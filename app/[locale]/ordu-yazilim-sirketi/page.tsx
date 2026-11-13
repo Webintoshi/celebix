@@ -59,20 +59,17 @@ const features = [
   },
   {
     icon: Zap,
-    title: "7/24 Teknik Destek",
-    titleEn: "24/7 Technical Support",
+    title: "Teknik Destek",
+    titleEn: "Technical Support",
     description: "Yerel ekip ile hızlı ve güvenilir destek",
     descriptionEn: "Fast and reliable support with local team",
   },
 ];
 
 const benefits = [
-  { text: "İstanbul'a göre %30-40 daha uygun fiyat", textEn: "30-40% more affordable than Istanbul" },
-  { text: "Yüz yüze iletişim ve toplantı imkanı", textEn: "Face-to-face communication and meetings" },
-  { text: "Aynı gün teknik destek ve müdahale", textEn: "Same-day technical support" },
-  { text: "Türkçe 7/24 iletişim", textEn: "Turkish 24/7 communication" },
-  { text: "Kod mülkiyeti %100 size ait", textEn: "100% code ownership" },
-  { text: "3-6 ay garanti süresi", textEn: "3-6 month warranty period" },
+  { text: "Altınordu’da yüz yüze görüşme", textEn: "In-person meetings in Altınordu" },
+  { text: "Proje kapsamına göre teklif", textEn: "Quotes based on project scope" },
+  { text: "Bakım ve teknik destek seçenekleri", textEn: "Maintenance and technical support options" },
 ];
 
 const process = [
@@ -110,8 +107,8 @@ const faqs = [
   {
     question: "Ordu'da yazılım şirketi fiyatları ne kadar?",
     questionEn: "How much do software companies in Ordu charge?",
-    answer: "Proje kapsamına göre değişir. Basit bir web sitesi 50.000-100.000 TL, kurumsal yazılım projeleri 300.000 TL ve üzeri. İstanbul'a göre %30-40 daha uygun fiyatlar sunuyoruz. Detaylı teklif için iletişime geçin.",
-    answerEn: "It varies by project scope. A simple website 50,000-100,000 TL, enterprise software 300,000 TL+. We offer 30-40% more affordable prices than Istanbul. Contact us for a detailed quote.",
+    answer: "Fiyat, geliştirilecek özelliklere ve entegrasyonlara göre değişir. Keşif görüşmesinden sonra kapsamı, takvimi ve bütçeyi içeren bir teklif hazırlıyoruz.",
+    answerEn: "Pricing depends on the features and integrations you need. After a discovery meeting, we prepare a proposal covering scope, timeline, and budget.",
   },
   {
     question: "Projeler ne kadar sürüyor?",
@@ -176,8 +173,8 @@ export default function OrduSoftwarePage({ params }: { params: { locale: string 
                 
                 <p className="text-lg md:text-xl text-dark-600 mb-8 leading-relaxed">
                   {isTr
-                    ? "Karadeniz Bölgesi'nin önde gelen yazılım şirketi. Web, mobil ve kurumsal yazılım çözümleri. İstanbul kalitesinde, %30 daha uygun fiyat."
-                    : "Leading software company in the Black Sea Region. Web, mobile and enterprise software solutions. Istanbul quality, 30% more affordable."
+                    ? "Altınordu’daki ekibimiz işletmelere özel web ve mobil uygulamalar, kurumsal yazılım ve e-ticaret çözümleri geliştirir."
+                    : "Our team in Altınordu builds custom web and mobile apps, business software, and e-commerce solutions."
                   }
                 </p>
                 
@@ -475,8 +472,8 @@ export default function OrduSoftwarePage({ params }: { params: { locale: string 
               </h2>
               <p className="text-dark-600 text-lg mb-8 max-w-2xl mx-auto">
                 {isTr
-                  ? "Ordu'nun en güvenilir yazılım şirketi olarak yanınızdayız. Ücretsiz keşif görüşmesi için bugün iletişime geçin."
-                  : "We are with you as Ordu's most reliable software company. Contact us today for a free discovery meeting."
+                  ? "İhtiyaçlarınızı ve proje kapsamını konuşmak için keşif görüşmesi planlayın."
+                  : "Book a discovery meeting to discuss what you need and define the project scope."
                 }
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
