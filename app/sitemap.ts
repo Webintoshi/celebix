@@ -38,7 +38,6 @@ const STATIC_ROUTE_DEFINITIONS = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const buildDate = new Date();
   const seen = new Set<string>();
   const entries: MetadataRoute.Sitemap = [];
 
@@ -52,7 +51,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     seen.add(url);
     entries.push({
       url,
-      lastModified: buildDate,
       changeFrequency: route.changeFrequency,
       priority: route.priority,
     });
