@@ -7,11 +7,11 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   
   return {
     title: isTr 
-      ? "Ordu Yazılım Şirketi | Celebix - Özel Yazılım Çözümleri"
-      : "Ordu Software Company | Celebix - Custom Software Solutions",
+      ? "Ordu Yazılım Şirketi ve Özel Yazılım"
+      : "Ordu Software Company & Custom Development",
     description: isTr
-      ? "Ordu'da profesyonel yazılım şirketi. Web, mobil, kurumsal yazılım. %30 daha uygun fiyat, 7/24 destek, yüz yüze iletişim. Ücretsiz keşif görüşmesi!"
-      : "Professional software company in Ordu. Web, mobile, enterprise software. 30% more affordable, 24/7 support, face-to-face communication.",
+      ? "Altınordu merkezli Celebix, işletmelere özel web ve mobil uygulamalar, kurumsal yazılım ve e-ticaret çözümleri geliştirir. Projeniz için görüşme planlayın."
+      : "Celebix develops custom web and mobile apps, business software and e-commerce solutions from Altınordu, Ordu. Get in touch to discuss your project.",
     keywords: isTr
       ? ["ordu yazılım şirketi", "ordu web tasarım", "karadeniz yazılım", "özel yazılım ordu", "yazılım firması ordu", "mobil uygulama ordu"]
       : ["ordu software company", "ordu web design", "karadeniz software", "custom software ordu", "software company ordu"],

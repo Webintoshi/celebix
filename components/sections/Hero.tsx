@@ -53,7 +53,7 @@ export default function Hero({ locale }: { locale: string }) {
               variants={itemVariants}
               className="font-display text-5xl sm:text-6xl lg:text-7xl xl:text-8xl text-dark-900 mb-6 leading-[1.05]"
             >
-              {isTr ? "Dijital Dönüşümünüzü Hızlandırın" : "Accelerate Your Digital Transformation"}
+              {isTr ? "Yazılım ve E-Ticaret Çözümleri" : "Software & E-Commerce Solutions"}
             </motion.h1>
 
             {/* Subheadline */}
@@ -62,8 +62,8 @@ export default function Hero({ locale }: { locale: string }) {
               className="text-lg lg:text-xl text-dark-900/60 mb-10 max-w-xl leading-relaxed"
             >
               {isTr 
-                ? "İşletmenizi büyütmek için tasarlanmış premium yazılım ürünleri. Ölçeklenebilir, güvenli ve kullanıcı dostu çözümler."
-                : "Premium software products designed to grow your business. Scalable, secure and user-friendly solutions."
+                ? "Kendi markanızla online satışa başlayın. İşletmenize özel web ve mobil yazılım, dijital reklam ve SEO hizmetlerimizi keşfedin."
+                : "Start selling online under your own brand. Explore custom web and mobile software, digital advertising and SEO services."
               }
             </motion.p>
 

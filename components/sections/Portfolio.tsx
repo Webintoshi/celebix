@@ -10,10 +10,10 @@ const projectsData = {
     {
       id: 1,
       title: "Celebix E-Ticaret",
-      tagline: "Komisyonsuz E-Ticaret Platformu",
-      description: "AI destekli SEO, sınırsız ürün kapasitesi ve tüm pazar yerleri tek panelde.",
-      price: "19.000₺ Tek Fiyat",
-      features: ["AI SEO", "Pazar Yeri Entegrasyonu", "Özelleştirilebilir"],
+      tagline: "E-Ticaret Altyapısı",
+      description: "Kendi markanızla online mağaza açın. Ürünleri, siparişleri ve müşterileri tek panelden yönetin.",
+      price: "Paketler ve fiyatlar",
+      features: ["Ürün Yönetimi", "Sipariş Takibi", "Mağaza Tasarımı"],
       link: "/e-ticaret-paketleri",
       visualType: "ecommerce" as const,
       icon: ShoppingCart,
@@ -38,7 +38,7 @@ const projectsData = {
       title: "Celebix E-Commerce",
       tagline: "Commission-Free E-Commerce Platform",
       description: "AI-powered SEO, unlimited product capacity, all marketplaces in one panel.",
-      price: "19,000₺ Fixed Price",
+      price: "Plans and pricing",
       features: ["AI SEO", "Marketplace Integration", "Customizable"],
       link: "/e-ticaret-paketleri",
       visualType: "ecommerce" as const,
@@ -99,7 +99,7 @@ export default function Portfolio({ locale }: { locale: string }) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Link href={project.link} className="group block">
+                <Link href={`/${locale}${project.link}`} className="group block">
                   <div className="glass-card rounded-3xl overflow-hidden hover-lift bg-white h-full">
                     {/* Visual Area */}
                     <div className="relative aspect-[16/10] overflow-hidden bg-dark-900">

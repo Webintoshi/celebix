@@ -1,6 +1,3 @@
-"use client";
-
-import Script from "next/script";
 import { SITE_URL, absoluteSiteUrl } from "@/lib/site";
 
 interface SchemaScriptProps {
@@ -20,11 +17,11 @@ export function SchemaScript({ schema, id = "json-ld-schema" }: SchemaScriptProp
   const schemas = Array.isArray(schema) ? schema : [schema];
 
   return (
-    <Script
+    <script
       id={id}
       type="application/ld+json"
       dangerouslySetInnerHTML={{
-        __html: JSON.stringify(schemas.length === 1 ? schemas[0] : schemas),
+        __html: JSON.stringify(schemas.length === 1 ? schemas[0] : schemas).replace(/</g, "\\u003c"),
       }}
     />
   );
@@ -42,12 +39,7 @@ export function OrganizationSchema() {
     alternateName: "Celebix Digital Agency",
     url: SITE_URL,
     logo: absoluteSiteUrl("/Logo/celebix beyaz logo.svg"),
-    sameAs: [
-      "https://twitter.com/celebix",
-      "https://linkedin.com/company/celebix",
-      "https://instagram.com/celebix",
-      "https://github.com/celebix",
-    ],
+    sameAs: ["https://instagram.com/celebix.net"],
     contactPoint: {
       "@type": "ContactPoint",
       telephone: "+90-530-209-9628",

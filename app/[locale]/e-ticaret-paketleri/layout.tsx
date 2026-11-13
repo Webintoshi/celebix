@@ -10,8 +10,8 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const isTr = locale === "tr";
   
   if (isTr) {
-    const title = 'E-Ticaret Paketleri ve Toshi Kredileri | Celebix';
-    const description = 'Celebix mağaza paketlerini ve Toshi kredi paketlerini inceleyin. KDV dahil fiyatları karşılaştırın, mağaza panelinizden satın alın.';
+    const title = 'E-Ticaret Altyapısı ve Mağaza Paketleri | Celebix';
+    const description = 'Celebix ile kendi e-ticaret sitenizi kurun. Mağaza paketlerini ve Toshi kredilerini inceleyin, KDV dahil fiyatları karşılaştırın ve mağazanızı açın.';
     const imageUrl = 'https://celebix.net/og-image.webp';
 
     return {
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
         description,
         url: 'https://celebix.net/tr/e-ticaret-paketleri',
         type: 'website',
-        images: [{ url: imageUrl, width: 1200, height: 630, alt: 'Celebix E-Ticaret' }],
+        images: [{ url: imageUrl, width: 984, height: 492, alt: 'Celebix E-Ticaret' }],
       },
       twitter: {
         card: 'summary_large_image',
