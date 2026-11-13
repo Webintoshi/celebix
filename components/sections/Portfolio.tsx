@@ -36,10 +36,10 @@ const projectsData = {
     {
       id: 1,
       title: "Celebix E-Commerce",
-      tagline: "Commission-Free E-Commerce Platform",
-      description: "AI-powered SEO, unlimited product capacity, all marketplaces in one panel.",
+      tagline: "E-Commerce Platform",
+      description: "Open an online store under your own brand. Manage products, orders, and customers from one dashboard.",
       price: "Plans and pricing",
-      features: ["AI SEO", "Marketplace Integration", "Customizable"],
+      features: ["Product Management", "Order Tracking", "Store Design"],
       link: "/e-ticaret-paketleri",
       visualType: "ecommerce" as const,
       icon: ShoppingCart,

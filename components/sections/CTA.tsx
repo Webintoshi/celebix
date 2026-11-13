@@ -1,24 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { generatePlaceholderSVG } from "@/lib/utils";
 
 export default function CTA({ locale }: { locale: string }) {
   const isTr = locale === "tr";
-  const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setIsSubmitted(true);
-      setTimeout(() => setIsSubmitted(false), 3000);
-      setEmail("");
-    }
-  };
-
   return (
     <section className="relative w-full overflow-hidden py-12">
       {/* Background - Placeholder_IMG_022 */}
@@ -48,49 +36,15 @@ export default function CTA({ locale }: { locale: string }) {
             </h2>
             <p className="text-h3 text-light-100/70 mb-10">
               {isTr 
-                ? "Ücretsiz danışmanlık için formu doldurun, 24 saat içinde dönüş yapalım."
-                : "Fill out the form for a free consultation, we'll get back to you within 24 hours."
+                ? "Yazılım, e-ticaret veya dijital pazarlama projenizi bize anlatın."
+                : "Tell us about your software, e-commerce, or digital marketing project."
               }
             </p>
 
-            {/* Email Form */}
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-              <div className="flex-1 relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder={isTr ? "E-posta adresiniz" : "Your email address"}
-                  className="w-full px-6 py-4 bg-light-100/10 border border-light-100/20 rounded-full text-light-100 placeholder:text-light-100/50 focus:outline-none focus:border-aurora-indigo focus:bg-light-100/20 transition-all duration-300"
-                  required
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={isSubmitted}
-                className="group inline-flex items-center justify-center gap-2 px-8 py-4 bg-light-100 text-dark-900 font-medium rounded-full hover:bg-white transition-all duration-300 disabled:opacity-70"
-              >
-                {isSubmitted ? (
-                  <>
-                    <Check size={18} />
-                    {isTr ? "Gönderildi" : "Sent"}
-                  </>
-                ) : (
-                  <>
-                    {isTr ? "Gönder" : "Send"}
-                    <ArrowRight
-                      size={18}
-                      className="transition-transform duration-300 group-hover:translate-x-1"
-                    />
-                  </>
-                )}
-              </button>
-            </form>
-
-            {/* Trust Text */}
-            <p className="text-small text-light-100/50 mt-6">
-              {isTr ? "Ücretsiz danışmanlık • 24 saat içinde dönüş" : "Free consultation • Response within 24h"}
-            </p>
+            <Link href={`/${locale}/iletisim`} className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-8 py-4 font-medium text-dark-900 hover:bg-light-100">
+              {isTr ? "İletişime Geçin" : "Contact Us"}
+              <ArrowRight size={18} aria-hidden="true" />
+            </Link>
           </motion.div>
         </div>
       </div>

@@ -7,12 +7,8 @@ const clients = [
   "DeryCraft", 
   "Ezmeo",
   "Okur Otomasyon",
-  "Tık Profil",
-  "Klarna",
-  "One Base",
-  "AnyDesk",
-  "Flow Part",
-  "Bingo",
+  "FlowPart",
+  "Lilyum Flora",
   "Dolka",
 ];
 
@@ -29,7 +25,7 @@ export default function TrustedBy({ locale }: { locale?: string }) {
           transition={{ duration: 0.5 }}
           className="text-center text-small text-dark-900/50 uppercase tracking-wider"
         >
-          {isTr ? "Güvenilen Ortaklar" : "Trusted By"}
+          {isTr ? "Proje Referansları" : "Client Projects"}
         </motion.p>
       </div>
 
