@@ -504,4 +504,13 @@ html:has(.celebix-commerce){scroll-behavior:auto!important;scrollbar-gutter:stab
 @media(max-width:700px){.celebix-commerce .intro h1{font-size:clamp(29px,8.7vw,40px);line-height:1.1;letter-spacing:-1.7px}.celebix-commerce #beginStory{gap:12px;min-height:52px;padding:0 16px;font-size:13px}.celebix-commerce #beginStory .story-time{padding-left:12px}}
 @media(min-width:701px){.celebix-commerce .header-actions{gap:24px}}
 @media(max-width:700px){.celebix-commerce{--header:92px}.celebix-commerce .site-header{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:48px 44px;height:92px;column-gap:12px}.celebix-commerce .brand-group{grid-column:1;grid-row:1}.celebix-commerce .header-actions{display:contents}.celebix-commerce .header-actions>.button{grid-column:2;grid-row:1;justify-self:end}.celebix-commerce .header-actions>.catalog-link{grid-column:1/-1;grid-row:2;border-top:1px solid var(--line);align-self:stretch}}
+.celebix-commerce #film[data-story-started=false] .intro{text-align:center}
+.celebix-commerce .intro h1{max-width:850px;text-wrap:balance}
+.celebix-commerce .intro .actions{justify-content:center}
+.celebix-commerce .intro .open-store{min-height:54px;color:#1d1d1d;font-size:14px}
+.celebix-commerce #beginStory .story-play{border-color:#dedede}
+.celebix-commerce #beginStory .story-time{border-left-color:#dedede}
+.celebix-commerce #beginStory:hover .story-play{background:#fff1e6}
+@media(max-width:700px){.celebix-commerce .intro .open-store{min-height:52px;font-size:13px}}
+@media(max-height:500px){.celebix-commerce .intro .open-store,.celebix-commerce #beginStory{min-height:44px}}
 }

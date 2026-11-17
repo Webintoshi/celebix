@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "source": {
-    "commit": "50f2439d65362b2c7d6e3abf6248ece29fc30fe0",
+    "commit": "bb2106cdc6e191308794b8ffa561e831aa7d06e6",
     "files": [
       {
         "path": "packages/saas-contracts/src/commercial-packages/catalog.ts",
@@ -9,7 +9,7 @@
       },
       {
         "path": "packages/saas-contracts/src/toshi/credits.ts",
-        "sha256": "58d8d167155e7aa18da85c3011cf637f176a6800a45ca6e4f653265df6191335"
+        "sha256": "7b10a7417801ee068450fef26942e4b92f6862a2404f2a868a4c60359fd3c59d"
       }
     ]
   },

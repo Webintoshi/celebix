@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url), React = require('react');
 const { renderToStaticMarkup } = require('react-dom/server'), ts = require('typescript');
 const root = fileURLToPath(new URL('../', import.meta.url));
-function load(relative) {
+function load(relative, annual = false) {
   const filename = path.join(root, relative), localRequire = createRequire(filename);
   const output = ts.transpileModule(readFileSync(filename, 'utf8'), { compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true } }).outputText;
   const module = { exports: {} };
@@ -18,13 +18,16 @@ function load(relative) {
     if (['@/components/sections/Navigation', '@/components/sections/Footer'].includes(specifier)) return { __esModule: true, default: () => null };
     if (specifier === '@/components/SchemaScript') return Object.fromEntries(['OrganizationSchema', 'BreadcrumbSchema', 'EcommerceProductSchema', 'FAQSchema'].map(name => [name, () => null]));
     if (specifier.startsWith('@/') && /\.(?:json|mjs)$/.test(specifier)) return localRequire(path.join(root, specifier.slice(2)));
-    if (specifier.startsWith('@/')) return load(specifier.slice(2) + '.tsx');
+    if (specifier.startsWith('@/')) return load(specifier.slice(2) + '.tsx', annual);
+    if (annual && relative === 'components/public-products/PublicProductCatalog.tsx' && specifier === 'react') {
+      return { ...React, useState: initial => React.useState(initial === 'monthly' ? 'annual' : initial) };
+    }
     return localRequire(specifier);
   }, module, module.exports);
   return module.exports;
 }
-function render(locale = 'tr', checkout) {
-  const Page = load('app/[locale]/e-ticaret-paketleri/page.tsx').default;
+function render(locale = 'tr', checkout, annual = false) {
+  const Page = load('app/[locale]/e-ticaret-paketleri/page.tsx', annual).default;
   const Layout = load('app/[locale]/e-ticaret-paketleri/layout.tsx').default;
   return renderToStaticMarkup(React.createElement(Layout, { params: { locale } }, React.createElement(Page, { params: { locale }, searchParams: checkout ? { checkout } : {} })));
 }
@@ -58,7 +61,7 @@ test('catalog prices disclose actual VAT-inclusive monthly, annual and one-time 
 });
 test('catalog purchase links use the verified store entry and leave legal navigation to the global footer', () => {
   const html = render();
-  assert.equal((html.match(/href="https:\/\/panel\.saas-staging\.celebix\.net\/login"/g) ?? []).length, 7);
+  assert.equal((html.match(/href="https:\/\/panel\.saas-staging\.celebix\.net\/login"/g) ?? []).length, 4);
   assert.equal((html.match(/href="https:\/\/kayit\.celebix\.net\/"/g) ?? []).length, 1);
   const Footer = load('components/ServicePolicyFooter.tsx').default;
   const combined = html + renderToStaticMarkup(React.createElement(Footer, { locale: 'tr' }));
@@ -67,7 +70,6 @@ test('catalog purchase links use the verified store entry and leave legal naviga
     assert.equal(combined.split(`href="/tr/${slug}"`).length - 1, 1);
   }
   assert.ok(html.includes('Panelden satın al')); assert.ok(!html.includes('1 TL ile satın al')); assert.ok(!html.includes('/checkout/saas/toshi-test')); assert.ok(html.includes('Satın alımlar iyzico ile tamamlanır.'));
-  assert.ok(!html.includes('/login?purchase='));
   assert.ok(!html.includes('<form')); assert.ok(!html.includes('offerId='));
 });
 test('the English catalogue matches Turkish offer IDs and prices and preserves historic payment returns', () => {
@@ -75,7 +77,7 @@ test('the English catalogue matches Turkish offer IDs and prices and preserves h
   const en = render('en');
   assert.deepEqual([...en.matchAll(/data-public-product="([^"]+)"/g)].map(match => match[1]), [...tr.matchAll(/data-public-product="([^"]+)"/g)].map(match => match[1]));
   for (const value of ['3,104.40', '31,044.00', '1,000 products', 'Toshi credits', 'VAT included']) assert.ok(en.includes(value), value);
-  assert.equal((en.match(/panel\.saas-staging\.celebix\.net\/login/g) ?? []).length, 7);
+  assert.equal((en.match(/panel\.saas-staging\.celebix\.net\/login"/g) ?? []).length, 4);
   assert.ok(en.includes('https://celebix.net/en/e-ticaret-paketleri#urun-paket-starter'));
   assert.ok(!en.includes('19,000')); assert.ok(!en.includes('buy.polar.sh'));
   for (const locale of ['tr', 'en']) {
@@ -85,10 +87,29 @@ test('the English catalogue matches Turkish offer IDs and prices and preserves h
     assert.ok(!html.includes('"@type":"ItemList"'));
   }
 });
-test('both the fixed header and introduction expose direct catalog anchors', () => {
+test('all paid cards carry their exact plan and selected billing period to the panel', () => {
+  for (const term of ['monthly', 'annual']) {
+    const html = render('tr', undefined, term === 'annual');
+    for (const plan of ['starter', 'growth', 'professional']) {
+      const article = html.match(new RegExp('<article(?=[^>]*id="urun-paket-' + plan + '")[\\s\\S]*?</article>'))?.[0];
+      assert.ok(article?.includes('href="https://panel.saas-staging.celebix.net/login?purchase=' + plan + '&amp;term=' + term + '"'), plan + ':' + term);
+    }
+    assert.equal((html.match(/Toshi kredileri kullanılabilir/g) ?? []).length, 3);
+    assert.equal((html.match(/Toshi kredileri için ücretli paket gerekir/g) ?? []).length, 1);
+    assert.ok(html.includes('Yıllık ödemede 2 ay avantaj'));
+    assert.ok(html.includes('Otomatik yenileme yok.'));
+  }
+});
+test('the introduction promotes direct registration and keeps the existing story and finale interactions', () => {
   const source = readFileSync(path.join(root, 'components/commerce-v6/markup.ts'), 'utf8');
   const markup = JSON.parse(source.split('export const commerceMarkup = ')[1].trim().replace(/;$/, ''));
   const header = markup.match(/<header class="site-header">[\s\S]*?<\/header>/)?.[0];
   const intro = markup.match(/<article class="copy intro"[\s\S]*?<\/article>/)?.[0];
-  for (const section of [header, intro]) assert.match(section, /<a(?=[^>]*href="#paketler")[^>]*>Paketler ve fiyatlar<\/a>/);
+  const finale = markup.match(/<article class="copy finale"[\s\S]*?<\/article>/)?.[0];
+  assert.match(header, /<a(?=[^>]*href="#paketler")[^>]*>Paketler ve fiyatlar<\/a>/);
+  assert.equal(intro.match(/<h1>(.*?)<\/h1>/)?.[1].replace(/<[^>]+>/g, ''), 'Kendi e-ticaret mağazanızı ücretsiz açın');
+  assert.ok(intro.includes('25 ürüne ve ayda 50 siparişe kadar ücretsiz başlayın. Ürünlerinizi, siparişlerinizi ve müşterilerinizi tek panelden yönetin.'));
+  assert.match(intro, /<a(?=[^>]*href="https:\/\/kayit\.celebix\.net\/")[^>]*>Ücretsiz mağaza aç<\/a>[\s\S]*?<button(?=[^>]*data-begin-story)(?=[^>]*secondary)[^>]*>/);
+  assert.match(intro, /data-story-label>Hikâyeyi izle[\s\S]*?data-story-time[^>]*>21 sn/);
+  assert.match(finale, /data-action="start">Mağazamı aç[\s\S]*?data-compose>[\s\S]*?Demoyu deneyin/);
 });
