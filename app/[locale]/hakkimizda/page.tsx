@@ -3,6 +3,7 @@ import { ArrowRight, CheckCircle2, MapPin, Sparkles, Users } from "lucide-react"
 import Navigation from "@/components/sections/Navigation";
 import CTA from "@/components/sections/CTA";
 import Footer from "@/components/sections/Footer";
+import BusinessIdentity from "@/components/BusinessIdentity";
 
 const valueCards = {
   tr: [
@@ -78,6 +79,13 @@ export default function HakkimizdaPage({ params }: { params: { locale: string } 
                   ? "Celebix, Ordu merkezli bir yazilim ve dijital buyume ekibi olarak isletmelerin web, e-ticaret, reklam ve donusum altyapilarini daha saglam hale getirmek icin calisir."
                   : "Celebix is a software and digital growth team based in Ordu, helping businesses build stronger foundations across web, e-commerce, advertising, and conversion systems."}
               </p>
+
+              <section className="mt-8 text-dark-900/80" aria-labelledby="business-identity-title">
+                <h2 id="business-identity-title" className="mb-3 text-xl font-semibold text-dark-900">
+                  {isTr ? "İşletme bilgileri" : "Business details"}
+                </h2>
+                <BusinessIdentity locale={locale} />
+              </section>
 
               <div className="mt-10 flex flex-col gap-4 sm:flex-row">
                 <Link

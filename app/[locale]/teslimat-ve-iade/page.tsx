@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
+import BusinessIdentity from '@/components/BusinessIdentity';
 
 interface PolicySection { id: string; title: string; paragraphs: string[]; }
 const sources = [
@@ -188,8 +189,8 @@ export default function DeliveryAndRefundPage({ params }: { params: { locale: st
             <section id="iletisim" aria-labelledby="iletisim-title">
               <h2 id="iletisim-title" className="mb-3 text-xl font-semibold leading-7 text-dark-900">{isTr ? '8. İletişim ve talepler' : '8. Contact and requests'}</h2>
               <p className="mb-3">{isTr ? 'Hizmet, teslimat, iptal ve iade talepleriniz için bize ulaşabilirsiniz.' : 'Contact us about service delivery, cancellation and refund requests.'}</p>
+              <BusinessIdentity locale={locale} />
               <address className="space-y-1 not-italic">
-                <p className="font-medium text-dark-900">Celebix</p>
                 <p><a className="underline underline-offset-4 hover:text-[#B54400]" href="mailto:merhaba@celebix.net">merhaba@celebix.net</a></p>
                 <p><a className="underline underline-offset-4 hover:text-[#B54400]" href="tel:+905302099628">+90 530 209 96 28</a></p>
                 <p>Akyazı Mahallesi, Altınordu / Ordu, Türkiye</p>

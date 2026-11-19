@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import BusinessIdentity from "@/components/BusinessIdentity";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
@@ -34,6 +35,7 @@ export default function PrivacyPage({ params }: { params: { locale: string } }) 
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">1. Veri Sorumlusu</h2>
+          <BusinessIdentity />
           <p className="mb-4">
             Celebix olarak kişisel verilerinizin güvenliği bizim için önemlidir. 
             Bu gizlilik politikası, hangi verileri topladığımızı, nasıl kullandığımızı 

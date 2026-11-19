@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import BusinessIdentity from "@/components/BusinessIdentity";
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const { locale } = params;
@@ -32,6 +33,9 @@ export default function TermsPage({ params }: { params: { locale: string } }) {
           <p className="text-sm text-dark-900/50 mb-8">
             Son güncellenme tarihi: 2026
           </p>
+
+          <h2 className="text-2xl font-semibold mt-8 mb-4">İşletme bilgileri</h2>
+          <BusinessIdentity />
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">1. Koşulların Kabulü</h2>
           <p className="mb-4">
